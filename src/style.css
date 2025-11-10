@@ -1,6 +1,35 @@
 @import url(reset.css);
 @import "tailwindcss";
 
+
 :root{
   --anim-duration: 0.15s;
+
+  --primary: rgb(20, 140, 255);
+  --secondary: rgb(110, 20, 255);
+
+  --background: hsl(0, 0%, 96%);
+  --foreground: hsl(0, 0%, 100%);
+
+
+  color: black;
+}
+
+.dark{
+  --background: hsl(0, 0%, 15%);
+  --foreground: hsl(0, 0%, 22.5%);
+
+  color: white;
+}
+
+.primary-bg-gradient{
+  background-image: linear-gradient(to right, #29a6ff, #0073ff);
+}
+
+.secondary-bg-gradient{
+  background-image: linear-gradient(to right, #8929ff, #5100ff);
+}
+
+.mixed-bg-gradient{
+  background-image: linear-gradient(to right, var(--primary), var(--secondary));
 }
