@@ -1,17 +1,16 @@
 <script setup lang="ts">
     import type { FileType } from '../../types/entities';
-    import { Icon } from '@iconify/vue';
     import './entity.css';
+    import Button from '../common/Button.vue';
 
     const props = defineProps<{ file: FileType }>()
 </script>
 
 
 <template>
-    <div class="entity flex items-center gap-2 px-2 py-1 rounded-sm bg-gray-700 border border-white">
-        <Icon icon="mdi:file-outline" />
+    <Button variant="primary-filled" icon="mdi:file-outline">
         <p>{{ props.file.name }}</p>
-    </div>
+    </Button>
 </template>
 
 

@@ -1,17 +1,16 @@
 <script setup lang="ts">
     import type { FolderType } from '../../types/entities';
-    import { Icon } from '@iconify/vue';
     import './entity.css';
+    import Button from '../common/Button.vue';
 
     const props = defineProps<{ folder: FolderType }>()
 </script>
 
 
 <template>
-    <div class="entity flex items-center gap-2 px-2 py-1 rounded-sm bg-gray-700 border border-white">
-        <Icon icon="mdi:folder" />
+    <Button variant="secondary-filled" icon="mdi:folder">
         <p>{{ props.folder.name }}</p>
-    </div>
+    </Button>
 </template>
 
 
