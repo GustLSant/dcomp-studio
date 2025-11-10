@@ -17,18 +17,43 @@
         });
     });
 
+    // async function runCode() {
+    //     if (!pyodide) {
+    //         alert('pyodide nao carregado');
+    //         return;
+    //     }
+    //     try {
+    //         const result = pyodide.runPython(code.value);
+    //         console.log(result);
+    //     } catch (err) {
+    //         console.log(String(err));
+    //     }
+    // };
+
     async function runCode() {
         if (!pyodide) {
-            alert('pyodide nao carregado');
+            alert('pyodide não carregado');
             return;
         }
+
         try {
-            const result = pyodide.runPython(code.value);
-            console.log(result);
-        } catch (err) {
-            console.log(String(err));
+            // Redireciona stdout e stderr dentro do Pyodide
+            await pyodide.runPythonAsync(`
+                import io, sys
+                sys.stdout = io.StringIO()
+                sys.stderr = sys.stdout
+            `);
+
+            // Executa o código do usuário
+            await pyodide.runPythonAsync(code.value);
+
+            const result = await pyodide.runPythonAsync("sys.stdout.getvalue()");
+            console.log('Saída do código: ', result);
         }
-    };
+        catch (_err) {
+            console.log(_err)
+        }
+    }
 </script>
 
 
