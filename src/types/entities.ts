@@ -9,5 +9,7 @@ export type FolderType = Entity & {
 
 export type FileType = Entity & {
     content: string,
+    creationDate: Date,
+    editDate: Date
 }
 
