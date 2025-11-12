@@ -9,13 +9,15 @@
 
 
 <template>
-  <div class="p-4 pt-[calc(52px+16px)] bg-(--background) h-screen dark">
+  <div class="app pt-[calc(52px)] bg-(--background) min-h-screen dark">
     <Navbar />
     <router-view />
   </div>
 </template>
 
 
-<style scoped>
-
+<style>
+  .app {
+    background-image: radial-gradient(circle at 10% 90%, rgba(255,255,255, 0.1), transparent);
+  }
 </style>
