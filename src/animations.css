@@ -3,30 +3,49 @@
     --anim-duration-short: 0.15s;
 }
 
+.fade-in-normal{
+    animation-name: FadeIn;
+    animation-duration: var(--anim-duration-normal);
+    animation-fill-mode: forwards;
+}
+
+.fade-in-short{
+    animation-name: FadeIn;
+    animation-duration: var(--anim-duration-short);
+    animation-fill-mode: forwards;
+}
+
+.fade-out-normal{
+    animation-name: FadeOut;
+    animation-duration: var(--anim-duration-normal);
+    animation-fill-mode: forwards;
+}
+
+.fade-out-short{
+    animation-name: FadeOut;
+    animation-duration: var(--anim-duration-short);
+    animation-fill-mode: forwards;
+}
 
 .fade-in-top-normal{
-    opacity: 0%;
     animation-name: FadeInTop;
     animation-duration: var(--anim-duration-normal);
     animation-fill-mode: forwards;
 }
 
 .fade-in-top-short{
-    opacity: 0%;
     animation-name: FadeInTop;
     animation-duration: var(--anim-duration-short);
     animation-fill-mode: forwards;
 }
 
 .fade-in-left-normal{
-    opacity: 0%;
     animation-name: FadeInLeft;
     animation-duration: var(--anim-duration-normal);
     animation-fill-mode: forwards;
 }
 
 .fade-in-right-normal{
-    opacity: 0%;
     animation-name: FadeInRight;
     animation-duration: var(--anim-duration-normal);
     animation-fill-mode: forwards;
@@ -34,9 +53,20 @@
 
 
 .fade-in-left-short{
-    opacity: 0%;
     animation-name: FadeInLeft;
     animation-duration: var(--anim-duration-short);
+    animation-fill-mode: forwards;
+}
+
+.fade-out-left-normal{
+    animation-name: FadeOutLeft;
+    animation-duration: var(--anim-duration-normal);
+    animation-fill-mode: forwards;
+}
+
+.fade-out-right-normal {
+    animation-name: FadeOutRight;
+    animation-duration: var(--anim-duration-normal);
     animation-fill-mode: forwards;
 }
 
@@ -44,6 +74,24 @@
     animation-name: FadeOutRight;
     animation-duration: var(--anim-duration-short);
     animation-fill-mode: forwards;
+}
+
+@keyframes FadeIn {
+    0%{
+        opacity: 0%;
+    }
+    100%{
+        opacity: 100%;
+    }
+}
+
+@keyframes FadeOut {
+    0%{
+        opacity: 100%;
+    }
+    100%{
+        opacity: 0%;
+    }
 }
 
 @keyframes FadeInLeft {
@@ -79,6 +127,16 @@
     }
 }
 
+@keyframes FadeOutLeft {
+    0%{
+        opacity: 100%;
+        transform: translateX(0px);
+    }
+    100%{
+        opacity: 0%;
+        transform: translateX(-30px);
+    }
+}
 
 @keyframes FadeOutRight {
     0%{
