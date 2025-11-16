@@ -1,0 +1,92 @@
+:root{
+    --anim-duration-normal: 0.3s;
+    --anim-duration-short: 0.15s;
+}
+
+
+.fade-in-top-normal{
+    opacity: 0%;
+    animation-name: FadeInTop;
+    animation-duration: var(--anim-duration-normal);
+    animation-fill-mode: forwards;
+}
+
+.fade-in-top-short{
+    opacity: 0%;
+    animation-name: FadeInTop;
+    animation-duration: var(--anim-duration-short);
+    animation-fill-mode: forwards;
+}
+
+.fade-in-left-normal{
+    opacity: 0%;
+    animation-name: FadeInLeft;
+    animation-duration: var(--anim-duration-normal);
+    animation-fill-mode: forwards;
+}
+
+.fade-in-right-normal{
+    opacity: 0%;
+    animation-name: FadeInRight;
+    animation-duration: var(--anim-duration-normal);
+    animation-fill-mode: forwards;
+}
+
+
+.fade-in-left-short{
+    opacity: 0%;
+    animation-name: FadeInLeft;
+    animation-duration: var(--anim-duration-short);
+    animation-fill-mode: forwards;
+}
+
+.fade-out-right-short{
+    animation-name: FadeOutRight;
+    animation-duration: var(--anim-duration-short);
+    animation-fill-mode: forwards;
+}
+
+@keyframes FadeInLeft {
+    0%{
+        opacity: 0%;
+        transform: translateX(-30px);
+    }
+    100%{
+        opacity: 100%;
+        transform: translateX(0px);
+    }
+}
+
+@keyframes FadeInRight {
+    0%{
+        opacity: 0%;
+        transform: translateX(30px);
+    }
+    100%{
+        opacity: 100%;
+        transform: translateX(0px);
+    }
+}
+
+@keyframes FadeInTop {
+    0%{
+        opacity: 0%;
+        transform: translateY(-15px);
+    }
+    100%{
+        opacity: 100%;
+        transform: translateY(0px);
+    }
+}
+
+
+@keyframes FadeOutRight {
+    0%{
+        opacity: 100%;
+        transform: translateX(0px);
+    }
+    100%{
+        opacity: 0%;
+        transform: translateX(30px);
+    }
+}
