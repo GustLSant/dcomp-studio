@@ -8,7 +8,6 @@
     <div class="flex flex-col gap-4 p-4 fade-in-left-normal">
         <RecentFileViewer />
         <FileList />
-        <!-- <CodeEditor /> -->
     </div>
 </template>
 

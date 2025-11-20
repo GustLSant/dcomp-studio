@@ -1,7 +1,7 @@
 <script setup lang="ts">
     import type { FileType, FolderType } from '../../types/entities';
-    import File from './File.vue';
-    import Folder from './Folder.vue';
+    import File from '../files/File.vue';
+    import Folder from '../folders/Folder.vue';
 
     const props = defineProps<{ folder: FolderType }>();
 </script>

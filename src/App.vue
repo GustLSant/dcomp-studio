@@ -1,21 +1,28 @@
 <script setup lang="ts">
   import { useRoute } from 'vue-router';
   import Navbar from './components/layout/Navbar.vue';
+  import { getNavbarVariation } from './utils/route';
   import { computed } from 'vue';
+  import CodeNavbar from './components/layout/CodeNavbar.vue';
 
   const route = useRoute();
-  const isStartPage = computed<boolean>(() => route.path === '/');
+  const navbarVariation = computed(() => { return getNavbarVariation(route); });
 
-  // npm install codemirror vue-codemirror --save
-  // npm install @codemirror/lang-python @codemirror/lang-html @codemirror/lang-markdown
-  // npm install @codemirror/theme-one-dark
-  // npm install pyodide
+  const paddingTop = computed(() => {
+    switch (navbarVariation.value) {
+      case 'none':    return '0px';
+      case 'code': return '0px';
+      case 'full':    return '52px';
+      default:        return '0px';
+    };
+  });
 </script>
 
 
 <template>
-  <div class="app bg-(--background) min-h-screen max-w-[800px] m-auto overflow-x-hidden dark" :class="isStartPage ? '' : 'pt-[calc(52px)]'">
-    <Navbar v-if="!isStartPage" />
+  <div class="app bg-(--background) min-h-screen max-w-[800px] m-auto overflow-x-hidden dark" :style="{ paddingTop: paddingTop }">
+    <Navbar v-if="navbarVariation === 'full'" />
+    <CodeNavbar v-if="navbarVariation === 'code'" />
     <router-view />
   </div>
 </template>

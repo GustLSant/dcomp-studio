@@ -3,23 +3,30 @@
     import Button from '../common/Button.vue';
     import CodePreview from '../common/CodePreview.vue';
     import type { FileType } from '../../types/entities';
+    import { useRouter } from 'vue-router';
+    import { getLastEditedFile } from '../../services/files';
+    import { formatDate } from '../../utils/date';
 
-    const lastEditedFile = ref<FileType | undefined>(undefined)
+    const lastEditedFile = ref<FileType | undefined>(undefined);
+    const router = useRouter();
 
-    onMounted(getLastEditedFile)
+    onMounted(async () => { lastEditedFile.value = await getLastEditedFile(); })
 
-    function getLastEditedFile() {
-        
+    function handleClickContinue() {
+        router.push('/file/' + lastEditedFile.value?.id);
     }
 </script>
 
 
 <template>
-    <section class="flex flex-col items-center justify-center gap-3 py-6">
+    <section v-if="lastEditedFile" class="flex flex-col items-center justify-center gap-3 py-6">
         <CodePreview />
-        <p class="font-mono">file.py</p>
+        <div class="flex flex-col items-center text-center font-mono">
+            <p>{{ lastEditedFile.name }}</p>
+            <p class="text-xs font-light opacity-60">{{ formatDate(lastEditedFile.editDate) }}</p>
+        </div>
 
-        <Button variant="primary-filled" icon="mdi:login-variant">
+        <Button variant="primary-filled" icon="mdi:login-variant" @click="handleClickContinue">
             Continuar Editando
         </Button>
     </section>

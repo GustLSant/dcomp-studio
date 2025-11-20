@@ -3,7 +3,7 @@
 @import "tailwindcss";
 
 
-:root{
+:root {
   --anim-duration: 0.15s;
 
   --primary: rgb(20, 140, 255);
@@ -16,7 +16,7 @@
   color: black;
 }
 
-.dark{
+.dark {
   --background: hsl(0, 0%, 15%);
   --foreground: hsl(0, 0%, 22.5%);
 
@@ -27,14 +27,18 @@ body {
   background-color: black; 
 }
 
-.primary-bg-gradient{
+.primary-bg-gradient {
   background-image: linear-gradient(to right, #29a6ff, #0073ff);
 }
 
-.secondary-bg-gradient{
+.secondary-bg-gradient {
   background-image: linear-gradient(to right, #8929ff, #5100ff);
 }
 
-.mixed-bg-gradient{
+.mixed-bg-gradient {
   background-image: linear-gradient(to right, var(--primary), var(--secondary));
+}
+
+.shadow-inset {
+  box-shadow: 4px 4px 4px rgba(0,0,0, 0.15) inset;
 }

@@ -1,3 +1,5 @@
+import type { FileType } from "../types/entities";
+
 const dbName: string = 'DcompStudioDB';
 
 export class IndexedDB {
@@ -63,7 +65,7 @@ export class IndexedDB {
     }
 
 
-    async getById<T>(_id: number): Promise<T | undefined> {
+    async getById<T>(_id: number): Promise<T> {
         await this.initRequest;
 
         return new Promise((resolve, reject) => {
@@ -73,8 +75,27 @@ export class IndexedDB {
             const store: IDBObjectStore    = tx.objectStore(this.storeName);
             const request: IDBRequest<any> = store.get(_id);
 
-            request.onsuccess = () => { resolve(request.result as T | undefined); }
-            request.onerror   = () => { reject(request.error); }
+            request.onsuccess = () => {
+                if (request.result) { resolve(request.result as T); }
+                else { reject('Not found'); }
+            }
+            request.onerror = () => { reject(request.error); }
+        })
+    }
+
+
+    async update<T>(_value: T): Promise<void> {
+        await this.initRequest;
+
+        return new Promise((resolve, reject) => {
+            if(!this.db) { return reject('DB not initialized'); }
+
+            const tx: IDBTransaction               = this.db.transaction(this.storeName, 'readwrite');
+            const store: IDBObjectStore            = tx.objectStore(this.storeName);
+            const request: IDBRequest<IDBValidKey> = store.put(_value);
+
+            request.onsuccess = () => resolve();
+            request.onerror   = () => reject(request.error);
         })
     }
 

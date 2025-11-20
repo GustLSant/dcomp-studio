@@ -1,6 +1,5 @@
 <script setup lang="ts">
     import type { FileType } from '../../types/entities';
-    import './entity.css';
     import Button from '../common/Button.vue';
 
     const props = defineProps<{ file: FileType }>()
