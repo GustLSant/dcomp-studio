@@ -1,10 +1,10 @@
 <script setup lang="ts">
     import { Codemirror } from 'vue-codemirror'
     import { python } from "@codemirror/lang-python";
-    import { oneDark } from '@codemirror/theme-one-dark'
+    import { codeThemesDict } from '../../utils/codeEditorThemes';
 
     const code = defineModel<string>();
-    const extensions = [ python(), oneDark ];
+    const extensions = [ python(), ...codeThemesDict['hacker90s'] ];
 </script>
 
 

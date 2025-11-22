@@ -23,7 +23,7 @@
         <CodePreview />
         <div class="flex flex-col items-center text-center font-mono">
             <p>{{ lastEditedFile.name }}</p>
-            <p class="text-xs font-light opacity-60">{{ formatDate(lastEditedFile.editDate) }}</p>
+            <p class="text-xs opacity-50">{{ formatDate(lastEditedFile.editDate) }}</p>
         </div>
 
         <Button variant="primary-filled" icon="mdi:login-variant" @click="handleClickContinue">

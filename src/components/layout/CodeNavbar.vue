@@ -1,19 +1,25 @@
 <script setup lang="ts">
     import { Icon } from '@iconify/vue';
-    import eventBus from '../../eventBus';
+    import { useRouter } from 'vue-router';
 
+    const router = useRouter()
+    const emit = defineEmits(['runCode', 'saveFile']);
+
+    function handleClickMenu() {
+        router.push({ name: 'FileMenu' });
+    }
     function handleClickSave() {
-        eventBus.dispatchEvent(new Event('save-file'));
+        emit('saveFile');
     }
     function handleClickRun() {
-        eventBus.dispatchEvent(new Event('run-code'));
+        emit('runCode');
     }    
 </script>
 
 
 <template>
     <div class="fixed top-0 left-0 right-0 z-50 flex flex-col items-end gap-1.5 p-2 pointer-events-none">
-        <div class="button">
+        <div class="button" @click="handleClickMenu">
             <Icon icon="mdi:menu" width="24" height="24" />
         </div>
         <div class="button" @click="handleClickSave">

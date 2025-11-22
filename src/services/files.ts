@@ -47,6 +47,7 @@ export async function updateFile(_file: FileType): Promise<void> {
     }
 
     try {
+        fileToBeSaved.editDate = new Date();
         return await dbInstance.update(fileToBeSaved);
     }
     catch(_error) {

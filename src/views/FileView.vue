@@ -1,15 +1,15 @@
 <script setup lang="ts">
     import { onMounted, onUnmounted, ref } from 'vue';
-    import CodeEditor from '../components/CodeEditor.vue';
+    import CodeEditor from '../components/codeEditor/CodeEditor.vue';
     import { useRoute } from 'vue-router';
     import { type FileType } from '../types/entities';
     import { getFileById, updateFile } from '../services/files';
     import { getDefaultFile } from '../utils/entities';
-    import eventBus from '../eventBus';
     import { runPythonCode } from '../utils/code';
     import CodeOutputModal from '../components/files/CodeOutputModal.vue';
     import LoadingOverlay from '../components/common/LoadingOverlay.vue';
     import type { CodeOutput } from '../types/code';
+    import CodeNavbar from '../components/layout/CodeNavbar.vue';
 
     const file = ref<FileType | undefined>(undefined);
     const codeOutput = ref<CodeOutput>({ type: 'success', content: '' });
@@ -18,12 +18,6 @@
     const route = useRoute();
 
     onMounted(getFileFromDB);
-
-    onMounted(() => { eventBus.addEventListener('save-file', saveFile) });
-    onUnmounted(() => { eventBus.removeEventListener('save-file', saveFile) });
-    
-    onMounted(() => { eventBus.addEventListener('run-code', runCode) });
-    onUnmounted(() => { eventBus.removeEventListener('run-code', runCode) });
 
 
     async function getFileFromDB() {
@@ -45,7 +39,13 @@
 
     function saveFile() {
         if(!file.value) { return; } 
-        updateFile(file.value);
+        updateFile(file.value)
+        .then((_response) => {
+            console.log('saving successful');
+        })
+        .catch((_error) => {
+            console.error(_error);
+        })
     }
 
 
@@ -76,7 +76,9 @@
 
 
 <template>
+    <CodeNavbar @run-code="runCode" @save-file="saveFile" />
     <LoadingOverlay v-if="loading" />
+    <router-view />
 
     <div v-if="file">
         <CodeEditor v-model="file.content" />

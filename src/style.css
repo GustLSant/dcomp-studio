@@ -4,21 +4,32 @@
 
 
 :root {
+  --max-width: 1400px;
   --anim-duration: 0.15s;
 
-  --primary: rgb(20, 140, 255);
+  --primary: #148cff;
+  --primary-gradient-left: #29a6ff;
+  --primary-gradient-right: #0073ff;
+
   --secondary: rgb(110, 20, 255);
+  --secondary-gradient-left: #8929ff;
+  --secondary-gradient-right: #5100ff;
+
+  --primary-darker: hsl(209, 100%, 35%);
 
   --background: hsl(0, 0%, 96%);
   --foreground: hsl(0, 0%, 100%);
 
+  --success-color: rgb(170, 255, 40);
+  --warning-color: rgb(255, 150, 0);
+  --error-color: rgb(255, 0, 60);
 
   color: black;
 }
 
 .dark {
-  --background: hsl(0, 0%, 15%);
-  --foreground: hsl(0, 0%, 22.5%);
+  --background: rgb(20 20 20);  
+  --foreground: rgb(25, 25, 30);
 
   color: white;
 }
@@ -27,16 +38,44 @@ body {
   background-color: black; 
 }
 
+.shiny-gradient {
+  --bright-color: rgba(255,255,255, 35%);
+  background: linear-gradient(
+    -45deg,
+    var(--bright-color) 0%,
+    rgba(255,255,255, 10%) 50%,
+    var(--bright-color) 100%
+  );
+}
+
 .primary-bg-gradient {
-  background-image: linear-gradient(to right, #29a6ff, #0073ff);
+  background-image: linear-gradient(to right, var(--primary-gradient-left), var(--primary-gradient-right));
 }
 
 .secondary-bg-gradient {
-  background-image: linear-gradient(to right, #8929ff, #5100ff);
+  background-image: linear-gradient(to right, var(--secondary-gradient-left), var(--secondary-gradient-left));
 }
 
 .mixed-bg-gradient {
   background-image: linear-gradient(to right, var(--primary), var(--secondary));
+}
+
+.primary-text-gradient {
+  background: linear-gradient(90deg, var(--primary-gradient-left), var(--primary-gradient-right));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  position: relative;
+
+  &.underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 1px;
+    width: 100%;
+    background: linear-gradient(90deg, var(--primary-gradient-left), var(--primary-gradient-right));
+  }
 }
 
 .shadow-inset {

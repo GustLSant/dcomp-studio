@@ -4,6 +4,7 @@ import FolderView from "./views/FolderView.vue";
 import FileView from "./views/FileView.vue";
 import StartView from "./views/StartView.vue";
 import type { RouteMeta } from "./types/route";
+import CodeNavbarMenu from "./components/layout/CodeNavbarMenu.vue";
 
 
 const routes: Array<RouteRecordRaw & { meta: RouteMeta }> = [
@@ -29,7 +30,14 @@ const routes: Array<RouteRecordRaw & { meta: RouteMeta }> = [
     path: "/file/:id",
     name: "File",
     component: FileView,
-    meta: { navbarVariation: 'code' }
+    meta: { navbarVariation: 'code' },
+    children: [
+      {
+        path: 'menu',
+        name: 'FileMenu',
+        component: CodeNavbarMenu
+      }
+    ]
   },
 ];
 

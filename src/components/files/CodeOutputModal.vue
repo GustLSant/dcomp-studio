@@ -1,7 +1,7 @@
 <script setup lang="ts">
     import type { CodeOutput } from '../../types/code';
-import { truncate } from '../../utils/text';
-    import HoverableIcon from '../common/HoverableIcon.vue';
+    import { truncate } from '../../utils/text';
+    import CloseButton from '../common/CloseButton.vue';
     import ModalContainer from '../common/ModalContainer.vue';
 
     const open = defineModel<boolean>();
@@ -26,7 +26,7 @@ import { truncate } from '../../utils/text';
                 <textarea readonly :rows="(props.codeOutput.type === 'success' ? 5 : 20)" class="bg-neutral-900 p-2 rounded-sm shadow-inner font-mono text-green-500">{{ props.codeOutput.content }}</textarea>
             </div>
 
-            <HoverableIcon icon="mdi:close" :size="22" class="absolute top-2 right-2" @click="close" />
+            <CloseButton @click="close" />
         </div>
     </ModalContainer>
 </template>
