@@ -30,7 +30,7 @@ const routes: Array<RouteRecordRaw & { meta: RouteMeta }> = [
     path: "/file/:id",
     name: "File",
     component: FileView,
-    meta: { navbarVariation: 'code' },
+    meta: { navbarVariation: 'none' },
     children: [
       {
         path: 'menu',
