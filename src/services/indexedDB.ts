@@ -1,21 +1,22 @@
-import type { FileType } from "../types/entities";
+const DB_NAME = 'DcompStudioDB' as const;
+const STORES = ['folders', 'files'] as const;
 
-const dbName: string = 'DcompStudioDB';
+export type StoreType = typeof STORES[number];
+
 
 export class IndexedDB {
-    private storeName: string;
     private db: IDBDatabase | null = null;
     private initRequest: Promise<void>;
+    private storeName: string;
 
-
-    constructor(storeName: string) {
-        this.storeName = storeName;
+    constructor(_storeName: StoreType) {
         this.initRequest = this.open();
+        this.storeName = _storeName;
     }
 
     private open(): Promise<void> {
         return new Promise((resolve, reject) => {
-            const request = indexedDB.open(dbName, 1);
+            const request = indexedDB.open(DB_NAME, 3);
 
             request.onerror = () => { reject(request.error); }
             request.onsuccess = () => {
@@ -25,9 +26,12 @@ export class IndexedDB {
 
             request.onupgradeneeded = () => {
                 const db = request.result;
-                if (!db.objectStoreNames.contains(this.storeName)) {
-                    db.createObjectStore(this.storeName, { keyPath: 'id', autoIncrement: true })
-                }
+                
+                STORES.forEach((_store: string) => {
+                    if (!db.objectStoreNames.contains(_store)) {
+                        db.createObjectStore(_store, { keyPath: 'id', autoIncrement: true });
+                    }
+                })
             }
         })
     }
