@@ -1,6 +1,6 @@
 export type Entity = {
     id?: number,
-    parentFolderId?: number,
+    parentFolderId: number,
     name: string,
 }
 

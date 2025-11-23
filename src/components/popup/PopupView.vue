@@ -44,7 +44,7 @@
 
 
 <template>
-    <div class="fixed top-0 left-0 min-w-screen z-50 flex flex-col items-center pointer-events-none" :class="(popups.length > 0) ? 'pt-4' : ''">
+    <div class="fixed top-0 left-0 min-w-screen z-50 flex flex-col gap-1 items-center pointer-events-none pt-4">
         <PopupItem 
             v-for="popup in popups"
             :key="popup.id"

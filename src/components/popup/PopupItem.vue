@@ -39,19 +39,12 @@
 <style scoped>
     .popup{
         --popup-anim-duration: 0.15s;
-        --trans-duration: 0.1s;
 
         max-height: 99px;
-        transition: 
-            max-height var(--trans-duration) var(--popup-anim-duration), 
-            margin var(--trans-duration) var(--popup-anim-duration), 
-            border-width var(--trans-duration) var(--popup-anim-duration)
-        ;
+        transition: max-height var(--popup-anim-duration);
 
         &.closing{
             max-height: 0px;
-            margin: 0px;
-            border-width: 0px;
         };
     }
 

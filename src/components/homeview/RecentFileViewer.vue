@@ -10,7 +10,20 @@
     const lastEditedFile = ref<FileType | undefined>(undefined);
     const router = useRouter();
 
-    onMounted(async () => { lastEditedFile.value = await getLastEditedFile(); })
+    onMounted(getLastFile)
+
+    async function getLastFile() {
+        getLastEditedFile()
+        .then((_response) => {
+            lastEditedFile.value = _response;
+        })
+        .catch((_error) => {
+            console.error(_error);
+        })
+        .finally(() => {
+
+        })
+    }
 
     function handleClickContinue() {
         router.push('/file/' + lastEditedFile.value?.id);

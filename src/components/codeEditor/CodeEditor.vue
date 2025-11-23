@@ -4,7 +4,7 @@
     import { codeThemesDict } from '../../utils/codeEditorThemes';
 
     const code = defineModel<string>();
-    const extensions = [ python(), ...codeThemesDict['hacker90s'] ];
+    const extensions = [ python(), ...codeThemesDict['dracula'] ];
 </script>
 
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { onMounted, onUnmounted, ref } from 'vue';
+    import { onMounted, ref } from 'vue';
     import CodeEditor from '../components/codeEditor/CodeEditor.vue';
     import { useRoute } from 'vue-router';
     import { type FileType } from '../types/entities';

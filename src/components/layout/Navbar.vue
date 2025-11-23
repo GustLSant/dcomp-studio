@@ -1,8 +1,7 @@
 <script setup lang="ts">
     import HoverableIcon from '../common/HoverableIcon.vue';
     import Logo from '../../assets/logo/new_white.png'
-    import ShinyContainer from '../common/ShinyContainer.vue';
-
+    import ShinyContainer from '../common/shinyContainer/ShinyContainer.vue';
 </script>
 
 

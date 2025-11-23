@@ -1,6 +1,8 @@
 <script setup lang="ts">
     import { Icon } from '@iconify/vue';
     import { useRouter } from 'vue-router';
+    import PrimaryShinyContainer from '../common/shinyContainer/PrimaryShinyContainer.vue';
+    import ShinyContainer from '../common/shinyContainer/ShinyContainer.vue';
 
     const router = useRouter()
     const emit = defineEmits(['runCode', 'saveFile']);
@@ -19,15 +21,23 @@
 
 <template>
     <div class="fixed top-0 left-0 right-0 z-50 flex flex-col items-end gap-1.5 p-2 pointer-events-none">
-        <div class="button" @click="handleClickMenu">
-            <Icon icon="mdi:menu" width="24" height="24" />
-        </div>
-        <div class="button" @click="handleClickSave">
-            <Icon icon="mdi:content-save-outline" width="24" height="24" />
-        </div>
-        <div class="button" @click="handleClickRun">
-            <Icon icon="mdi:play-circle-outline" width="24" height="24" />
-        </div>
+        <ShinyContainer class="rounded-full">
+            <div class="button" @click="handleClickMenu">
+                <Icon icon="mdi:menu" width="24" height="24" />
+            </div>
+        </ShinyContainer>
+
+        <PrimaryShinyContainer class="rounded-full">
+            <div class="button" @click="handleClickSave">
+                <Icon icon="mdi:content-save-outline" width="24" height="24" />
+            </div>
+        </PrimaryShinyContainer>
+
+        <PrimaryShinyContainer class="rounded-full">
+            <div class="button" @click="handleClickRun">
+                <Icon icon="mdi:play-circle-outline" width="24" height="24" />
+            </div>
+        </PrimaryShinyContainer>
     </div>
 </template>
 
@@ -35,11 +45,9 @@
 <style scoped>
     .button {
         padding: 6px;
-        border-width: 1px;
         border-radius: 999px;
         box-shadow: 4px 4px 4px rgba(0,0,0, 0.1);
         background-color: #171717;
-        border-color: #3a3a3a;
         pointer-events: auto;
     }
 </style>

@@ -6,20 +6,32 @@
     import { onMounted, ref } from 'vue';
     import { type FileType } from '../../types/entities';
     import router from '../../router';
+    import ShinyContainer from '../common/shinyContainer/ShinyContainer.vue';
     import { createPopup } from '../../utils/popup';
-    import ShinyContainer from '../common/ShinyContainer.vue';
 
     const fileList = ref<FileType[]>([]);
 
     onMounted(getFilesFromDB);
 
     async function getFilesFromDB() {
-        fileList.value = await getRecentFiles(5);
+        getRecentFiles(5)
+        .then((_response) => {
+            fileList.value = _response;
+        })
+        .catch((_error) => {
+            createPopup('error', 'Erro ao carregar os arquivos', 'Por favor, tente novamente');
+            fileList.value = [];
+        })
+        .finally(() => {  })
     }
 
     async function handleClickAddFile() {
         const newFileId: number = await addFile(getDefaultFile());
         router.push('/file/' + newFileId.toString());
+    }
+
+    function handleClickExploreFiles() {
+        router.push({ name: 'Folder', params: { id: 0 } });
     }
 </script>
 
@@ -43,7 +55,7 @@
             </div>
 
             <div class="flex items-center justify-end">
-                <p @click="() => { createPopup('success', 'Success', 'Sucesso ao comer cu de curioso') }" class="text-sm primary-text-gradient underline">Explorar todos os arquivos</p>
+                <p @click="handleClickExploreFiles" class="text-sm primary-text-gradient underline">Explorar todos os arquivos</p>
             </div>
         </section>
     </ShinyContainer>
