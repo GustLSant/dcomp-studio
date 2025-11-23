@@ -10,8 +10,8 @@ export async function getAllFiles(): Promise<FileType[]> {
         return await dbInstance.getAll<FileType>();
     }
     catch(_error) {
-        console.error(_error);
-        return [];
+        const message = _error instanceof Error ? _error.message : String(_error);
+        throw new Error(message);
     }
 }
 
@@ -51,8 +51,8 @@ export async function updateFile(_file: FileType): Promise<void> {
         return await dbInstance.update(fileToBeSaved);
     }
     catch(_error) {
-        console.error(_error);
-        throw new Error("Error on updateFile");
+        const message = _error instanceof Error ? _error.message : String(_error);
+        throw new Error(message);
     }
 }
 
@@ -76,8 +76,8 @@ export async function getMostRecentFile(): Promise<FileType | undefined> {
         }
     }
     catch(_error) {
-        console.error(_error);
-        return undefined;
+        const message = _error instanceof Error ? _error.message : String(_error);
+        throw new Error(message);
     }
 }
 
@@ -91,8 +91,8 @@ export async function getRecentFiles(_count: number): Promise<FileType[]> {
         return [...files.slice(0, _count)];
     }
     catch (_error) {
-        console.error(_error);
-        return [];
+        const message = _error instanceof Error ? _error.message : String(_error);
+        throw new Error(message);
     }
 }
 
@@ -116,7 +116,7 @@ export async function getLastEditedFile(): Promise<FileType | undefined> {
         }
     }
     catch(_error) {
-        console.error(_error);
-        return undefined;
+        const message = _error instanceof Error ? _error.message : String(_error);
+        throw new Error(message);
     }
 }
