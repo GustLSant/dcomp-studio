@@ -1,7 +1,9 @@
+const DB_VERSION = 5;
 const DB_NAME = 'DcompStudioDB' as const;
 const STORES = ['folders', 'files'] as const;
 
 export type StoreType = typeof STORES[number];
+export type StoreIndex = 'by_parentFolderId';
 
 
 export class IndexedDB {
@@ -16,7 +18,7 @@ export class IndexedDB {
 
     private open(): Promise<void> {
         return new Promise((resolve, reject) => {
-            const request = indexedDB.open(DB_NAME, 3);
+            const request = indexedDB.open(DB_NAME, DB_VERSION);
 
             request.onerror = () => { reject(request.error); }
             request.onsuccess = () => {
@@ -26,10 +28,18 @@ export class IndexedDB {
 
             request.onupgradeneeded = () => {
                 const db = request.result;
+                let objectStore: IDBObjectStore;
                 
-                STORES.forEach((_store: string) => {
+                STORES.forEach((_store: StoreType) => {
                     if (!db.objectStoreNames.contains(_store)) {
-                        db.createObjectStore(_store, { keyPath: 'id', autoIncrement: true });
+                        objectStore = db.createObjectStore(_store, { keyPath: 'id', autoIncrement: true });
+                    }
+                    else {
+                        objectStore = request.transaction!.objectStore(_store);
+                    }
+
+                    if (!objectStore.indexNames.contains('by_parentFolderId')) {
+                        objectStore.createIndex("by_parentFolderId", "parentFolderId", { unique: false });
                     }
                 })
             }
@@ -66,6 +76,28 @@ export class IndexedDB {
             request.onsuccess = () => { resolve(request.result as T[]); }
             request.onerror   = () => { reject(request.error); }
         })
+    }
+
+
+    async getAllByIndex<T>(_indexName: StoreIndex, _indexValue: number): Promise<T[]> {
+        await this.initRequest;
+
+        return new Promise((resolve, reject) => {
+            if (!this.db) return reject('DB not initialized');
+
+            const tx = this.db.transaction(this.storeName, 'readonly');
+            const store = tx.objectStore(this.storeName);
+
+            if (!store.indexNames.contains(_indexName)) {
+                return reject(`Index "${_indexName}" não existe na store "${this.storeName}"`);
+            }
+
+            const index = store.index(_indexName);
+            const request = index.getAll(_indexValue);
+
+            request.onsuccess = () => resolve(request.result as T[]);
+            request.onerror = () => reject(request.error);
+        });
     }
 
 

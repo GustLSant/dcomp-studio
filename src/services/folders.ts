@@ -1,26 +1,16 @@
 import type { FileType, FolderType } from "../types/entities";
-import { getAllFiles } from "./files";
+import { getAllFilesFromFolder } from "./files";
 import { IndexedDB } from "./indexedDB";
 
 
 const dbInstance: IndexedDB = new IndexedDB('folders');
 
 
-export async function getRootFolder(): Promise<FolderType> {
+export async function getFolderContent(_folderId: number): Promise<(FolderType | FileType)[]> {
     try {
-        const allFolders: FolderType[] = await getAllFolders();
-        const allFiles: FileType[] = await getAllFiles();
-
-        const allEntities: (FolderType | FileType)[] = [...allFolders, ...allFiles];
-
-        const rootFolderContent = allEntities.filter((_entitie) => { return (_entitie.parentFolderId === 0); });
-        
-        return {
-            id: 0,
-            name: 'root',
-            content: rootFolderContent,
-            parentFolderId: 0,
-        } satisfies FolderType;
+        const folders: FolderType[] = await dbInstance.getAllByIndex<FolderType>('by_parentFolderId', _folderId);
+        const files: FileType[] = await getAllFilesFromFolder(_folderId);
+        return [...folders, ...files];
     }
     catch (_error) {
         const message = _error instanceof Error ? _error.message : String(_error);
@@ -41,6 +31,15 @@ export async function getAllFolders(): Promise<FolderType[]> {
 
 
 export async function getFolderById(_id: number): Promise<FolderType> {
+    if (_id === 0) {
+        return {
+            id: 0,
+            name: 'root',
+            kind: 'folder',
+            parentFolderId: 0,
+        };
+    }
+
     try {
         return await dbInstance.getById<FolderType>(_id);
     }

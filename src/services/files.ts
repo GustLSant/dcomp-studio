@@ -16,6 +16,17 @@ export async function getAllFiles(): Promise<FileType[]> {
 }
 
 
+export async function getAllFilesFromFolder(_folderId: number): Promise<FileType[]> {
+    try {
+        return await dbInstance.getAllByIndex<FileType>('by_parentFolderId', _folderId);
+    }
+    catch(_error) {
+        const message = _error instanceof Error ? _error.message : String(_error);
+        throw new Error(message);
+    }
+}
+
+
 export async function getFileById(_id: number): Promise<FileType> {
     try {
         return await dbInstance.getById<FileType>(_id);

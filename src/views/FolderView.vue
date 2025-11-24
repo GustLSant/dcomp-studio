@@ -4,17 +4,18 @@
     import type { FileType, FolderType } from '../types/entities';
     import LoadingComponent from '../components/common/LoadingComponent.vue';
     import { useRoute, useRouter } from 'vue-router';
-    import { addFolder, getFolderById, getRootFolder } from '../services/folders';
+    import { addFolder, getFolderById, getFolderContent } from '../services/folders';
     import { addFile } from '../services/files';
     import { Icon } from '@iconify/vue';
     import FolderPreview from '../components/folders/FolderPreview.vue';
-    import { getDefaultFile, getDefaultFolder, getEntityType } from '../utils/entities';
+    import { getDefaultFile, getDefaultFolder } from '../utils/entities';
     import FilePreview from '../components/files/FilePreview.vue';
     import ShinyContainer from '../components/common/shinyContainer/ShinyContainer.vue';
     import { createPopup } from '../utils/popup';
     import PrimaryShinyContainer from '../components/common/shinyContainer/PrimaryShinyContainer.vue';
 
     const folder = ref<FolderType | undefined>(undefined);
+    const content = ref<(FolderType | FileType)[]>([]);
     const loading = ref<boolean>(false);
     const route = useRoute();
     const router = useRouter();
@@ -28,38 +29,26 @@
 
         if (!folderIdFromRoute || Array.isArray(folderIdFromRoute)) { return; }
 
-        const folderId: number = Number(folderIdFromRoute)
-        const isRootFolder: boolean = folderId === 0;
+        const folderId: number = Number(folderIdFromRoute);
 
-        if (!isRootFolder) {
-            loading.value = true;
-    
-            getFolderById(folderId)
-            .then((_response) => {
-                folder.value = _response;
-            })
-            .catch((_error) => {
-                createPopup('error', 'Erro ao obter os dados da pasta', 'Por favor, tente novamente');
-            })
-            .finally(() => {
-                loading.value = false;
-            })
-        }
-        else {
-            loading.value = true;
+        loading.value = true;
 
-            getRootFolder()
-            .then((_response) => {
-                folder.value = _response;
-            })
-            .catch((_error) => {
-                createPopup('error', 'Erro ao obter os dados da pasta', 'Por favor, tente novamente');
-            })
-            .finally(() => {
-                loading.value = false;
-            })
-        }
+        getFolderById(folderId)
+        .then((_response) => {
+            folder.value = _response;
+        })
+        .catch((_error) => {
+            createPopup('error', 'Erro ao obter os dados da pasta', 'Por favor, tente novamente');
+        })
+        .finally(() => {
+            getFolderContent(folderId)
+            .then((_response) => { content.value = _response; })
+            .catch((_error)   => { createPopup('error', 'Erro ao obter os dados da pasta', 'Por favor, tente novamente'); })
+            .finally(()       => { loading.value = false; })
+        })
     }
+
+
 
 
     async function handleClickAddFolder() {
@@ -103,7 +92,7 @@
             <LoadingComponent />
         </div>
         
-        <ShinyContainer v-if="!loading && folder" class="rounded-md">
+        <ShinyContainer v-if="!loading && folder && content" class="rounded-md">
             <div class="flex flex-col gap-4 p-2 bg-(--foreground) rounded-md">
                 <div class="flex items-center justify-between gap-2">
                     <div class="flex items-center gap-2">
@@ -126,8 +115,8 @@
                 <div class="self-stretch bg-white/20 h-px"></div>
 
                 <div class="flex gap-1 flex-wrap">
-                    <template v-for="item in folder.content">
-                        <FolderPreview v-if="getEntityType(item) === 'folder'" :folder="(item as FolderType)" />
+                    <template v-for="item in content">
+                        <FolderPreview v-if="item.kind === 'folder'" :folder="(item as FolderType)" />
                         <FilePreview v-else :file="(item as FileType)" />
                     </template>
                 </div>
