@@ -27,7 +27,7 @@
 
             (props.variant === 'primary-outlined')   ? 'text-(--primary) border border-(--primary) hover:bg-(--primary)/10' : '',
             (props.variant === 'secondary-outlined') ? 'text-(--secondary) border border-(--secondary) hover:bg-(--secondary)/10 ' : '',
-            (props.variant === 'danger-outlined')    ? 'text-red-600 border border-red-600 hover:bg-red-600/3' : '',
+            (props.variant === 'danger-outlined')    ? 'text-(--error-color) border border-(--error-color) hover:bg-red-600/3' : '',
             (props.variant === 'primary-filled')     ? 'text-white primary-bg-gradient hover:brightness-110' : '',
             (props.variant === 'secondary-filled')   ? 'text-white secondary-bg-gradient hover:brightness-130' : '',
             (props.variant === 'mixed-filled')       ? 'text-white mixed-bg-gradient hover:brightness-130' : '',

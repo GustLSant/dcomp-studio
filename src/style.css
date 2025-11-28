@@ -38,7 +38,7 @@ body {
   background-color: black; 
 }
 
-.shiny-gradient {
+.shiny-outline-gradient {
   --highlight-color: rgba(255,255,255, 35%);
   background: linear-gradient(
     -45deg,
@@ -46,6 +46,11 @@ body {
     rgba(255,255,255, 10%) 50%,
     var(--highlight-color) 100%
   );
+}
+
+.shiny-background-color {
+  background-color: #282828;
+  background-image: linear-gradient(25deg, transparent, rgba(255,255,255, 5%), transparent);
 }
 
 .primary-bg-gradient {

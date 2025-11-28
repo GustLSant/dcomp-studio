@@ -4,7 +4,7 @@
 
 
 <template>
-    <div class="primary shiny-gradient p-px">
+    <div class="primary shiny-outline-gradient p-px">
         <slot />
     </div>
 </template>

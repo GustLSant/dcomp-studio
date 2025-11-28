@@ -10,6 +10,7 @@
     import LoadingOverlay from '../components/common/LoadingOverlay.vue';
     import type { CodeOutput } from '../types/code';
     import CodeNavbar from '../components/layout/CodeNavbar.vue';
+    import { createPopup } from '../utils/popup';
 
     const file = ref<FileType | undefined>(undefined);
     const codeOutput = ref<CodeOutput>({ type: 'success', content: '' });
@@ -41,10 +42,10 @@
         if(!file.value) { return; } 
         updateFile(file.value)
         .then((_response) => {
-            console.log('saving successful');
+            createPopup('success', 'Sucesso', 'Sucesso ao salvar o arquivo');
         })
         .catch((_error) => {
-            console.error(_error);
+            createPopup('error', 'Erro ao salvar o arquivo', 'Por favor, tente novamente');
         })
     }
 
