@@ -131,3 +131,15 @@ export async function getLastEditedFile(): Promise<FileType | undefined> {
         throw new Error(message);
     }
 }
+
+
+export async function deleteFile(_file: FileType): Promise<void> {
+    try {
+        if (!_file.id) throw new Error('Erro ao deletar o arquivo: arquivo não possui um ID');
+        dbInstance.delete(_file.id);
+    }
+    catch(_error) {
+        const message = _error instanceof Error ? _error.message : String(_error);
+        throw new Error(message);
+    }
+}

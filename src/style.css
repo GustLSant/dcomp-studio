@@ -1,38 +1,7 @@
-@import url(reset.css);
-@import url(animations.css);
+@import url(./css/reset.css);
+@import url(./css/colors.css);
+@import url(./css/animations.css);
 @import "tailwindcss";
-
-
-:root {
-  --max-width: 1400px;
-  --anim-duration: 0.15s;
-
-  --primary: #148cff;
-  --primary-gradient-left: #29a6ff;
-  --primary-gradient-right: #0073ff;
-
-  --secondary: rgb(110, 20, 255);
-  --secondary-gradient-left: #8929ff;
-  --secondary-gradient-right: #5100ff;
-
-  --primary-darker: hsl(209, 100%, 35%);
-
-  --background: hsl(0, 0%, 96%);
-  --foreground: hsl(0, 0%, 100%);
-
-  --success-color: rgb(170, 255, 40);
-  --warning-color: rgb(255, 150, 0);
-  --error-color: rgb(255, 0, 60);
-
-  color: black;
-}
-
-.dark {
-  --background: rgb(20 20 20);  
-  --foreground: rgb(25, 25, 30);
-
-  color: white;
-}
 
 body {
   background-color: black; 

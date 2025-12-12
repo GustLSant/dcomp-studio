@@ -11,6 +11,8 @@
     import type { CodeOutput } from '../types/code';
     import CodeNavbar from '../components/layout/CodeNavbar.vue';
     import { createPopup } from '../utils/popup';
+    import EditorFooter from '../components/files/EditorFooter.vue';
+    import DeleteFileModal from '../components/actionModals/DeleteFileModal.vue';
 
     const file = ref<FileType | undefined>(undefined);
     const codeOutput = ref<CodeOutput>({ type: 'success', content: '' });
@@ -78,12 +80,14 @@
 
 <template>
     <CodeNavbar @run-code="runCode" @save-file="saveFile" />
+    
     <LoadingOverlay v-if="loading" />
     <router-view />
 
     <div v-if="file">
         <CodeEditor v-model="file.content" />
         <CodeOutputModal v-model="canShowCodeOutput" :file-name="file.name" :code-output="codeOutput" />
+        <EditorFooter />
     </div>
 </template>
 

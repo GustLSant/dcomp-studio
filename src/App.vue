@@ -4,6 +4,7 @@
   import { computed } from 'vue';
   import PopupView from './components/popup/PopupView.vue';
   import Navbar from './components/layout/Navbar.vue';
+  import DeleteFileModal from './components/actionModals/DeleteFileModal.vue';
 
   const route = useRoute();
   const navbarVariation = computed(() => { return getNavbarVariation(route); });
@@ -21,11 +22,13 @@
 <template>
   <div class="app bg-(--background) max-w-(--max-width) min-h-screen m-auto flex flex-col overflow-x-hidden dark" :style="{ paddingTop: paddingTop }">
     <Navbar v-if="navbarVariation === 'full'" />
-    <PopupView />
-
+    
     <main class="grow flex flex-col">
       <router-view />
     </main>
+    
+    <DeleteFileModal />
+    <PopupView />
   </div>
 </template>
 

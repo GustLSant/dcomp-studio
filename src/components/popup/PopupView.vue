@@ -19,7 +19,7 @@
         if(item){
             setTimeout(() => {
                 animateAndClose(item.id);
-            }, 5000);
+            }, 2000);
         }
     }
 

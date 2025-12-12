@@ -18,3 +18,8 @@ export type FileType = Entity & {
     editDate: Date,
 }
 
+export type EntityPreviewPropType = {
+    name: string,
+    icon: string,
+    interactable: boolean
+}

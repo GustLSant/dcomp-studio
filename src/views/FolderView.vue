@@ -112,9 +112,9 @@
                 <div class="self-stretch bg-white/20 h-px"></div>
 
                 <div class="flex gap-1 items-start flex-wrap">
-                    <template v-for="item in content">
-                        <FolderPreview v-if="item.kind === 'folder'" :folder="(item as FolderType)" class="basis-1 grow max-w-[50%]" />
-                        <FilePreview v-else :file="(item as FileType)" class="basis-1 grow max-w-[50%]" />
+                    <template v-for="entity in content">
+                        <FolderPreview v-if="entity.kind === 'folder'" :folder="(entity as FolderType)" class="basis-1 grow max-w-[50%]" />
+                        <FilePreview v-else :file="(entity as FileType)" class="basis-1 grow max-w-[50%]" />
                     </template>
                 </div>
             </div>
