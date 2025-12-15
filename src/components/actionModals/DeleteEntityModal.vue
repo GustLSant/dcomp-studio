@@ -3,48 +3,62 @@
     import ModalContainer from '../common/ModalContainer.vue';
     import ShinyContainer from '../common/shinyContainer/ShinyContainer.vue';
     import CloseButton from '../common/CloseButton.vue';
-    import { onMounted, ref } from 'vue';
+    import { onMounted, onUnmounted, ref } from 'vue';
     import eventBus from '../../eventBus';
     import Button from '../common/Button.vue';
     import { deleteFile } from '../../services/files';
-    import { type FileType } from '../../types/entities';
+    import { type FolderType, type FileType } from '../../types/entities';
     import LoadingOverlay from '../common/LoadingOverlay.vue';
-import { createPopup } from '../../utils/popup';
+    import { createPopup } from '../../utils/popup';
+    import { EVENT_DELETE_ENTITY } from '../../events/actionModal';
+    import { useRouter } from 'vue-router';
 
     const isOpen = ref<boolean>(false);
     const isLoading = ref<boolean>(false);
-    const file = ref<FileType | undefined>(undefined);
+    const entity = ref<FileType | FolderType | undefined>(undefined);
+    const router = useRouter();
 
-    onMounted(() => { eventBus.addEventListener('open-delete-file-modal', openModal) })
+    onMounted(() => { eventBus.addEventListener(EVENT_DELETE_ENTITY, openModal) });
+    onUnmounted(() => { eventBus.removeEventListener(EVENT_DELETE_ENTITY, openModal) });
 
     function closeModal() {
         isOpen.value = false;
     }
     
     function openModal(_event: Event) {
-        const event = _event as CustomEvent<{ file: FileType }>;
+        const event = _event as CustomEvent<{ entity: FileType | FolderType }>;
         
-        file.value = event.detail.file;
+        entity.value = event.detail.entity;
         
         isOpen.value = true;
     }
 
     function handleClickDeleteFile() {
-        if (!file.value) return;
+        if (!entity.value) return;
 
         isLoading.value = true;
 
-        deleteFile(file.value)
-        .then(() => {
-            createPopup('success', 'Sucesso', 'Sucesso ao deletar o arquivo');
-        })
-        .catch((_error) => {
-            console.log(_error);
-            createPopup('error', 'Erro ao deletar o arquivo', 'Por favor, tente novamente');
-        })
-        .finally(() => {
-            isLoading.value = false;
-        })
+        if (entity.value.kind === 'file') {
+            const parentFolderId: number = entity.value.parentFolderId;
+
+            deleteFile(entity.value)
+            .then(() => {
+                createPopup('success', 'Sucesso', 'Sucesso ao deletar o arquivo');
+                // router.push({ name: 'Home' });
+                router.push({ path: '/folder/' + parentFolderId });
+                isOpen.value = false;
+            })
+            .catch((_error) => {
+                console.log(_error);
+                createPopup('error', 'Erro ao deletar o arquivo', 'Por favor, tente novamente');
+            })
+            .finally(() => {
+                isLoading.value = false;
+            })
+        }
+        else {
+
+        }
     }
 
     function handleClickCancel() {
@@ -56,7 +70,7 @@ import { createPopup } from '../../utils/popup';
 <template>
     <LoadingOverlay v-if="isLoading" />
 
-    <ModalContainer v-if="isOpen">
+    <ModalContainer v-if="isOpen" @click-outside="closeModal">
         <ShinyContainer class="rounded-md relative">
             <div class="flex flex-col gap-6 p-2 py-4 rounded-md bg-(--foreground)">
                 <CloseButton @click="closeModal" />

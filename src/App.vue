@@ -4,7 +4,9 @@
   import { computed } from 'vue';
   import PopupView from './components/popup/PopupView.vue';
   import Navbar from './components/layout/Navbar.vue';
-  import DeleteFileModal from './components/actionModals/DeleteFileModal.vue';
+  import DeleteEntityModal from './components/actionModals/DeleteEntityModal.vue';
+  import RenameEntityModal from './components/actionModals/RenameEntityModal.vue';
+import CreateEntityModal from './components/actionModals/CreateEntityModal.vue';
 
   const route = useRoute();
   const navbarVariation = computed(() => { return getNavbarVariation(route); });
@@ -27,7 +29,9 @@
       <router-view />
     </main>
     
-    <DeleteFileModal />
+    <CreateEntityModal />
+    <DeleteEntityModal />
+    <RenameEntityModal />
     <PopupView />
   </div>
 </template>

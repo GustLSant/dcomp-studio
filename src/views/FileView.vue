@@ -1,7 +1,7 @@
 <script setup lang="ts">
     import { onMounted, ref } from 'vue';
     import CodeEditor from '../components/codeEditor/CodeEditor.vue';
-    import { useRoute } from 'vue-router';
+    import { useRoute, useRouter } from 'vue-router';
     import { type FileType } from '../types/entities';
     import { getFileById, updateFile } from '../services/files';
     import { getDefaultFile } from '../utils/entities';
@@ -12,13 +12,13 @@
     import CodeNavbar from '../components/layout/CodeNavbar.vue';
     import { createPopup } from '../utils/popup';
     import EditorFooter from '../components/files/EditorFooter.vue';
-    import DeleteFileModal from '../components/actionModals/DeleteFileModal.vue';
 
     const file = ref<FileType | undefined>(undefined);
     const codeOutput = ref<CodeOutput>({ type: 'success', content: '' });
     const canShowCodeOutput = ref<boolean>(false);
     const loading = ref<boolean>(false);
     const route = useRoute();
+    const router = useRouter();
 
     onMounted(getFileFromDB);
 
@@ -31,8 +31,8 @@
             file.value = _response
         })
         .catch((_error) => {
-            console.error(_error)
-            file.value = getDefaultFile();
+            createPopup('error', 'Erro ao obter o arquivo', _error);
+            router.push({ name: 'Home' });
         })
         .finally(() => {
             loading.value = false;

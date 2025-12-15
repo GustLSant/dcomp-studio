@@ -22,7 +22,7 @@
             props.isClosing ? 'fade-out-right-short closing' : 'fade-in-top-short'
         ]"
     >
-        <div class="popup-content flex items-center gap-3 p-2 pr-6 rounded-md bg-(--foreground)">
+        <div class="popup-content flex items-center gap-3 p-2 pr-7 rounded-md bg-(--foreground)">
             <div class="neon-stroke w-0.5 self-stretch"></div>
 
             <div class="flex flex-col justify-center">

@@ -3,6 +3,7 @@
     import { formatDate } from '../../utils/date';
     import CodePreview from '../common/CodePreview.vue';
     import HoverableIcon from '../common/HoverableIcon.vue';
+    import { truncate } from '../../utils/text';
 
     const router = useRouter();
     const props = defineProps<{ id: number, name: string, date: Date }>();
@@ -16,10 +17,10 @@
     <div @click="handleClickFile" class="flex items-center gap-2 asd rounded-r-md font-mono">
         <div class="neon-strike w-0.5 self-stretch primary-bg-gradient"></div>
 
-        <div class="grow flex items-center gap-2 p-2">
+        <div class="grow flex items-center gap-2 p-2 overflow-hidden">
             <CodePreview />
 
-            <div class="flex items-start flex-col justify-center grow">
+            <div class="flex items-start flex-col justify-center grow basis-1 overflow-auto">
                 <p>{{ props.name }}</p>
                 <p class="text-sm opacity-50">{{ formatDate(props.date) }}</p>
             </div>

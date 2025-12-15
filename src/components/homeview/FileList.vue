@@ -4,10 +4,12 @@
     import { addFile, getRecentFiles } from '../../services/files';
     import { getDefaultFile } from '../../utils/entities';
     import { onMounted, ref } from 'vue';
-    import { type FileType } from '../../types/entities';
+    import { type FileType, type FolderType } from '../../types/entities';
     import router from '../../router';
     import ShinyContainer from '../common/shinyContainer/ShinyContainer.vue';
     import { createPopup } from '../../utils/popup';
+    import { openCreateEntityModal } from '../../utils/actionModal';
+    import { getFolderById } from '../../services/folders';
 
     const fileList = ref<FileType[]>([]);
 
@@ -26,8 +28,8 @@
     }
 
     async function handleClickAddFile() {
-        const newFileId: number = await addFile(getDefaultFile());
-        router.push('/file/' + newFileId.toString());
+        const rootFolder: FolderType = await getFolderById(0);
+        openCreateEntityModal('file', rootFolder);
     }
 
     function handleClickExploreFiles() {

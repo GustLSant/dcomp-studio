@@ -14,7 +14,7 @@
     import { createPopup } from '../../utils/popup';
     import ModalContainer from '../common/ModalContainer.vue';
     import Button from '../common/Button.vue';
-    import { deleteFile } from '../../utils/actionModal';
+    import { openDeleteEntityModal, openRenameEntityModal } from '../../utils/actionModal';
 
     const file = ref<FileType | undefined>(undefined);
     const parentFolder = ref<FolderType | undefined>(undefined);
@@ -59,14 +59,14 @@
 
     function handleClickDeleteFile() {
         if (!file.value) return;
-        deleteFile(file.value);
+        openDeleteEntityModal(file.value);
     }
 </script>
 
 
 <template>
     <ModalContainer @click-outside="handleClickCloseMenu">
-        <ShinyContainer class="rounded-md relative">
+        <ShinyContainer class="rounded-md relative fade-in-bottom-short">
             <div class="flex flex-col gap-4 p-2 py-4 rounded-md bg-(--foreground)">
                 <CloseButton @click="handleClickCloseMenu" />
 
@@ -83,7 +83,7 @@
                                 {{ file.name }}
                             </FileNameContainer>
 
-                            <HoverableIcon icon="mdi:edit" :size="22" />
+                            <HoverableIcon icon="mdi:rename-outline" :size="22" @click="() => { openRenameEntityModal(file!) }" />
                         </div>
                     </section>
 

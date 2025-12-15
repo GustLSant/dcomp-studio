@@ -10,7 +10,6 @@
     import FilePreview from '../components/files/FilePreview.vue';
     import ShinyContainer from '../components/common/shinyContainer/ShinyContainer.vue';
     import { createPopup } from '../utils/popup';
-    import CreateEntityModal from '../components/common/CreateEntityModal.vue';
 
     const folder = ref<FolderType | undefined>(undefined);
     const content = ref<(FolderType | FileType)[]>([]);
@@ -69,14 +68,6 @@
 
 
 <template>
-    <CreateEntityModal
-        v-if="canShowCreatingModal && folder"
-        :kind="newEntityKind"
-        :parent-folder="folder"
-        @close-modal="() => { canShowCreatingModal = false; }"
-        @update-content="getFolderData"
-    />
-
     <div class="flex flex-col px-2 py-4 gap-4">
 
         <div class="flex items-center gap-2">
@@ -111,11 +102,16 @@
 
                 <div class="self-stretch bg-white/20 h-px"></div>
 
-                <div class="flex gap-1 items-start flex-wrap">
+                <div v-if="content.length > 0" class="flex gap-1 items-start flex-wrap">
                     <template v-for="entity in content">
                         <FolderPreview v-if="entity.kind === 'folder'" :folder="(entity as FolderType)" class="basis-1 grow max-w-[50%]" />
                         <FilePreview v-else :file="(entity as FileType)" class="basis-1 grow max-w-[50%]" />
                     </template>
+                </div>
+
+                <div v-else class="grow flex flex-col items-center pb-4 opacity-40">
+                    <Icon icon="mdi:archive-alert-outline" width="28" height="28" />
+                    <p class="text-center">Nenhum conteúdo encontrado</p>
                 </div>
             </div>
         </ShinyContainer>
