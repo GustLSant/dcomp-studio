@@ -36,7 +36,7 @@
 
 
 <template>
-    <div class="fixed bottom-0 left-0 right-0 flex flex-col">
+    <div class="fixed bottom-0 left-0 right-0 flex flex-col max-w-(--max-app-width) m-auto">
         <div class="footer flex flex-col" :class="footerOpenStates[1] ? 'open' : 'closed'">
             <div class="flex justify-end pointer-events-none" @click="() => { toggleFooterOpenState(1) }">
                 <div class="bg-(--foreground) p-1  pointer-events-auto transition-transform" :class="footerOpenStates[1] ? '-rotate-180 rounded-b-full' : 'rounded-t-full'">

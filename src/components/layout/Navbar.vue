@@ -6,7 +6,7 @@
 
 
 <template>
-    <ShinyContainer class="p-0! pb-px! fixed top-0 left-0 right-0 z-30 shadow-md backdrop-brightness-50 max-w-(--max-width) m-auto">
+    <ShinyContainer class="p-0! pb-px! fixed top-0 left-0 right-0 z-30 shadow-md backdrop-brightness-50 max-w-(--max-app-width) m-auto">
         <div class="flex items-center justify-between p-2 px-4 bg-(--foreground)">
             <div class="flex items-center gap-1.5">
                 <img :src="Logo" class="w-8" />

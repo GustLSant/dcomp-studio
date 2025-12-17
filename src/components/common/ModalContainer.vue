@@ -20,7 +20,7 @@
 
 <template>
     <div @click="handleClickOutsideModal" class="z-50 fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center p-2 bg-black/30 backdrop-blur-sm">
-        <div ref="modalContentRef" class="grow">
+        <div ref="modalContentRef" class="grow max-w-(--max-modal-width)">
             <slot />
         </div>
     </div>

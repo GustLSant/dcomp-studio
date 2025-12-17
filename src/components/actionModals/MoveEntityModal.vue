@@ -11,7 +11,7 @@
     import eventBus from '../../eventBus';
     import { moveFile } from '../../services/files';
     import { EVENT_MOVE_ENTITY } from '../../events/actionModal';
-    import { getAllFolders, getFolderById, getRootFolder } from '../../services/folders';
+    import { getAllFolders } from '../../services/folders';
     import FolderPreview from '../folders/FolderPreview.vue';
 import { EVENT_ENTITY_UPDATED } from '../../events/entities';
 
@@ -99,7 +99,7 @@ import { EVENT_ENTITY_UPDATED } from '../../events/entities';
                 <p>Selecione para qual pasta deseja mover o arquivo:</p>
 
                 <div class="flex flex-col gap-1 max-h-[50vh] overflow-y-auto">
-                    <FolderPreview v-for="folder in folders" :folder="folder" :interactable="false" @click="() => { handleClickFolder(folder.id) }" />
+                    <FolderPreview v-for="folder in folders" :folder="folder" :interactable="false" @click="() => { handleClickFolder(folder.id) }" class="hover:brightness-130 hover:cursor-pointer" />
                 </div>
 
                 <Button variant="primary-outlined" @click="handleClickCancel">

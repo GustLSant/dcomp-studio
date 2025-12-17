@@ -23,7 +23,7 @@
 
 
 <template>
-  <div class="app bg-(--background) max-w-(--max-width) min-h-screen m-auto flex flex-col overflow-x-hidden dark" :style="{ paddingTop: paddingTop }">
+  <div class="app bg-(--background) max-w-(--max-app-width) min-h-screen m-auto flex flex-col overflow-x-hidden dark" :style="{ paddingTop: paddingTop }">
     <Navbar v-if="navbarVariation === 'full'" />
     
     <main class="grow flex flex-col">

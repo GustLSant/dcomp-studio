@@ -20,7 +20,7 @@
 
 
 <template>
-    <div class="fixed top-0 left-0 right-0 z-50 flex flex-col items-end gap-1.5 p-2 pointer-events-none">
+    <div class="fixed top-0 left-0 right-0 z-50 flex flex-col items-end gap-1.5 p-2 pointer-events-none max-w-(--max-app-width) m-auto">
         <ShinyContainer class="rounded-full">
             <div class="button" @click="handleClickMenu">
                 <Icon icon="mdi:menu" width="24" height="24" />

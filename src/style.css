@@ -1,6 +1,7 @@
 @import url(./css/reset.css);
 @import url(./css/colors.css);
 @import url(./css/animations.css);
+@import url(./css/sizes.css);
 @import "tailwindcss";
 
 body {
