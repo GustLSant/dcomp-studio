@@ -3,7 +3,6 @@
     import { formatDate } from '../../utils/date';
     import CodePreview from '../common/CodePreview.vue';
     import HoverableIcon from '../common/HoverableIcon.vue';
-    import { truncate } from '../../utils/text';
 
     const router = useRouter();
     const props = defineProps<{ id: number, name: string, date: Date }>();

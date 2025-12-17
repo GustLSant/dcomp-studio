@@ -1,8 +1,7 @@
 <script setup lang="ts">
     import { Icon } from '@iconify/vue';
     import CodeFileCard from './CodeFileCard.vue';
-    import { addFile, getRecentFiles } from '../../services/files';
-    import { getDefaultFile } from '../../utils/entities';
+    import { getRecentFiles } from '../../services/files';
     import { onMounted, ref } from 'vue';
     import { type FileType, type FolderType } from '../../types/entities';
     import router from '../../router';

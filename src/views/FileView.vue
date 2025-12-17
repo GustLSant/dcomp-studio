@@ -4,7 +4,6 @@
     import { useRoute, useRouter } from 'vue-router';
     import { type FileType } from '../types/entities';
     import { getFileById, updateFile } from '../services/files';
-    import { getDefaultFile } from '../utils/entities';
     import { runPythonCode } from '../utils/code';
     import CodeOutputModal from '../components/files/CodeOutputModal.vue';
     import LoadingOverlay from '../components/common/LoadingOverlay.vue';

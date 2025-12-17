@@ -154,7 +154,7 @@ export function copy(_view: any) {
 }
 
 
-import { undo, redo } from "@codemirror/commands"
+import { undo } from "@codemirror/commands"
 
 export function undo2(_view: any) {
     if (!_view) return;
@@ -173,25 +173,25 @@ export function undo2(_view: any) {
 
 
 
-function moveCursor(_view: any, _direction: 1 | -1, _amount: number = 1) {
-    if (!_view) return;
+// function moveCursor(_view: any, _direction: 1 | -1, _amount: number = 1) {
+//     if (!_view) return;
 
-    const state = _view.state;
-    const pos = _view.state.selection.main.head;
-    let newPos = 0;
+//     const state = _view.state;
+//     const pos = _view.state.selection.main.head;
+//     let newPos = 0;
 
-    newPos = Math.min(                        // limite superior
-        state.doc.length, 
-        Math.max(                             // limite inferior
-            0,
-            pos + (_direction * _amount)
-        )
-    );
+//     newPos = Math.min(                        // limite superior
+//         state.doc.length, 
+//         Math.max(                             // limite inferior
+//             0,
+//             pos + (_direction * _amount)
+//         )
+//     );
 
-    _view.dispatch({
-        selection: EditorSelection.cursor(newPos),
-        scrollIntoView: true
-    });
+//     _view.dispatch({
+//         selection: EditorSelection.cursor(newPos),
+//         scrollIntoView: true
+//     });
 
-    _view.focus();
-}
+//     _view.focus();
+// }
