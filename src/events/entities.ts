@@ -1,0 +1,1 @@
+export const EVENT_ENTITY_UPDATED: string = 'entity-updated';

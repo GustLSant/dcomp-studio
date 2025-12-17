@@ -1,5 +1,5 @@
 import eventBus from "../eventBus";
-import { EVENT_CREATE_ENTITY, EVENT_DELETE_ENTITY, EVENT_RENAME_ENTITY } from "../events/actionModal";
+import { EVENT_CREATE_ENTITY, EVENT_DELETE_ENTITY, EVENT_MOVE_ENTITY, EVENT_RENAME_ENTITY } from "../events/actionModal";
 import type { EntityKind, FileType, FolderType } from "../types/entities";
 
 
@@ -20,5 +20,12 @@ export function openDeleteEntityModal(_entity: FileType | FolderType) {
 export function openRenameEntityModal(_entity: FileType | FolderType) {
     eventBus.dispatchEvent(
         new CustomEvent(EVENT_RENAME_ENTITY, { detail: { entity: _entity } })
+    );
+}
+
+
+export function openMoveEntityModal(_entity: FileType | FolderType) {
+    eventBus.dispatchEvent(
+        new CustomEvent(EVENT_MOVE_ENTITY, { detail: { entity: _entity } })
     );
 }

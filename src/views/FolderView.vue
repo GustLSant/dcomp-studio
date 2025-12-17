@@ -1,7 +1,7 @@
 <script setup lang="ts">
     import { onMounted, ref, watch } from 'vue';
     import HoverableIcon from '../components/common/HoverableIcon.vue';
-    import { type EntityKind, type FileType, type FolderType } from '../types/entities';
+    import { type FileType, type FolderType } from '../types/entities';
     import LoadingComponent from '../components/common/LoadingComponent.vue';
     import { useRoute, useRouter } from 'vue-router';
     import { getFolderById, getFolderContent } from '../services/folders';
@@ -10,6 +10,7 @@
     import FilePreview from '../components/files/FilePreview.vue';
     import ShinyContainer from '../components/common/shinyContainer/ShinyContainer.vue';
     import { createPopup } from '../utils/popup';
+    import { openCreateEntityModal } from '../utils/actionModal';
 
     const folder = ref<FolderType | undefined>(undefined);
     const content = ref<(FolderType | FileType)[]>([]);
@@ -17,20 +18,12 @@
     const route = useRoute();
     const router = useRouter();
 
-    const canShowCreatingModal = ref<boolean>(false);
-    const newEntityKind = ref<EntityKind>('file');
-
     onMounted(getFolderData);
     watch(() => (route.params), getFolderData);
 
 
     async function getFolderData() {
-        canShowCreatingModal.value = false;
-        const folderIdFromRoute = route.params.id;
-
-        if (!folderIdFromRoute || Array.isArray(folderIdFromRoute)) { return; }
-
-        const folderId: number = Number(folderIdFromRoute);
+        const folderId: number = getFolderIdFromRoute();
 
         loading.value = true;
 
@@ -50,14 +43,23 @@
     }
 
 
-    async function handleClickAddFolder() {
-        newEntityKind.value = 'folder';
-        canShowCreatingModal.value = true;
+    function getFolderIdFromRoute(): number {
+        const folderIdFromRoute = route.params.id;
+
+        if (!folderIdFromRoute || Array.isArray(folderIdFromRoute)) { return 0; }
+
+        return Number(folderIdFromRoute);
     }
 
-    async function handleClickAddFile() {
-        newEntityKind.value = 'file';
-        canShowCreatingModal.value = true;
+
+    function handleClickAddFolder() {
+        if (!folder.value) { return; }
+        openCreateEntityModal('folder', folder.value);
+    }
+
+    function handleClickAddFile() {
+        if (!folder.value) { return; }
+        openCreateEntityModal('file', folder.value);
     }
 
 

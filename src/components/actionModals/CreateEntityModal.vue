@@ -14,7 +14,7 @@
     import TextInput from '../common/TextInput.vue';
     import eventBus from '../../eventBus';
     import { EVENT_CREATE_ENTITY } from '../../events/actionModal';
-    import { EVENT_UPDATE_ENTITY_TREE } from '../../events/entitiesTree';
+    import { EVENT_ENTITY_TREE_UPDATED } from '../../events/entitiesTree';
     import { useRouter } from 'vue-router';
 
     const isOpen = ref<boolean>(false);
@@ -62,7 +62,7 @@
         addFolder(newFolder)
         .then((_response: number) => {
             createPopup('success', 'Sucesso', 'Sucesso ao criar a pasta');
-            eventBus.dispatchEvent(new Event(EVENT_UPDATE_ENTITY_TREE));
+            eventBus.dispatchEvent(new Event(EVENT_ENTITY_TREE_UPDATED));
 
             const id: number = _response;
             router.push({ path: '/folder/' + id });
@@ -82,7 +82,7 @@
         addFile(newFile)
         .then((_response) => {
             createPopup('success', 'Sucesso', 'Sucesso ao criar o arquivo');
-            eventBus.dispatchEvent(new Event(EVENT_UPDATE_ENTITY_TREE));
+            eventBus.dispatchEvent(new Event(EVENT_ENTITY_TREE_UPDATED));
 
             const id: number = _response;
             router.push({ path: '/file/' + id });

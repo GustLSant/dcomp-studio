@@ -5,7 +5,7 @@
     import FileNameContainer from '../common/FileNameContainer.vue';
     import FolderPreview from '../folders/FolderPreview.vue';
     import { type FolderType, type FileType } from '../../types/entities';
-    import { onBeforeUnmount, onMounted, ref } from 'vue';
+    import { onBeforeUnmount, onMounted, onUnmounted, ref } from 'vue';
     import { getFileById } from '../../services/files';
     import { formatDate } from '../../utils/date';
     import HoverableIcon from '../common/HoverableIcon.vue';
@@ -14,7 +14,9 @@
     import { createPopup } from '../../utils/popup';
     import ModalContainer from '../common/ModalContainer.vue';
     import Button from '../common/Button.vue';
-    import { openDeleteEntityModal, openRenameEntityModal } from '../../utils/actionModal';
+    import { openDeleteEntityModal, openMoveEntityModal, openRenameEntityModal } from '../../utils/actionModal';
+    import eventBus from '../../eventBus';
+    import { EVENT_ENTITY_UPDATED } from '../../events/entities';
 
     const file = ref<FileType | undefined>(undefined);
     const parentFolder = ref<FolderType | undefined>(undefined);
@@ -27,26 +29,21 @@
     onMounted(() => { document.body.style.overflow = "hidden"; });
     onBeforeUnmount(() => { document.body.style.overflow = ""; });
     
+    onMounted(() => { eventBus.addEventListener(EVENT_ENTITY_UPDATED, getFileFromDB); });
+    onUnmounted(() => { eventBus.removeEventListener(EVENT_ENTITY_UPDATED, getFileFromDB); });
 
-    function handleClickReturnToHome() {
-        router.push('/home');
-    }
 
-    function handleClickCloseMenu() {
-        router.back();
-    }
+    function handleClickReturnToHome() { router.push('/home'); }
+    function handleClickCloseMenu() { router.back(); }
 
     
-    async function getFileFromDB() {
+    function getFileFromDB() {
         loading.value = true;
 
         getFileById(Number(route.params.id))
         .then((_response: FileType) => {
             file.value = _response;
-
-            getFolderById(file.value.parentFolderId)
-            .then((_response: FolderType) => { parentFolder.value = _response; })
-            .catch((_error) => { createPopup('error', 'Erro ao obter a pasta de origem', 'Por favor, recarregue a página'); })
+            getParentFolder();
         })
         .catch((_error) => {
             console.error(_error);
@@ -56,6 +53,14 @@
             loading.value = false;
         })
     }
+
+
+    function getParentFolder() {
+        getFolderById(file.value!.parentFolderId)
+        .then((_response: FolderType) => { parentFolder.value = _response; })
+        .catch((_error) => { createPopup('error', 'Erro ao obter a pasta de origem', 'Por favor, recarregue a página'); })
+    }
+
 
     function handleClickDeleteFile() {
         if (!file.value) return;
@@ -96,24 +101,24 @@
                         <p>Pasta de origem:</p>
                         <div class="flex items-center justify-between gap-2">
                             <FolderPreview :folder="parentFolder" :interactable="false" />
-                            <Icon icon="fa7-solid:exchange" width="22" height="22" />
+                            <Icon icon="fa7-solid:exchange" width="22" height="22" @click="() => { openMoveEntityModal(file!) }" />
                         </div>
                     </section>
 
                     <section>
-                        <Button variant="primary-filled">
+                        <Button variant="primary-filled" icon="mdi:play-circle-outline">
                             Executar
                         </Button>
 
-                        <Button variant="primary-outlined">
+                        <Button variant="primary-outlined" icon="mdi:content-save-outline">
                             Salvar
                         </Button>
                         
-                        <Button variant="danger-outlined" @click="handleClickReturnToHome">
+                        <Button variant="primary-outlined" @click="handleClickReturnToHome" icon="mdi:home">
                             Sair para Home
                         </Button>
 
-                        <Button variant="danger-filled" @click="handleClickDeleteFile">
+                        <Button variant="danger-filled" @click="handleClickDeleteFile" icon="mdi:file-document-delete-outline">
                             Excluir Arquivo
                         </Button>
                     </section>

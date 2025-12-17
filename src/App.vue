@@ -6,7 +6,8 @@
   import Navbar from './components/layout/Navbar.vue';
   import DeleteEntityModal from './components/actionModals/DeleteEntityModal.vue';
   import RenameEntityModal from './components/actionModals/RenameEntityModal.vue';
-import CreateEntityModal from './components/actionModals/CreateEntityModal.vue';
+  import CreateEntityModal from './components/actionModals/CreateEntityModal.vue';
+  import MoveEntityModal from './components/actionModals/MoveEntityModal.vue';
 
   const route = useRoute();
   const navbarVariation = computed(() => { return getNavbarVariation(route); });
@@ -32,6 +33,7 @@ import CreateEntityModal from './components/actionModals/CreateEntityModal.vue';
     <CreateEntityModal />
     <DeleteEntityModal />
     <RenameEntityModal />
+    <MoveEntityModal />
     <PopupView />
   </div>
 </template>

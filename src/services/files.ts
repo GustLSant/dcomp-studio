@@ -143,3 +143,19 @@ export async function deleteFile(_file: FileType): Promise<void> {
         throw new Error(message);
     }
 }
+
+
+export async function moveFile(_file: FileType, _newParentFolderId: number): Promise<void> {
+    try {
+        if (!_file.id) throw new Error('Erro ao mover o arquivo: arquivo não possui um ID');
+        
+        const updatedFile: FileType = { ..._file };
+        updatedFile.parentFolderId = _newParentFolderId;
+
+        dbInstance.update(updatedFile);
+    }
+    catch(_error) {
+        const message = _error instanceof Error ? _error.message : String(_error);
+        throw new Error(message);
+    }
+}

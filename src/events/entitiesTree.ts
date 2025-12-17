@@ -1,1 +1,1 @@
-export const EVENT_UPDATE_ENTITY_TREE: string = 'update-entity-tree';
+export const EVENT_ENTITY_TREE_UPDATED: string = 'entity-tree-updated';

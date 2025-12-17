@@ -21,12 +21,27 @@ export async function getFolderContent(_folderId: number): Promise<(FolderType |
 
 export async function getAllFolders(): Promise<FolderType[]> {
     try {
-        return await dbInstance.getAll<FolderType>();
+        const folders: FolderType[] = [];
+        folders.push(getRootFolder());
+
+        folders.push(...(await dbInstance.getAll<FolderType>()));
+
+        return folders;
     }
     catch(_error) {
         const message = _error instanceof Error ? _error.message : String(_error);
         throw new Error(message);
     }
+}
+
+
+export function getRootFolder(): FolderType {
+    return {
+        id: 0,
+        name: 'root',
+        kind: 'folder',
+        parentFolderId: 0,
+    };
 }
 
 
