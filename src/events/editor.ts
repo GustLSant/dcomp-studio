@@ -1,0 +1,1 @@
+export const EVENT_EDITOR_THEME_CHANGED: string = 'editor-theme-changed';

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import type { CodeEditorButton } from '../../../../enums/codeEditor';
+    import type { CodeEditorButton } from '../../../../enums/codeEditorButtons';
     import { FOOTER_BT_EVENT_SULFIX } from '../../../../utils/codeEditor';
     import eventBus from '../../../../eventBus';
 

@@ -6,10 +6,12 @@ import { lightPlusTheme } from "../assets/codeThemes/lightPlusTheme";
 import { solarizedLightTheme } from "../assets/codeThemes/solarizedLightTheme";
 import { solarizedDarkTheme } from "../assets/codeThemes/solarizedDarkTheme";
 import { synthwaveTheme } from "../assets/codeThemes/synthwaveTheme";
-import type { CodeTheme } from "../enums/codeThemes";
+import type { EditorTheme } from "../enums/editorThemes";
 import type { Extension } from "@codemirror/state";
+import eventBus from "../eventBus";
+import { EVENT_EDITOR_THEME_CHANGED } from "../events/editor";
 
-export const codeThemesDict: Record<CodeTheme, Extension[]> = {
+export const codeThemesDict: Record<EditorTheme, Extension[]> = {
     'default':        defaultTheme,
     'dracula':        draculaTheme,
     'githubLight':    githubLightTheme,
@@ -19,3 +21,26 @@ export const codeThemesDict: Record<CodeTheme, Extension[]> = {
     'solarizedDark':  solarizedDarkTheme,
     'synthwave':      synthwaveTheme,
 };
+
+
+export function saveEditorTheme(_theme: EditorTheme) {
+    localStorage.setItem('editorTheme', _theme);
+}
+
+
+export function changeEditorTheme(_newTheme: EditorTheme) {
+    saveEditorTheme(_newTheme);
+    eventBus.dispatchEvent(new Event(EVENT_EDITOR_THEME_CHANGED));
+}
+
+
+export function getEditorTheme(): EditorTheme {
+    const themeFromLocalStorage: string | null = localStorage.getItem('editorTheme');
+    
+    if (themeFromLocalStorage) {
+        return themeFromLocalStorage as EditorTheme;
+    }
+    else {
+        return 'default';
+    }
+}

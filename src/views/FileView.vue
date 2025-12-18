@@ -40,7 +40,8 @@
 
 
     function saveFile() {
-        if(!file.value) { return; } 
+        if (!file.value) { return; } 
+
         updateFile(file.value)
         .then((_response) => {
             createPopup('success', 'Sucesso', 'Sucesso ao salvar o arquivo');
@@ -52,7 +53,7 @@
 
 
     async function runCode() {
-        if(!file.value){ return; }
+        if (!file.value){ return; }
         
         loading.value = true;
 

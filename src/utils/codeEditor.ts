@@ -1,5 +1,5 @@
 import { EditorSelection } from '@codemirror/state';
-import type { CodeEditorButton } from '../enums/codeEditor';
+import type { CodeEditorButton } from '../enums/codeEditorButtons';
 import { createPopup } from './popup';
 
 export const FOOTER_BT_EVENT_SULFIX: string = '-fb-pressed';

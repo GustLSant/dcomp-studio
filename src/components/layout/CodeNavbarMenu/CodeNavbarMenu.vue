@@ -1,22 +1,23 @@
 <script setup lang="ts">
     import { useRoute, useRouter } from 'vue-router';
     import { Icon } from '@iconify/vue';
-    import CloseButton from '../common/CloseButton.vue';
-    import FileNameContainer from '../common/FileNameContainer.vue';
-    import FolderPreview from '../folders/FolderPreview.vue';
-    import { type FolderType, type FileType } from '../../types/entities';
+    import CloseButton from '../../common/CloseButton.vue';
+    import FileNameContainer from '../../common/FileNameContainer.vue';
+    import FolderPreview from '../../folders/FolderPreview.vue';
+    import { type FolderType, type FileType } from '../../../types/entities';
     import { onBeforeUnmount, onMounted, onUnmounted, ref } from 'vue';
-    import { getFileById } from '../../services/files';
-    import { formatDate } from '../../utils/date';
-    import HoverableIcon from '../common/HoverableIcon.vue';
-    import ShinyContainer from '../common/shinyContainer/ShinyContainer.vue';
-    import { getFolderById } from '../../services/folders';
-    import { createPopup } from '../../utils/popup';
-    import ModalContainer from '../common/ModalContainer.vue';
-    import Button from '../common/Button.vue';
-    import { openDeleteEntityModal, openMoveEntityModal, openRenameEntityModal } from '../../utils/actionModal';
-    import eventBus from '../../eventBus';
-    import { EVENT_ENTITY_UPDATED } from '../../events/entities';
+    import { getFileById } from '../../../services/files';
+    import { formatDate } from '../../../utils/date';
+    import HoverableIcon from '../../common/HoverableIcon.vue';
+    import ShinyContainer from '../../common/shinyContainer/ShinyContainer.vue';
+    import { getFolderById } from '../../../services/folders';
+    import { createPopup } from '../../../utils/popup';
+    import ModalContainer from '../../common/ModalContainer.vue';
+    import Button from '../../common/Button.vue';
+    import { openDeleteEntityModal, openMoveEntityModal, openRenameEntityModal } from '../../../utils/actionModal';
+    import { EVENT_ENTITY_UPDATED } from '../../../events/entities';
+    import EditorThemeAccordion from './EditorThemeAccordion.vue';
+    import eventBus from '../../../eventBus';
 
     const file = ref<FileType | undefined>(undefined);
     const parentFolder = ref<FolderType | undefined>(undefined);
@@ -33,8 +34,8 @@
     onUnmounted(() => { eventBus.removeEventListener(EVENT_ENTITY_UPDATED, getFileFromDB); });
 
 
-    function handleClickReturnToHome() { router.push('/home'); }
-    function handleClickCloseMenu() { router.back(); }
+    function returnToHome() { router.push('/home'); }
+    function closeMenu() { router.back(); }
 
     
     function getFileFromDB() {
@@ -47,7 +48,7 @@
         })
         .catch((_error) => {
             console.error(_error);
-            handleClickCloseMenu();
+            closeMenu();
         })
         .finally(() => {
             loading.value = false;
@@ -70,10 +71,10 @@
 
 
 <template>
-    <ModalContainer @click-outside="handleClickCloseMenu">
+    <ModalContainer @click-outside="closeMenu">
         <ShinyContainer class="rounded-md relative fade-in-bottom-short">
             <div class="flex flex-col gap-4 p-2 py-4 rounded-md bg-(--foreground)">
-                <CloseButton @click="handleClickCloseMenu" />
+                <CloseButton @click="closeMenu" />
 
                 <div class="flex items-center gap-1">
                     <Icon icon="mdi:file-outline" width="24" height="24" />
@@ -101,20 +102,18 @@
                         <p>Pasta de origem:</p>
                         <div class="flex items-center justify-between gap-2">
                             <FolderPreview :folder="parentFolder" :interactable="false" />
-                            <Icon icon="fa7-solid:exchange" width="22" height="22" @click="() => { openMoveEntityModal(file!) }" />
+                            <HoverableIcon icon="fa7-solid:exchange" :size="22" @click="() => { openMoveEntityModal(file!) }" />
                         </div>
                     </section>
 
-                    <section>
-                        <Button variant="primary-filled" icon="mdi:play-circle-outline">
-                            Executar
-                        </Button>
+                    <EditorThemeAccordion />
 
+                    <section>
                         <Button variant="primary-outlined" icon="mdi:content-save-outline">
                             Salvar
                         </Button>
                         
-                        <Button variant="primary-outlined" @click="handleClickReturnToHome" icon="mdi:home">
+                        <Button variant="primary-outlined" @click="returnToHome" icon="mdi:home">
                             Sair para Home
                         </Button>
 

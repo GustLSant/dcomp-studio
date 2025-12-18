@@ -47,7 +47,7 @@
                 </div>
 
                 <div class="py-1 px-2 border bg-(--primary) border-(--primary) rounded-sm">
-                    <Icon @click="handleClickAddFile" icon="mdi:add" width="24" height="24" class="shrink-0" />
+                    <Icon @click="handleClickAddFile" icon="mdi:file-plus-outline" width="24" height="24" class="shrink-0" />
                 </div>
             </div>
 

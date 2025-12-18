@@ -1,4 +1,4 @@
-const themeItems = [
+export const editorThemeItems = [
     'default',
     'dracula',
     'githubLight',
@@ -9,4 +9,4 @@ const themeItems = [
     'synthwave',
 ] as const;
 
-export type CodeTheme = typeof themeItems[number];
+export type EditorTheme = typeof editorThemeItems[number];

@@ -7,7 +7,7 @@
     import RightFooterButton from '../codeEditor/footer/footerButtons/RightFooterButton.vue';
     import UndoFooterButton from '../codeEditor/footer/footerButtons/UndoFooterButton.vue';
     import ShinyContainer from '../common/shinyContainer/ShinyContainer.vue';
-    import type { CodeEditorButton } from '../../enums/codeEditor';
+    import type { CodeEditorButton } from '../../enums/codeEditorButtons';
     import { Icon } from '@iconify/vue';
     import Separator from '../common/Separator.vue';
     import eventBus from '../../eventBus';
