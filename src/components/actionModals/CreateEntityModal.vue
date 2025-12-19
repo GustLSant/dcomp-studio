@@ -9,30 +9,31 @@
     import FolderPreview from '../folders/FolderPreview.vue';
     import Button from '../common/Button.vue';
     import CloseButton from '../common/CloseButton.vue';
-    import ModalContainer from '../common/ModalContainer.vue';
     import ShinyContainer from '../common/shinyContainer/ShinyContainer.vue';
     import TextInput from '../common/TextInput.vue';
     import eventBus from '../../eventBus';
     import { EVENT_CREATE_ENTITY } from '../../events/actionModal';
     import { EVENT_ENTITY_TREE_UPDATED } from '../../events/entitiesTree';
     import { useRouter } from 'vue-router';
+    import LoadingOverlay from '../common/LoadingOverlay.vue';
+    import ActionModalContainer from './ActionModalContainer.vue';
 
-    const isOpen = ref<boolean>(false);
+    const modalRef = ref<InstanceType<typeof ActionModalContainer> | null>(null);
     const entityKind = ref<EntityKind>('file');
     const parentFolder = ref<FolderType | undefined>(undefined);
     const entityName = ref<string>('');
+    const loading = ref<boolean>(false);
     const router = useRouter();
 
-    onMounted(() => { eventBus.addEventListener(EVENT_CREATE_ENTITY, openModal) });
-    onUnmounted(() => { eventBus.removeEventListener(EVENT_CREATE_ENTITY, openModal) });
+    onMounted(() => { modalRef.value?.setModalName('createEntityModal'); });
+
+    onMounted(() => { eventBus.addEventListener(EVENT_CREATE_ENTITY, handleOpenModal) });
+    onUnmounted(() => { eventBus.removeEventListener(EVENT_CREATE_ENTITY, handleOpenModal) });
 
 
-    function closeModal() {
-        isOpen.value = false;
-    }
+    function handleOpenModal(_event: Event) {
+        if (!modalRef) { return; }
 
-
-    function openModal(_event: Event) {
         const event = _event as CustomEvent<{ entityKind: EntityKind, parentFolder: FolderType }>;
 
         entityKind.value = event.detail.entityKind;
@@ -44,7 +45,7 @@
             return ;
         }
 
-        isOpen.value = true;
+        modalRef.value!.requestModalOpen();
     }
 
 
@@ -59,6 +60,8 @@
         newFolder.parentFolderId = parentFolder.value!.id!;
         newFolder.name = entityName.value;
 
+        loading.value = true;
+
         addFolder(newFolder)
         .then((_response: number) => {
             createPopup('success', 'Sucesso', 'Sucesso ao criar a pasta');
@@ -66,11 +69,9 @@
 
             const id: number = _response;
             router.push({ path: '/folder/' + id });
-
-            closeModal();
         })
         .catch((_error) => { createPopup('error', 'Erro ao criar nova pasta', 'Por favor, tente novamente'); })
-        .finally(() => {  })
+        .finally(() => { loading.value = false; })
     }
 
 
@@ -79,6 +80,8 @@
         newFile.parentFolderId = parentFolder.value!.id!;
         newFile.name = entityName.value;
 
+        loading.value = true;
+
         addFile(newFile)
         .then((_response) => {
             createPopup('success', 'Sucesso', 'Sucesso ao criar o arquivo');
@@ -86,21 +89,26 @@
 
             const id: number = _response;
             router.push({ path: '/file/' + id });
-            
-            closeModal();
         })
         .catch((_error) => { createPopup('error', 'Erro ao criar arquivo', 'Por favor, tente novamente'); })
-        .finally(() => {  })
+        .finally(() => { loading.value = false; })
+    }
+
+
+    function handleCloseModal() {
+        modalRef.value!.requestModalClose();
     }
 </script>
 
 
 <template>
-    <ModalContainer v-if="isOpen" @click-outside="closeModal">
+    <LoadingOverlay v-if="loading" />
+
+    <ActionModalContainer ref="modalRef">
         <ShinyContainer class="rounded-md max-w-[600px] m-auto">
 
             <div class="relative flex flex-col gap-4 bg-(--foreground) p-2 rounded-md">
-                <CloseButton @click="closeModal" />
+                <CloseButton @click="handleCloseModal" />
 
                 <div class="flex items-center gap-1 text-xl">
                     <Icon icon="mdi:add" width="24" height="24" />
@@ -121,7 +129,7 @@
                 
 
                 <div class="flex items-center justify-end gap-2">
-                    <Button variant="danger-outlined" icon="mdi:close" @click="closeModal">
+                    <Button variant="danger-outlined" icon="mdi:close" @click="handleCloseModal">
                         Cancelar
                     </Button>
     
@@ -133,7 +141,7 @@
             </div>
 
         </ShinyContainer>
-    </ModalContainer>
+    </ActionModalContainer>
 </template>
 
 

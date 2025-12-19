@@ -11,9 +11,10 @@
     import { EVENT_DELETE_ENTITY } from '../../events/actionModal';
     import { useRouter } from 'vue-router';
     import ActionModalContainer from './ActionModalContainer.vue';
+    import LoadingOverlay from '../common/LoadingOverlay.vue';
 
 
-    const modalRef = ref<InstanceType<typeof ActionModalContainer> | null>(null)
+    const modalRef = ref<InstanceType<typeof ActionModalContainer> | null>(null);
     const entity = ref<FileType | FolderType | undefined>(undefined);
     const loading = ref<boolean>(false);
     const router = useRouter();

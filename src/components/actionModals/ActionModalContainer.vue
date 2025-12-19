@@ -69,7 +69,6 @@
 
 
     defineExpose({
-        isOpen,
         setModalName,
         requestModalOpen,
         requestModalClose,
