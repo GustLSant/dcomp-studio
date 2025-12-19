@@ -2,7 +2,6 @@
     import { Icon } from '@iconify/vue';
     import CloseButton from '../common/CloseButton.vue';
     import LoadingOverlay from '../common/LoadingOverlay.vue';
-    import ModalContainer from '../common/ModalContainer.vue';
     import ShinyContainer from '../common/shinyContainer/ShinyContainer.vue';
     import Button from '../common/Button.vue';
     import { createPopup } from '../../utils/popup';
@@ -13,69 +12,72 @@
     import { EVENT_MOVE_ENTITY } from '../../events/actionModal';
     import { getAllFolders } from '../../services/folders';
     import FolderPreview from '../folders/FolderPreview.vue';
-import { EVENT_ENTITY_UPDATED } from '../../events/entities';
+    import { EVENT_ENTITY_UPDATED } from '../../events/entities';
+    import ActionModalContainer from './ActionModalContainer.vue';
 
-    const isOpen = ref<boolean>(false);
-    const isLoading = ref<boolean>(false);
+    const modalRef = ref<InstanceType<typeof ActionModalContainer> | null>(null);
+    const loading = ref<boolean>(false);
     const entity = ref<FileType | FolderType | undefined>(undefined);
     const folders = ref<FolderType[]>([]);
 
-    onMounted(() => { eventBus.addEventListener(EVENT_MOVE_ENTITY, openModal) });
-    onUnmounted(() => { eventBus.removeEventListener(EVENT_MOVE_ENTITY, openModal) });
+    onMounted(() => { modalRef.value?.setModalName('moveEntityModal'); });
 
-    function closeModal() {
-        isOpen.value = false;
-    }
+    onMounted(() => { eventBus.addEventListener(EVENT_MOVE_ENTITY, handleOpenModal) });
+    onUnmounted(() => { eventBus.removeEventListener(EVENT_MOVE_ENTITY, handleOpenModal) });
     
-    async function openModal(_event: Event) {
+    
+    async function handleOpenModal(_event: Event) {
         const event = _event as CustomEvent<{ entity: FileType | FolderType }>;
         
         entity.value = event.detail.entity;
 
-        isLoading.value = true;
+        loading.value = true;
 
         getAllFolders()
         .then((_response) => {
             folders.value = filterCurrentParentFolder(_response);
-            isOpen.value = true;
+            modalRef.value?.requestModalOpen();
         })
         .catch((_error) => {
-            console.error(_error)
+            console.error(_error);
             createPopup('error', 'Erro ao obter pastas', 'Por favor, tente novamente');
         })
         .finally(() => {
-            isLoading.value = false;
+            loading.value = false;
         })
     }
+
+
+    function handleCloseModal() {
+        modalRef.value?.requestModalClose();
+    }
+
 
     function handleClickFolder(_newParentFolderId: number | undefined) {
         if (!entity.value || _newParentFolderId === undefined) { console.error('Error on handleClickFolder. entity.value: ',entity.value,' _newParentFolderId: ', _newParentFolderId); return; }
 
-        isLoading.value = true;
+        loading.value = true;
 
         if (entity.value.kind === 'file') {
             moveFile(entity.value, _newParentFolderId)
             .then(() => {
                 createPopup('success', 'Sucesso', 'Sucesso ao mover o arquivo');
                 eventBus.dispatchEvent(new Event(EVENT_ENTITY_UPDATED));
-                isOpen.value = false;
+                handleCloseModal();
             })
             .catch((_error) => {
                 console.error(_error);
                 createPopup('error', 'Erro ao deletar o arquivo', 'Por favor, tente novamente');
             })
             .finally(() => {
-                isLoading.value = false;
+                loading.value = false;
             })
         }
         else {
 
         }
     }
-
-    function handleClickCancel() {
-        closeModal();
-    }
+    
 
     function filterCurrentParentFolder(_foldersArray: FolderType[]): FolderType[] {
         return _foldersArray.filter((folder: FolderType) => (entity.value?.parentFolderId !== folder.id));
@@ -84,12 +86,12 @@ import { EVENT_ENTITY_UPDATED } from '../../events/entities';
 
 
 <template>
-    <LoadingOverlay v-if="isLoading" />
+    <LoadingOverlay v-if="loading" />
 
-    <ModalContainer v-if="isOpen" @click-outside="closeModal">
+    <ActionModalContainer ref="modalRef">
         <ShinyContainer class="rounded-md relative">
             <div class="flex flex-col gap-6 p-2 py-4 rounded-md bg-(--foreground)">
-                <CloseButton @click="closeModal" />
+                <CloseButton @click="handleCloseModal" />
 
                 <div class="flex items-center gap-1">
                     <Icon icon="fa7-solid:exchange" width="24" height="24" />
@@ -102,12 +104,12 @@ import { EVENT_ENTITY_UPDATED } from '../../events/entities';
                     <FolderPreview v-for="folder in folders" :folder="folder" :interactable="false" @click="() => { handleClickFolder(folder.id) }" class="hover:brightness-130 hover:cursor-pointer" />
                 </div>
 
-                <Button variant="primary-outlined" @click="handleClickCancel">
+                <Button variant="primary-outlined" @click="handleCloseModal">
                     Cancelar
                 </Button>
             </div>
         </ShinyContainer>
-    </ModalContainer>
+    </ActionModalContainer>
 </template>
 
 

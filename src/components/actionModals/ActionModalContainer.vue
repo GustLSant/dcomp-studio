@@ -23,7 +23,7 @@
         if (isModalAlreadyOpen) return;
 
         history.pushState({ ...history.state, [modalName.value]: true }, '');
-        syncStateAndVisibility(); // pq o pushState nao emit o evento popState
+        syncStateAndVisibility(); // pq o pushState nao emite o evento popState
     }
 
 
