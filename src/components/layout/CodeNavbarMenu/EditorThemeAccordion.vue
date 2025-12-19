@@ -25,6 +25,7 @@
 
 
 <style scoped>
-
-
+    section {
+        transition: max-height var(--anim-duration-short);
+    }
 </style>
