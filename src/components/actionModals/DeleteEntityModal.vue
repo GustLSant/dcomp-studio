@@ -1,6 +1,5 @@
 <script setup lang="ts">
     import { Icon } from '@iconify/vue';
-    import ModalContainer from '../common/ModalContainer.vue';
     import ShinyContainer from '../common/shinyContainer/ShinyContainer.vue';
     import CloseButton from '../common/CloseButton.vue';
     import { onMounted, onUnmounted, ref } from 'vue';
@@ -8,35 +7,37 @@
     import Button from '../common/Button.vue';
     import { deleteFile } from '../../services/files';
     import { type FolderType, type FileType } from '../../types/entities';
-    import LoadingOverlay from '../common/LoadingOverlay.vue';
     import { createPopup } from '../../utils/popup';
     import { EVENT_DELETE_ENTITY } from '../../events/actionModal';
     import { useRouter } from 'vue-router';
+    import ActionModalContainer from './ActionModalContainer.vue';
 
-    const isOpen = ref<boolean>(false);
-    const isLoading = ref<boolean>(false);
+
+    const modalRef = ref<InstanceType<typeof ActionModalContainer> | null>(null)
     const entity = ref<FileType | FolderType | undefined>(undefined);
+    const loading = ref<boolean>(false);
     const router = useRouter();
 
-    onMounted(() => { eventBus.addEventListener(EVENT_DELETE_ENTITY, openModal) });
-    onUnmounted(() => { eventBus.removeEventListener(EVENT_DELETE_ENTITY, openModal) });
+    onMounted(() => { modalRef.value?.setModalName('deleteEntityModal'); });
 
-    function closeModal() {
-        isOpen.value = false;
-    }
-    
-    function openModal(_event: Event) {
+    onMounted(() => { eventBus.addEventListener(EVENT_DELETE_ENTITY, handleOpenModal) });
+    onUnmounted(() => { eventBus.removeEventListener(EVENT_DELETE_ENTITY, handleOpenModal) });
+
+
+    function handleOpenModal(_event: Event) {
+        if (!modalRef) { return; }
+
         const event = _event as CustomEvent<{ entity: FileType | FolderType }>;
-        
         entity.value = event.detail.entity;
         
-        isOpen.value = true;
+        modalRef.value!.requestModalOpen();
     }
 
-    function handleClickDeleteFile() {
-        if (!entity.value) return;
 
-        isLoading.value = true;
+    function handleClickDeleteFile() {
+        if (!entity.value || !modalRef.value) return;
+
+        loading.value = true;
 
         if (entity.value.kind === 'file') {
             const parentFolderId: number = entity.value.parentFolderId;
@@ -44,16 +45,14 @@
             deleteFile(entity.value)
             .then(() => {
                 createPopup('success', 'Sucesso', 'Sucesso ao deletar o arquivo');
-                // router.push({ name: 'Home' });
-                router.push({ path: '/folder/' + parentFolderId });
-                isOpen.value = false;
+                router.push({ path: '/folder/' + parentFolderId })
             })
             .catch((_error) => {
                 console.log(_error);
                 createPopup('error', 'Erro ao deletar o arquivo', 'Por favor, tente novamente');
             })
             .finally(() => {
-                isLoading.value = false;
+                loading.value = false;
             })
         }
         else {
@@ -61,19 +60,20 @@
         }
     }
 
+
     function handleClickCancel() {
-        closeModal();
+        modalRef.value!.requestModalClose();
     }
 </script>
 
 
 <template>
-    <LoadingOverlay v-if="isLoading" />
+    <LoadingOverlay v-if="loading" />
 
-    <ModalContainer v-if="isOpen" @click-outside="closeModal">
+    <ActionModalContainer ref="modalRef">
         <ShinyContainer class="rounded-md relative">
             <div class="flex flex-col gap-6 p-2 py-4 rounded-md bg-(--foreground)">
-                <CloseButton @click="closeModal" />
+                <CloseButton @click="modalRef!.requestModalClose" />
 
                 <div class="flex items-center gap-1">
                     <Icon icon="mdi:file-document-delete-outline" width="24" height="24" />
@@ -96,11 +96,10 @@
                 </div>
             </div>
         </ShinyContainer>
-    </ModalContainer>
+    </ActionModalContainer>
 </template>
 
 
 <style scoped>
-
 
 </style>
