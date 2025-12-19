@@ -48,6 +48,7 @@
         })
         .catch((_error) => {
             console.error(_error);
+            createPopup('error', 'Erro ao obter o arquivo', 'Por favor, tente novamente');
             closeMenu();
         })
         .finally(() => {
