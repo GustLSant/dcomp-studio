@@ -12,7 +12,7 @@
     import ShinyContainer from '../../common/shinyContainer/ShinyContainer.vue';
     import { getFolderById } from '../../../services/folders';
     import { createPopup } from '../../../utils/popup';
-    import ModalContainer from '../../common/ModalContainer.vue';
+    import Modal from '../../common/Modal.vue';
     import Button from '../../common/Button.vue';
     import { openDeleteEntityModal, openMoveEntityModal, openRenameEntityModal } from '../../../utils/actionModal';
     import { EVENT_ENTITY_UPDATED } from '../../../events/entities';
@@ -72,7 +72,7 @@
 
 
 <template>
-    <ModalContainer @click-outside="closeMenu">
+    <Modal :open="true" @close="closeMenu">
         <ShinyContainer class="rounded-md relative fade-in-bottom-short">
             <div class="flex flex-col gap-4 p-2 py-4 rounded-md bg-(--foreground)">
                 <CloseButton @click="closeMenu" />
@@ -125,7 +125,7 @@
                 </div>
             </div>
         </ShinyContainer>
-    </ModalContainer>
+    </Modal>
 </template>
 
 

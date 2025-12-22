@@ -2,7 +2,7 @@
     import type { CodeOutput } from '../../types/code';
     import { truncate } from '../../utils/text';
     import CloseButton from '../common/CloseButton.vue';
-    import ModalContainer from '../common/ModalContainer.vue';
+    import Modal from '../common/Modal.vue';
     import ShinyContainer from '../common/shinyContainer/ShinyContainer.vue';
 
     const open = defineModel<boolean>();
@@ -15,7 +15,7 @@
 
 
 <template>
-    <ModalContainer @click-outside="close" v-if="open">
+    <Modal :open="open" @close="close">
         <ShinyContainer class="rounded-md">
             <div class="relative flex flex-col gap-2 p-2 bg-(--foreground) rounded-md">
                 <div class="flex items-center gap-2">
@@ -31,7 +31,7 @@
                 <CloseButton @click="close" />
             </div>
         </ShinyContainer>
-    </ModalContainer>
+    </Modal>
 </template>
 
 

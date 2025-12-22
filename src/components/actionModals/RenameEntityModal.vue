@@ -1,8 +1,7 @@
 <script setup lang="ts">
     import { Icon } from '@iconify/vue';
-    import ModalContainer from '../common/ModalContainer.vue';
+    import Modal from '../common/Modal.vue';
     import ShinyContainer from '../common/shinyContainer/ShinyContainer.vue';
-    import CloseButton from '../common/CloseButton.vue';
     import { onMounted, onUnmounted, ref } from 'vue';
     import eventBus from '../../eventBus';
     import Button from '../common/Button.vue';
@@ -13,7 +12,7 @@
     import { EVENT_RENAME_ENTITY } from '../../events/actionModal';
     import TextInput from '../common/TextInput.vue';
 
-    const isOpen = ref<boolean>(false);
+    const open = ref<boolean>(false);
     const isLoading = ref<boolean>(false);
     const entity = ref<FileType | FolderType | undefined>(undefined);
     const entityName = ref<string>('');
@@ -22,7 +21,7 @@
     onUnmounted(() => { eventBus.removeEventListener(EVENT_RENAME_ENTITY, openModal) });
 
     function closeModal() {
-        isOpen.value = false;
+        open.value = false;
     }
 
     function openModal(_event: Event) {
@@ -31,7 +30,7 @@
         entity.value = event.detail.entity;
         entityName.value = entity.value.name;
 
-        isOpen.value = true;
+        open.value = true;
     }
 
     function handleClickRenameFile() {
@@ -45,7 +44,7 @@
             updateFile(entity.value)
             .then(() => {
                 createPopup('success', 'Sucesso', 'Sucesso ao renomear o arquivo');
-                isOpen.value = false;
+                open.value = false;
             })
             .catch((_error) => {
                 createPopup('error', 'Erro ao renomear o arquivo', _error);
@@ -68,33 +67,31 @@
 <template>
     <LoadingOverlay v-if="isLoading" />
 
-    <ModalContainer v-if="isOpen" @click-outside="closeModal">
-        <ShinyContainer class="rounded-md relative">
-            <div class="flex flex-col gap-6 p-2 py-4 rounded-md bg-(--foreground)">
-                <CloseButton @click="closeModal" />
+        <Modal :open="open" @close="closeModal">
+            <ShinyContainer class="rounded-md relative">
+                <div class="flex flex-col gap-6 p-2 py-4 rounded-md bg-(--foreground)">
+                    <div class="flex items-center gap-1">
+                        <Icon icon="mdi:rename-outline" width="24" height="24" />
+                        <p class="text-xl">Renomear {{ (entity?.kind === 'file') ? 'Arquivo' : 'Pasta' }}</p>
+                    </div>
 
-                <div class="flex items-center gap-1">
-                    <Icon icon="mdi:rename-outline" width="24" height="24" />
-                    <p class="text-xl">Renomear {{ (entity?.kind === 'file') ? 'Arquivo' : 'Pasta' }}</p>
+                    <div class="flex flex-col">
+                        <p>Nome {{ (entity?.kind === 'file' ? 'do arquivo' : 'da pasta') }}:</p>
+                        <TextInput v-model="entityName" />
+                    </div>
+
+                    <div class="flex items-stretch justify-end flex-wrap gap-2">
+                        <Button variant="primary-outlined" @click="handleClickCancel">
+                            Cancelar
+                        </Button>
+
+                        <Button variant="primary-filled" @click="handleClickRenameFile">
+                            Renomear arquivo
+                        </Button>
+                    </div>
                 </div>
-
-                <div class="flex flex-col">
-                    <p>Nome {{ (entity?.kind === 'file' ? 'do arquivo' : 'da pasta') }}:</p>
-                    <TextInput v-model="entityName" />
-                </div>
-
-                <div class="flex items-stretch justify-end flex-wrap gap-2">
-                    <Button variant="primary-outlined" @click="handleClickCancel">
-                        Cancelar
-                    </Button>
-
-                    <Button variant="primary-filled" @click="handleClickRenameFile">
-                        Renomear arquivo
-                    </Button>
-                </div>
-            </div>
-        </ShinyContainer>
-    </ModalContainer>
+            </ShinyContainer>
+        </Modal>
 </template>
 
 

@@ -90,7 +90,7 @@
 
     <ActionModalContainer ref="modalRef">
         <ShinyContainer class="rounded-md relative">
-            <div class="flex flex-col gap-6 p-2 py-4 rounded-md bg-(--foreground)">
+            <div class="flex flex-col gap-6 p-2 py-4 rounded-md bg-(--foreground)" >
                 <CloseButton @click="handleCloseModal" />
 
                 <div class="flex items-center gap-1">
