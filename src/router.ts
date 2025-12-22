@@ -5,6 +5,7 @@ import FileView from "./views/FileView.vue";
 import StartView from "./views/StartView.vue";
 import type { RouteMeta } from "./types/route";
 import CodeNavbarMenu from "./components/layout/CodeNavbarMenu/CodeNavbarMenu.vue";
+import { useModalStore } from "./stores/modals";
 
 
 const routes: Array<RouteRecordRaw & { meta: RouteMeta }> = [
@@ -46,5 +47,25 @@ const router = createRouter({
   routes,
 });
 
-export default router;
 
+router.beforeEach((_to, _from, _next) => {
+  const modalStore = useModalStore();
+
+  console.log('hasAnyOpen: ', modalStore.hasAnyModalOpen());
+  console.log('localStorage.getItem(modal): ', localStorage.getItem('modal'));
+  const a = modalStore.hasAnyModalOpen();
+
+  if (localStorage.getItem('modal')) {
+    // modalStore.closeAllModals();
+    // console.log('vai rodaro next(fasle)')
+    _next(false);
+    return;
+  }
+  else{ 
+    _next();
+    return;
+  }
+})
+
+
+export default router;
