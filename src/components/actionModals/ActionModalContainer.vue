@@ -8,8 +8,8 @@
     const isOpen = ref<boolean>(false);
     const route = useRoute();
 
-    // onMounted(() => { window.addEventListener('popstate', syncStateAndVisibility); });
-    // onUnmounted(() => { window.removeEventListener('popstate', syncStateAndVisibility); });
+    onMounted(() => { window.addEventListener('popstate', syncStateAndVisibility); });
+    onUnmounted(() => { window.removeEventListener('popstate', syncStateAndVisibility); });
 
 
     watch(() => route.fullPath, clearModalFromHistory);
@@ -58,18 +58,13 @@
 
 
     function clearModalFromHistory() {
-        // if (isOpen.value) {
-        //     const newState = { ...history.state };
-        //     delete newState[modalName.value];
+        if (isOpen.value) {
+            const newState = { ...history.state };
+            delete newState[modalName.value];
 
-        //     history.replaceState(newState, '');
-        //     closeModal();
-        // }
-        const newState = { ...history.state };
-        delete newState[modalName.value];
-        
-        history.replaceState(newState, '');
-        closeModal();
+            history.replaceState(newState, '');
+            closeModal();
+        }
     }
 
 
