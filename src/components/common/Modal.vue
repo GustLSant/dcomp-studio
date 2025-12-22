@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { onBeforeUnmount, onMounted, ref } from 'vue';
+    import { ref, watch } from 'vue';
     import CloseButton from './CloseButton.vue';
     import TransitionFadeHorizontal from '../transitions/TransitionFadeHorizontal.vue';
 
@@ -11,12 +11,12 @@
     const modalContentRef = ref<HTMLElement | null>(null);
     const emit = defineEmits(['close']);
 
-    onMounted(() => {
-        document.body.style.overflow = "hidden";
-    });
-    onBeforeUnmount(() => {
-        document.body.style.overflow = "";
-    });
+    watch(() => props.open, handleOpenChange);
+
+    function handleOpenChange() {
+        if (props.open) { document.body.style.overflow = "hidden"; }
+        else { document.body.style.overflow = ""; }
+    }
 
     const handleClickOutsideModal = (_event: MouseEvent) => {
         if(props.persistent || !modalContentRef.value) return;
