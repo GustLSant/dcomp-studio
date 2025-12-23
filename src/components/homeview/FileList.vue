@@ -46,8 +46,8 @@
                     <p class="text-lg">Arquivos Recentes</p>
                 </div>
 
-                <div class="py-1 px-2 border bg-(--primary) border-(--primary) rounded-sm">
-                    <Icon @click="handleClickAddFile" icon="mdi:file-plus-outline" width="24" height="24" class="shrink-0" />
+                <div @click="handleClickAddFile" class="py-1 px-2 border bg-(--primary) border-(--primary) rounded-sm hover:cursor-pointer">
+                    <Icon icon="mdi:file-plus-outline" width="24" height="24" class="shrink-0" />
                 </div>
             </div>
 
@@ -55,7 +55,7 @@
                 <CodeFileCard v-for="(file, idx) in fileList" :key="idx" :id="file.id!" :name="file.name" :date="file.editDate"  />
             </div>
 
-            <div class="flex items-center justify-end">
+            <div class="flex items-center justify-end hover:cursor-pointer">
                 <p @click="handleClickExploreFiles" class="text-sm primary-text-gradient underline">Explorar todos os arquivos</p>
             </div>
         </section>
