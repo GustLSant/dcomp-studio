@@ -30,10 +30,10 @@
       <router-view />
     </main>
     
-    <CreateEntityModal />
-    <DeleteEntityModal />
-    <RenameEntityModal />
+    <!-- <DeleteEntityModal /> -->
+    <!-- <RenameEntityModal /> -->
     <MoveEntityModal />
+    <CreateEntityModal />
     <PopupView />
   </div>
 </template>
