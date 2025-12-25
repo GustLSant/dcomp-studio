@@ -1,7 +1,6 @@
 <script setup lang="ts">
     import { Icon } from '@iconify/vue';
     import ShinyContainer from '../common/shinyContainer/ShinyContainer.vue';
-    import CloseButton from '../common/CloseButton.vue';
     import { onMounted, onUnmounted, ref } from 'vue';
     import eventBus from '../../eventBus';
     import Button from '../common/Button.vue';
@@ -11,15 +10,11 @@
     import { EVENT_DELETE_ENTITY } from '../../events/actionModal';
     import { useRouter } from 'vue-router';
     import ActionModalContainer from './ActionModalContainer.vue';
-    import LoadingOverlay from '../common/LoadingOverlay.vue';
 
 
     const modalRef = ref<InstanceType<typeof ActionModalContainer> | null>(null);
     const entity = ref<FileType | FolderType | undefined>(undefined);
-    const loading = ref<boolean>(false);
     const router = useRouter();
-
-    onMounted(() => { modalRef.value?.setModalName('deleteEntityModal'); });
 
     onMounted(() => { eventBus.addEventListener(EVENT_DELETE_ENTITY, handleOpenModal) });
     onUnmounted(() => { eventBus.removeEventListener(EVENT_DELETE_ENTITY, handleOpenModal) });
@@ -31,30 +26,24 @@
         const event = _event as CustomEvent<{ entity: FileType | FolderType }>;
         entity.value = event.detail.entity;
         
-        modalRef.value!.requestModalOpen();
+        modalRef.value!.openModal();
+    }
+
+    function handleCloseModal() {
+        modalRef.value!.closeModal();
     }
 
 
     function handleClickDeleteFile() {
         if (!entity.value || !modalRef.value) return;
 
-        loading.value = true;
+        modalRef.value?.setLoading(true);
 
         if (entity.value.kind === 'file') {
-            const parentFolderId: number = entity.value.parentFolderId;
-
             deleteFile(entity.value)
-            .then(() => {
-                createPopup('success', 'Sucesso', 'Sucesso ao deletar o arquivo');
-                router.push({ path: '/folder/' + parentFolderId })
-            })
-            .catch((_error) => {
-                console.log(_error);
-                createPopup('error', 'Erro ao deletar o arquivo', 'Por favor, tente novamente');
-            })
-            .finally(() => {
-                loading.value = false;
-            })
+            .then(()        => { performSuccessEffect(); })
+            .catch((_error) => { createPopup('error', 'Erro ao deletar o arquivo', 'Por favor, tente novamente'); })
+            .finally(()     => { modalRef.value?.setLoading(false); })
         }
         else {
 
@@ -62,20 +51,21 @@
     }
 
 
-    function handleClickCancel() {
-        modalRef.value!.requestModalClose();
+    function performSuccessEffect() {
+        const popupSubtitle: string = (entity.value?.kind === 'file') ? 'Sucesso ao deletar o arquivo' : 'Sucesso ao deletar a pasta';
+
+        createPopup('success', 'Sucesso', popupSubtitle);
+        
+        handleCloseModal();
+        router.push({ path: '/folder/' + entity.value?.parentFolderId });
     }
 </script>
 
 
 <template>
-    <LoadingOverlay v-if="loading" />
-
     <ActionModalContainer ref="modalRef">
         <ShinyContainer class="rounded-md relative">
             <div class="flex flex-col gap-6 p-2 py-4 rounded-md bg-(--foreground)">
-                <CloseButton @click="modalRef!.requestModalClose" />
-
                 <div class="flex items-center gap-1">
                     <Icon icon="mdi:file-document-delete-outline" width="24" height="24" />
                     <p class="text-xl">Deletar Arquivo</p>
@@ -91,7 +81,7 @@
                         Deletar arquivo
                     </Button>
 
-                    <Button variant="primary-outlined" @click="handleClickCancel">
+                    <Button variant="primary-outlined" @click="handleCloseModal">
                         Cancelar
                     </Button>
                 </div>

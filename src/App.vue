@@ -30,7 +30,7 @@
       <router-view />
     </main>
     
-    <!-- <DeleteEntityModal /> -->
+    <DeleteEntityModal />
     <!-- <RenameEntityModal /> -->
     <MoveEntityModal />
     <CreateEntityModal />
