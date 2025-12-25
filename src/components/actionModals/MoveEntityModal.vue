@@ -1,7 +1,6 @@
 <script setup lang="ts">
     import { Icon } from '@iconify/vue';
     import CloseButton from '../common/CloseButton.vue';
-    import LoadingOverlay from '../common/LoadingOverlay.vue';
     import ShinyContainer from '../common/shinyContainer/ShinyContainer.vue';
     import Button from '../common/Button.vue';
     import { createPopup } from '../../utils/popup';
@@ -10,68 +9,58 @@
     import eventBus from '../../eventBus';
     import { moveFile } from '../../services/files';
     import { EVENT_MOVE_ENTITY } from '../../events/actionModal';
-    import { getAllFolders } from '../../services/folders';
+    import { getAllFolders, getRootFolder } from '../../services/folders';
     import FolderPreview from '../folders/FolderPreview.vue';
     import { EVENT_ENTITY_UPDATED } from '../../events/entities';
     import ActionModalContainer from './ActionModalContainer.vue';
+    import { openCreateEntityModal } from '../../utils/actionModal';
+    import { EVENT_ENTITY_TREE_UPDATED } from '../../events/entitiesTree';
 
     const modalRef = ref<InstanceType<typeof ActionModalContainer> | null>(null);
-    const loading = ref<boolean>(false);
     const entity = ref<FileType | FolderType | undefined>(undefined);
     const folders = ref<FolderType[]>([]);
-
-    onMounted(() => { modalRef.value?.setModalName('moveEntityModal'); });
 
     onMounted(() => { eventBus.addEventListener(EVENT_MOVE_ENTITY, handleOpenModal) });
     onUnmounted(() => { eventBus.removeEventListener(EVENT_MOVE_ENTITY, handleOpenModal) });
     
+    // pq se nao tiver nenhuma pasta, vai indicar criar uma, ai precisa ouvir o evento de criacao de entidade
+    onMounted(() => { eventBus.addEventListener(EVENT_ENTITY_TREE_UPDATED, getFoldersList); });
+    onUnmounted(() => { eventBus.removeEventListener(EVENT_ENTITY_TREE_UPDATED, getFoldersList); });
+
     
-    async function handleOpenModal(_event: Event) {
+    function handleOpenModal(_event: Event) {
         const event = _event as CustomEvent<{ entity: FileType | FolderType }>;
-        
         entity.value = event.detail.entity;
 
-        loading.value = true;
-
-        getAllFolders()
-        .then((_response) => {
-            folders.value = filterCurrentParentFolder(_response);
-            modalRef.value?.requestModalOpen();
-        })
-        .catch((_error) => {
-            console.error(_error);
-            createPopup('error', 'Erro ao obter pastas', 'Por favor, tente novamente');
-        })
-        .finally(() => {
-            loading.value = false;
-        })
+        modalRef.value?.openModal();
+        getFoldersList();
     }
 
+    function handleCloseModal() { modalRef.value?.closeModal(); }
 
-    function handleCloseModal() {
-        modalRef.value?.requestModalClose();
+
+    function getFoldersList() {
+        if (!modalRef.value?.checkIsOpen()) return;
+
+        modalRef.value?.setLoading(true);
+
+        getAllFolders()
+        .then((_response) => { folders.value = filterCurrentParentFolder(_response); })
+        .catch((_error)   => { createPopup('error', 'Erro ao obter pastas', 'Por favor, tente novamente'); })
+        .finally(()       => { modalRef.value?.setLoading(false); })
     }
 
 
     function handleClickFolder(_newParentFolderId: number | undefined) {
         if (!entity.value || _newParentFolderId === undefined) { console.error('Error on handleClickFolder. entity.value: ',entity.value,' _newParentFolderId: ', _newParentFolderId); return; }
 
-        loading.value = true;
+        modalRef.value?.setLoading(true);
 
         if (entity.value.kind === 'file') {
             moveFile(entity.value, _newParentFolderId)
-            .then(() => {
-                createPopup('success', 'Sucesso', 'Sucesso ao mover o arquivo');
-                eventBus.dispatchEvent(new Event(EVENT_ENTITY_UPDATED));
-                handleCloseModal();
-            })
-            .catch((_error) => {
-                console.error(_error);
-                createPopup('error', 'Erro ao deletar o arquivo', 'Por favor, tente novamente');
-            })
-            .finally(() => {
-                loading.value = false;
-            })
+            .then(()        => { performSuccessEffect() })
+            .catch((_error) => { createPopup('error', 'Erro ao mover a pasta', 'Por favor, tente novamente'); })
+            .finally(()     => { modalRef.value?.setLoading(false); })
         }
         else {
 
@@ -82,12 +71,25 @@
     function filterCurrentParentFolder(_foldersArray: FolderType[]): FolderType[] {
         return _foldersArray.filter((folder: FolderType) => (entity.value?.parentFolderId !== folder.id));
     }
+
+
+    function performSuccessEffect() {
+        const popupSubtitle: string = (entity.value?.kind === 'file') ? 'Sucesso ao mover o arquivo' : 'Sucesso ao mover a pasta';
+
+        createPopup('success', 'Sucesso', popupSubtitle);
+        eventBus.dispatchEvent(new Event(EVENT_ENTITY_UPDATED));
+        
+        handleCloseModal();
+    }
+
+
+    function handleClickNewFolder() {
+        openCreateEntityModal('folder', getRootFolder());
+    }
 </script>
 
 
 <template>
-    <LoadingOverlay v-if="loading" />
-
     <ActionModalContainer ref="modalRef">
         <ShinyContainer class="rounded-md relative">
             <div class="flex flex-col gap-6 p-2 py-4 rounded-md bg-(--foreground)" >
@@ -100,13 +102,22 @@
 
                 <p>Selecione para qual pasta deseja mover o arquivo:</p>
 
-                <div class="flex flex-col gap-1 max-h-[50vh] overflow-y-auto">
+                <div v-if="folders.length !== 0" class="flex flex-col gap-1 max-h-[50vh] overflow-y-auto">
                     <FolderPreview v-for="folder in folders" :folder="folder" :interactable="false" @click="() => { handleClickFolder(folder.id) }" class="hover:brightness-130 hover:cursor-pointer" />
                 </div>
 
-                <Button variant="primary-outlined" @click="handleCloseModal">
-                    Cancelar
-                </Button>
+                <div v-else class="flex flex-col items-center gap-1">
+                    <p>Não existe nenhuma outra pasta nos seus arquivos</p>
+                </div>
+
+                <div class="flex flex-col gap-1">
+                    <Button @click="handleClickNewFolder" variant="primary-outlined" icon="mdi:create-new-folder-outline">
+                        Nova Pasta
+                    </Button>
+                    <Button variant="primary-outlined" @click="handleCloseModal">
+                        Cancelar
+                    </Button>
+                </div>
             </div>
         </ShinyContainer>
     </ActionModalContainer>
