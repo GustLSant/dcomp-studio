@@ -11,7 +11,6 @@
     import { useRouter } from 'vue-router';
     import ActionModalContainer from './ActionModalContainer.vue';
 
-
     const modalRef = ref<InstanceType<typeof ActionModalContainer> | null>(null);
     const entity = ref<FileType | FolderType | undefined>(undefined);
     const router = useRouter();

@@ -31,7 +31,7 @@
     </main>
     
     <DeleteEntityModal />
-    <!-- <RenameEntityModal /> -->
+    <RenameEntityModal />
     <MoveEntityModal />
     <CreateEntityModal />
     <PopupView />
