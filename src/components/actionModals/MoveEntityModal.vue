@@ -106,7 +106,7 @@
                     <FolderPreview v-for="folder in folders" :folder="folder" :interactable="false" @click="() => { handleClickFolder(folder.id) }" class="hover:brightness-130 hover:cursor-pointer" />
                 </div>
 
-                <div v-else class="flex flex-col items-center gap-1">
+                <div v-else class="text-center">
                     <p>Não existe nenhuma outra pasta nos seus arquivos</p>
                 </div>
 
