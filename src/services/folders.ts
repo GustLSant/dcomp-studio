@@ -96,8 +96,24 @@ export async function updateFolder(_folder: FolderType): Promise<void> {
 
 export async function deleteFolder(_folder: FolderType): Promise<void> {
     try {
-        if (!_folder.id) throw new Error('Erro ao deletar o arquivo: arquivo não possui um ID');
+        if (!_folder.id) throw new Error('Erro ao excluir a pasta: pasta não possui um ID');
         dbInstance.delete(_folder.id);
+    }
+    catch(_error) {
+        const message = _error instanceof Error ? _error.message : String(_error);
+        throw new Error(message);
+    }
+}
+
+
+export async function moveFolder(_folder: FolderType, _newParentFolderId: number): Promise<void> {
+    try {
+        if (!_folder.id) throw new Error('Erro ao mover a pasta: pasta não possui um ID');
+        
+        const updatedFolder: FolderType = { ..._folder };
+        updatedFolder.parentFolderId = _newParentFolderId;
+
+        dbInstance.update(updatedFolder);
     }
     catch(_error) {
         const message = _error instanceof Error ? _error.message : String(_error);

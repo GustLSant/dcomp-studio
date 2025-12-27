@@ -9,7 +9,7 @@
     import eventBus from '../../eventBus';
     import { moveFile } from '../../services/files';
     import { EVENT_MOVE_ENTITY } from '../../events/actionModal';
-    import { getAllFolders, getRootFolder } from '../../services/folders';
+    import { getAllFolders, getRootFolder, moveFolder } from '../../services/folders';
     import FolderPreview from '../folders/FolderPreview.vue';
     import { EVENT_ENTITY_UPDATED } from '../../events/entities';
     import ActionModalContainer from './ActionModalContainer.vue';
@@ -59,11 +59,14 @@
         if (entity.value.kind === 'file') {
             moveFile(entity.value, _newParentFolderId)
             .then(()        => { performSuccessEffect() })
-            .catch((_error) => { createPopup('error', 'Erro ao mover a pasta', 'Por favor, tente novamente'); })
+            .catch((_error) => { createPopup('error', 'Erro ao mover o arquivo', 'Por favor, tente novamente'); })
             .finally(()     => { modalRef.value?.setLoading(false); })
         }
         else {
-
+            moveFolder(entity.value, _newParentFolderId)
+            .then(()        => { performSuccessEffect() })
+            .catch((_error) => { createPopup('error', 'Erro ao mover a pasta', 'Por favor, tente novamente'); })
+            .finally(()     => { modalRef.value?.setLoading(false); })
         }
     }
     
