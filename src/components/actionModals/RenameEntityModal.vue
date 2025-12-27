@@ -11,6 +11,7 @@
     import TextInput from '../common/TextInput.vue';
     import ActionModalContainer from './ActionModalContainer.vue';
     import { EVENT_ENTITY_TREE_UPDATED } from '../../events/entitiesTree';
+    import { updateFolder } from '../../services/folders';
 
     const modalRef = ref<InstanceType<typeof ActionModalContainer> | null>(null);
     const entity = ref<FileType | FolderType | undefined>(undefined);
@@ -38,24 +39,29 @@
     function handleClickRenameFile() {
         if (!entity.value) return;
 
+        if (entityName.value.length === 0) { createPopup('error', 'Não é possível renomear para " "', 'Por favor, digite outro nome'); return; }
+
         modalRef.value?.setLoading(true);
 
-        if (entity.value.kind === 'file') {
-            entity.value.name = entityName.value;
+        entity.value.name = entityName.value;
 
+        if (entity.value.kind === 'file') {
             updateFile(entity.value)
             .then(() => { performSuccessEffect(); })
             .catch((_error) => { createPopup('error', 'Erro ao renomear o arquivo', _error); })
             .finally(() => { modalRef.value?.setLoading(false); })
         }
         else {
-
+            updateFolder(entity.value)
+            .then(() => { performSuccessEffect(); })
+            .catch((_error) => { createPopup('error', 'Erro ao renomear a pasta', _error); })
+            .finally(() => { modalRef.value?.setLoading(false); })
         }
     }
 
 
     function performSuccessEffect() {
-        const popupSubtitle: string = (entity.value?.kind === 'file') ? 'Sucesso ao renomear o arquivo' : 'Sucesso ao criar a pasta';
+        const popupSubtitle: string = (entity.value?.kind === 'file') ? 'Sucesso ao renomear o arquivo' : 'Sucesso ao renomear a pasta';
         createPopup('success', 'Sucesso', popupSubtitle);
         eventBus.dispatchEvent(new Event(EVENT_ENTITY_TREE_UPDATED));
         handleCloseModal();
