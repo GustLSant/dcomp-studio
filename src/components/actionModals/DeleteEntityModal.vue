@@ -11,6 +11,7 @@
     import ActionModalContainer from './ActionModalContainer.vue';
     import { EVENT_DELETE_ENTITY } from '../../events/actionModal';
     import { EVENT_ENTITY_TREE_UPDATED } from '../../events/entitiesTree';
+    import { deleteFolder } from '../../services/folders';
 
     const modalRef = ref<InstanceType<typeof ActionModalContainer> | null>(null);
     const entity = ref<FileType | FolderType | undefined>(undefined);
@@ -42,17 +43,20 @@
         if (entity.value.kind === 'file') {
             deleteFile(entity.value)
             .then(()        => { performSuccessEffect(); })
-            .catch((_error) => { createPopup('error', 'Erro ao deletar o arquivo', 'Por favor, tente novamente'); })
+            .catch((_error) => { createPopup('error', 'Erro ao excluir o arquivo', 'Por favor, tente novamente'); })
             .finally(()     => { modalRef.value?.setLoading(false); })
         }
         else {
-
+            deleteFolder(entity.value)
+            .then(()        => { performSuccessEffect(); })
+            .catch((_error) => { createPopup('error', 'Erro ao excluir a pasta', 'Por favor, tente novamente'); })
+            .finally(()     => { modalRef.value?.setLoading(false); })
         }
     }
 
 
     function performSuccessEffect() {
-        const popupSubtitle: string = (entity.value?.kind === 'file') ? 'Sucesso ao deletar o arquivo' : 'Sucesso ao deletar a pasta';
+        const popupSubtitle: string = (entity.value?.kind === 'file') ? 'Sucesso ao excluir o arquivo' : 'Sucesso ao excluir a pasta';
 
         createPopup('success', 'Sucesso', popupSubtitle);
         eventBus.dispatchEvent(new Event(EVENT_ENTITY_TREE_UPDATED));

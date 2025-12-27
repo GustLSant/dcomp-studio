@@ -92,3 +92,15 @@ export async function updateFolder(_folder: FolderType): Promise<void> {
         throw new Error("Error on updateFolder");
     }
 }
+
+
+export async function deleteFolder(_folder: FolderType): Promise<void> {
+    try {
+        if (!_folder.id) throw new Error('Erro ao deletar o arquivo: arquivo não possui um ID');
+        dbInstance.delete(_folder.id);
+    }
+    catch(_error) {
+        const message = _error instanceof Error ? _error.message : String(_error);
+        throw new Error(message);
+    }
+}
