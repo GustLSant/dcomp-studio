@@ -109,7 +109,7 @@
                     <section>
                         <p class="label">Nome:</p>
                         <div class="flex items-center gap-2">
-                            <FileNameContainer class="grow">
+                            <FileNameContainer class="grow" @click="() => { openRenameEntityModal(entity!) }">
                                 {{ entity.name }}
                             </FileNameContainer>
 
@@ -125,7 +125,7 @@
                     <section v-if="parentFolder">
                         <p class="label">Pasta de origem:</p>
                         <div class="flex items-center justify-between gap-2">
-                            <FolderPreview :entity="parentFolder" :interactable="false" />
+                            <FolderPreview :entity="parentFolder" :interactable="false" @click="() => { openMoveEntityModal(entity!) }" />
                             <HoverableIcon icon="fa7-solid:exchange" :size="22" @click="() => { openMoveEntityModal(entity!) }" />
                         </div>
                     </section>
