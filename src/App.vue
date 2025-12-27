@@ -8,6 +8,7 @@
   import RenameEntityModal from './components/actionModals/RenameEntityModal.vue';
   import CreateEntityModal from './components/actionModals/CreateEntityModal.vue';
   import MoveEntityModal from './components/actionModals/MoveEntityModal.vue';
+  import EntityMenuModal from './components/actionModals/EntityMenuModal.vue';
 
   const route = useRoute();
   const navbarVariation = computed(() => { return getNavbarVariation(route); });
@@ -30,6 +31,7 @@
       <router-view />
     </main>
     
+    <EntityMenuModal />
     <DeleteEntityModal />
     <RenameEntityModal />
     <MoveEntityModal />
