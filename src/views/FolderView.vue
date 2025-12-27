@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { onMounted, ref, watch } from 'vue';
+    import { onMounted, onUnmounted, ref, watch } from 'vue';
     import HoverableIcon from '../components/common/HoverableIcon.vue';
     import { type FileType, type FolderType } from '../types/entities';
     import LoadingComponent from '../components/common/LoadingComponent.vue';
@@ -11,6 +11,8 @@
     import ShinyContainer from '../components/common/shinyContainer/ShinyContainer.vue';
     import { createPopup } from '../utils/popup';
     import { openCreateEntityModal } from '../utils/actionModal';
+    import eventBus from '../eventBus';
+    import { EVENT_ENTITY_TREE_UPDATED } from '../events/entitiesTree';
 
     const folder = ref<FolderType | undefined>(undefined);
     const content = ref<(FolderType | FileType)[]>([]);
@@ -21,8 +23,11 @@
     onMounted(getFolderData);
     watch(() => (route.params), getFolderData);
 
+    onMounted(()   => { eventBus.addEventListener(EVENT_ENTITY_TREE_UPDATED, getFolderData); });
+    onUnmounted(() => { eventBus.removeEventListener(EVENT_ENTITY_TREE_UPDATED, getFolderData); })
 
-    async function getFolderData() {
+    
+    function getFolderData() {
         const folderId: number = getFolderIdFromRoute();
 
         loading.value = true;
