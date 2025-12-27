@@ -7,9 +7,10 @@
     import { deleteFile } from '../../services/files';
     import { type FolderType, type FileType } from '../../types/entities';
     import { createPopup } from '../../utils/popup';
-    import { EVENT_DELETE_ENTITY } from '../../events/actionModal';
     import { useRouter } from 'vue-router';
     import ActionModalContainer from './ActionModalContainer.vue';
+    import { EVENT_DELETE_ENTITY } from '../../events/actionModal';
+    import { EVENT_ENTITY_TREE_UPDATED } from '../../events/entitiesTree';
 
     const modalRef = ref<InstanceType<typeof ActionModalContainer> | null>(null);
     const entity = ref<FileType | FolderType | undefined>(undefined);
@@ -54,6 +55,7 @@
         const popupSubtitle: string = (entity.value?.kind === 'file') ? 'Sucesso ao deletar o arquivo' : 'Sucesso ao deletar a pasta';
 
         createPopup('success', 'Sucesso', popupSubtitle);
+        eventBus.dispatchEvent(new Event(EVENT_ENTITY_TREE_UPDATED));
         
         handleCloseModal();
         router.push({ path: '/folder/' + entity.value?.parentFolderId });
