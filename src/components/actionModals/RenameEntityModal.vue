@@ -10,6 +10,7 @@
     import { EVENT_RENAME_ENTITY } from '../../events/actionModal';
     import TextInput from '../common/TextInput.vue';
     import ActionModalContainer from './ActionModalContainer.vue';
+    import { EVENT_ENTITY_TREE_UPDATED } from '../../events/entitiesTree';
 
     const modalRef = ref<InstanceType<typeof ActionModalContainer> | null>(null);
     const entity = ref<FileType | FolderType | undefined>(undefined);
@@ -56,6 +57,7 @@
     function performSuccessEffect() {
         const popupSubtitle: string = (entity.value?.kind === 'file') ? 'Sucesso ao renomear o arquivo' : 'Sucesso ao criar a pasta';
         createPopup('success', 'Sucesso', popupSubtitle);
+        eventBus.dispatchEvent(new Event(EVENT_ENTITY_TREE_UPDATED));
         handleCloseModal();
     }
 </script>
