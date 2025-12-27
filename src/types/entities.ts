@@ -19,7 +19,7 @@ export type FileType = Entity & {
 }
 
 export type EntityPreviewPropType = {
-    name: string,
+    entity: Entity,
     icon: string,
-    interactable: boolean
+    interactable: boolean,
 }

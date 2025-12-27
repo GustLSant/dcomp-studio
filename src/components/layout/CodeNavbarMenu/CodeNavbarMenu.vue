@@ -102,7 +102,7 @@
                     <section v-if="parentFolder">
                         <p>Pasta de origem:</p>
                         <div class="flex items-center justify-between gap-2">
-                            <FolderPreview :folder="parentFolder" :interactable="false" />
+                            <FolderPreview :entity="parentFolder" :interactable="false" />
                             <HoverableIcon icon="fa7-solid:exchange" :size="22" @click="() => { openMoveEntityModal(file!) }" />
                         </div>
                     </section>

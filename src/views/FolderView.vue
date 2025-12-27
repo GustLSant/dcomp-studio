@@ -111,8 +111,18 @@
 
                 <div v-if="content.length > 0" class="flex gap-1 items-start flex-wrap">
                     <template v-for="entity in content">
-                        <FolderPreview v-if="entity.kind === 'folder'" :folder="(entity as FolderType)" class="basis-1 grow max-w-[50%]" />
-                        <FilePreview v-else :file="(entity as FileType)" class="basis-1 grow max-w-[50%]" />
+                        <FolderPreview
+                            v-if="entity.kind === 'folder'"
+                            :entity="entity"
+                            :interactable="true"
+                            class="basis-1 grow max-w-[50%]"
+                        />
+                        <FilePreview
+                            v-else
+                            :entity="entity"
+                            :interactable="true"
+                            class="basis-1 grow max-w-[50%]"
+                        />
                     </template>
                 </div>
 

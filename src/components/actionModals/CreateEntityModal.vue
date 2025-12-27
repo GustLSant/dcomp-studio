@@ -108,7 +108,7 @@
         
                     <div class="flex items-center gap-2">
                         <p>Pasta de origem:</p>
-                        <FolderPreview :folder="parentFolder!" :interactable="false" />
+                        <FolderPreview :entity="parentFolder!" :interactable="false" />
                     </div>
                 </div>
                 

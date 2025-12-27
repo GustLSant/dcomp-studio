@@ -103,7 +103,13 @@
                 <p>Selecione para qual pasta deseja mover o arquivo:</p>
 
                 <div v-if="folders.length !== 0" class="flex flex-col gap-1 max-h-[50vh] overflow-y-auto">
-                    <FolderPreview v-for="folder in folders" :folder="folder" :interactable="false" @click="() => { handleClickFolder(folder.id) }" class="hover:brightness-130 hover:cursor-pointer" />
+                    <FolderPreview
+                        v-for="folder in folders"
+                        :entity="folder"
+                        :interactable="false"
+                        @click="() => { handleClickFolder(folder.id) }"
+                        class="hover:brightness-130 hover:cursor-pointer"
+                    />
                 </div>
 
                 <div v-else class="text-center">
