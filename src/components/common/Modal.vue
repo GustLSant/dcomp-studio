@@ -34,10 +34,12 @@
 
 <template>
     <TransitionFadeHorizontal>
-        <div v-if="props.open" @click="handleClickOutsideModal" class="z-50 fixed top-0 bottom-0 left-0 right-0 flex flex-col items-stretch justify-center p-2 bg-black/30 backdrop-blur-sm">
-            <div ref="modalContentRef" class="relative max-w-(--max-modal-width) overflow-y-auto">
-                <CloseButton @click="() => { emit('close'); }" />
-                <slot />
+        <div v-if="props.open" @click="handleClickOutsideModal" class="z-50 fixed top-0 bottom-0 left-0 right-0 bg-black/30 backdrop-blur-sm">
+            <div class="w-full h-full flex items-center justify-center">
+                <div ref="modalContentRef" class="relative basis-(--max-modal-width) max-h-full p-2 overflow-y-auto">
+                    <CloseButton @click="() => { emit('close'); }" />
+                    <slot />
+                </div>
             </div>
         </div>
     </TransitionFadeHorizontal>

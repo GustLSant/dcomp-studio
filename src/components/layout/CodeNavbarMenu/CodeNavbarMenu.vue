@@ -1,7 +1,6 @@
 <script setup lang="ts">
     import { useRoute, useRouter } from 'vue-router';
     import { Icon } from '@iconify/vue';
-    import CloseButton from '../../common/CloseButton.vue';
     import FileNameContainer from '../../common/FileNameContainer.vue';
     import FolderPreview from '../../folders/FolderPreview.vue';
     import { type FolderType, type FileType } from '../../../types/entities';
@@ -75,7 +74,6 @@
     <Modal :open="true" @close="closeMenu">
         <ShinyContainer class="rounded-md relative fade-in-bottom-short">
             <div class="flex flex-col gap-4 p-2 py-4 rounded-md bg-(--foreground)">
-                <CloseButton @click="closeMenu" />
 
                 <div class="flex items-center gap-1">
                     <Icon icon="mdi:file-outline" width="24" height="24" />
