@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { reactive } from 'vue';
+    import { onMounted, onUnmounted, reactive, ref } from 'vue';
     import LeftFooterButton from '../codeEditor/footer/footerButtons/LeftFooterButton.vue';
     import TabFooterButton from '../codeEditor/footer/footerButtons/TabFooterButton.vue';
     import BracketsFooterButton from '../codeEditor/footer/footerButtons/BracketsFooterButton.vue';
@@ -13,6 +13,28 @@
     import eventBus from '../../eventBus';
 
     const footerOpenStates = reactive<boolean[]>([true, false]);
+    const footerRef = ref<HTMLElement | null>(null);
+
+    const updateFooterPosition = () => {
+    if (!footerRef.value || !window.visualViewport) return;
+
+    const offset =
+        window.innerHeight - window.visualViewport.height - window.visualViewport.offsetTop;
+
+    footerRef.value.style.transform =
+        offset > 0 ? `translateY(-${offset}px)` : 'translateY(0)';
+    };
+
+    onMounted(() => {
+        window.visualViewport?.addEventListener('resize', updateFooterPosition);
+        window.visualViewport?.addEventListener('scroll', updateFooterPosition);
+        updateFooterPosition();
+    });
+
+    onUnmounted(() => {
+        window.visualViewport?.removeEventListener('resize', updateFooterPosition);
+        window.visualViewport?.removeEventListener('scroll', updateFooterPosition);
+    });
 
     function handleButtonPresed(_button: CodeEditorButton) {
         switch (_button) {
@@ -36,8 +58,9 @@
 
 
 <template>
-    <div class="fixed bottom-0 left-0 right-0 flex flex-col max-w-(--max-app-width) m-auto">
+    <footer ref="footerRef" class="fixed bottom-0 left-0 right-0 flex flex-col max-w-(--max-app-width) m-auto">
         <div class="footer flex flex-col" :class="footerOpenStates[1] ? 'open' : 'closed'">
+            
             <div class="flex justify-end pointer-events-none" @click="() => { toggleFooterOpenState(1) }">
                 <div class="bg-(--foreground) p-1  pointer-events-auto transition-transform" :class="footerOpenStates[1] ? '-rotate-180 rounded-b-full' : 'rounded-t-full'">
                     <Icon icon="meteor-icons:angles-up" height="18" width="18" />
@@ -96,11 +119,15 @@
                 <RightFooterButton />
             </section>
         </ShinyContainer>
-    </div>
+    </footer>
 </template>
 
 
 <style scoped>
+    footer {
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+    
     .footer {
         --footer-height: 28px;
 
