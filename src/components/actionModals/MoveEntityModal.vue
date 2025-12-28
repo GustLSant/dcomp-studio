@@ -1,6 +1,5 @@
 <script setup lang="ts">
     import { Icon } from '@iconify/vue';
-    import CloseButton from '../common/CloseButton.vue';
     import ShinyContainer from '../common/shinyContainer/ShinyContainer.vue';
     import Button from '../common/Button.vue';
     import { createPopup } from '../../utils/popup';
@@ -96,8 +95,6 @@
     <ActionModalContainer ref="modalRef">
         <ShinyContainer class="rounded-md relative">
             <div class="flex flex-col gap-6 p-2 py-4 rounded-md bg-(--foreground)" >
-                <CloseButton @click="handleCloseModal" />
-
                 <div class="flex items-center gap-1">
                     <Icon icon="fa7-solid:exchange" width="24" height="24" />
                     <p class="text-xl">Mover Arquivo</p>
