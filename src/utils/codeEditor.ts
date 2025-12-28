@@ -16,8 +16,8 @@ export const editorButtonsMappingToFunctions: Record<CodeEditorButton, (_view: a
     'end':      copy,
     'copy':     copy,
     'paste':    copy,
-    'undo':     undo2,
-    'redo':     copy,
+    'undo':     undo,
+    'redo':     redo,
 }
 
 
@@ -154,17 +154,15 @@ export function copy(_view: any) {
 }
 
 
-import { undo } from "@codemirror/commands"
 
-export function undo2(_view: any) {
-    if (!_view) return;
-
-    undo(_view.state)
-    // _view.dispatch({ userEvent: "undo" })
-
-    _view.focus();
+export function undo() {
+    (document as any).execCommand('undo');
 }
 
+
+export function redo() {
+    (document as any).execCommand('redo');
+}
 
 
 
