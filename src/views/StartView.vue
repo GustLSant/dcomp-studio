@@ -15,7 +15,7 @@
 
 
 <template>
-    <div class="relative flex flex-col min-h-dvh p-4" :class="(isExiting) ? 'fade-out-short' : ''" style="animation-delay: 0.3s;">
+    <div class="relative flex flex-col min-h-screen p-4" :class="(isExiting) ? 'fade-out-short' : ''" style="animation-delay: 0.3s;">
         <PulsingGridComponent />
 
         <div class="flex items-center gap-2" :class="(isExiting) ? 'fade-out-left-normal' : 'fade-in-left-normal'">
