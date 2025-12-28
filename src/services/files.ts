@@ -97,11 +97,12 @@ export async function getRecentFiles(_count: number): Promise<FileType[]> {
     try {
         const files: FileType[] = await dbInstance.getAll();
 
-        files.sort((file1, file2) => { return (file2.editDate.getDate() - file1.editDate.getDate()) });
+        files.sort(
+            (a, b) => b.editDate.getTime() - a.editDate.getTime()
+        );
 
-        return [...files.slice(0, _count)];
-    }
-    catch (_error) {
+        return files.slice(0, _count);
+    } catch (_error) {
         const message = _error instanceof Error ? _error.message : String(_error);
         throw new Error(message);
     }
@@ -114,7 +115,7 @@ export async function getLastEditedFile(): Promise<FileType | undefined> {
         let lastEditedFileIdx: number = 0;
 
         if(files.length > 0){
-            for(let i=0; i<files.length-1; i++){
+            for(let i=0; i<files.length; i++){
                 if(files[i]!.editDate > files[lastEditedFileIdx]!.editDate){
                     lastEditedFileIdx = i;
                 }
