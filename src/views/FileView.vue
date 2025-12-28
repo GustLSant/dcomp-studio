@@ -5,12 +5,12 @@
     import { type FileType } from '../types/entities';
     import { getFileById, updateFile } from '../services/files';
     import { runPythonCode } from '../utils/code';
-    import CodeOutputModal from '../components/files/CodeOutputModal.vue';
+    import CodeOutputModal from '../components/file/CodeOutputModal.vue';
     import LoadingOverlay from '../components/common/LoadingOverlay.vue';
     import type { CodeOutput } from '../types/code';
     import CodeNavbar from '../components/layout/CodeNavbar.vue';
     import { createPopup } from '../utils/popup';
-    import EditorFooter from '../components/files/EditorFooter.vue';
+    import EditorFooter from '../components/file/EditorFooter.vue';
 
     const file = ref<FileType | undefined>(undefined);
     const codeOutput = ref<CodeOutput>({ type: 'success', content: '' });
