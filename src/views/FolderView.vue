@@ -7,7 +7,7 @@
     import { getFolderById, getFolderContent } from '../services/folders';
     import { Icon } from '@iconify/vue';
     import FolderPreview from '../components/folders/FolderPreview.vue';
-    import FilePreview from '../components/files/FilePreview.vue';
+    import FilePreview from '../components/file/FilePreview.vue';
     import ShinyContainer from '../components/common/shinyContainer/ShinyContainer.vue';
     import { createPopup } from '../utils/popup';
     import { openCreateEntityModal } from '../utils/actionModal';
