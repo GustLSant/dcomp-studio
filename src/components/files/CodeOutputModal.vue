@@ -1,7 +1,6 @@
 <script setup lang="ts">
     import type { CodeOutput } from '../../types/code';
     import { truncate } from '../../utils/text';
-    import CloseButton from '../common/CloseButton.vue';
     import Modal from '../common/Modal.vue';
     import ShinyContainer from '../common/shinyContainer/ShinyContainer.vue';
 
@@ -27,8 +26,6 @@
                     <p>Saída:</p>
                     <textarea readonly :rows="(props.codeOutput.type === 'success' ? 5 : 20)" class="bg-neutral-950 p-2 rounded-sm shadow-inner font-mono text-green-500">{{ props.codeOutput.content }}</textarea>
                 </div>
-
-                <CloseButton @click="close" />
             </div>
         </ShinyContainer>
     </Modal>
