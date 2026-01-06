@@ -86,7 +86,7 @@
         background: #292929;
         color: #e5e7eb;
         border: 1px solid #4e4e4e;
-        opacity: 50%;
+        opacity: 75%;
         box-shadow: 0 10px 25px rgba(0,0,0,.4);
         font-family: monospace;
         pointer-events: none !important;
