@@ -34,15 +34,14 @@ export const pythonLinter = linter(view => {
     const diagnostics: Diagnostic[] = [];
     const lines = view.state.doc.toString().split('\n');
 
-    let paren = 0;    // ()
-    let bracket = 0;  // []
-    let brace = 0;    // {}
+    let paren = 0;
+    let bracket = 0;
+    let brace = 0;
 
     lines.forEach((line, i) => {
         const lineNo = i + 1;
         const lineInfo = view.state.doc.line(lineNo);
 
-        // Contadores separados
         paren   += (line.match(/\(/g)?.length || 0);
         paren   -= (line.match(/\)/g)?.length || 0);
 
