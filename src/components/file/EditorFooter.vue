@@ -1,7 +1,7 @@
 <script setup lang="ts">
     import { onMounted, onUnmounted, ref } from 'vue';
     import HoverableIcon from '../common/HoverableIcon.vue';
-import ShinyContainer from '../common/shinyContainer/ShinyContainer.vue';
+    import ShinyContainer from '../common/shinyContainer/ShinyContainer.vue';
 
     const isOpen = ref<boolean>(false);
     const footerRef = ref<HTMLElement | null>(null);
