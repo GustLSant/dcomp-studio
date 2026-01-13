@@ -29,44 +29,46 @@
 
 
 <template>
-    <footer ref="footerRef" class="fixed bottom-0 left-0 right-0  flex items-stretch  max-w-(--max-app-width) m-auto">
-        <div :class="(isOpen) ? 'ml-0' : 'ml-[calc(100%-30px-12px)]'" class="w-full px-2 flex items-center gap-4">
+    <footer ref="footerRef" class="fixed bottom-0 left-0 right-0  flex items-stretch pl-2  max-w-(--max-app-width) m-auto pointer-events-none">
+        <div :class="(isOpen) ? 'ml-0' : 'ml-[calc(100%-40px)]'" class="w-full flex items-center gap-2 pointer-events-auto">
             <ShinyContainer class="rounded-full">
                 <div class="rounded-full bg-(--foreground)">
                     <HoverableIcon @click="toggleFooter" :class="(isOpen) ? '-scale-x-100' : 'scale-x-100'" icon="mdi:chevron-left" :size="20" />
                 </div>
             </ShinyContainer>
             
-            <div class="flex items-center gap-2 basis-1 grow overflow-x-auto">
-                <p>awd</p>
-                <p>awd</p>
-                <p>awd</p>
-                <p>awd</p>
-                <p>awd</p>
-                <p>awd</p>
-                <p>awd</p>
-                <p>awd</p>
-                <p>awd</p>
-                <p>awd</p>
-                <p>awd</p>
-                <p>awd</p>
-                <p>awd</p>
-                <p>awd</p>
-                <p>awd</p>
-                <p>awd</p>
-                <p>awd</p>
-                <p>awd</p>
-                <p>awd</p>
-                <p>awd</p>
-                <p>awd</p>
-                <p>awd</p>
-                <p>awd</p>
-                <p>awd</p>
-                <p>awd</p>
-                <p>awd</p>
-                <p>awd</p>
-                <p>awd</p>
-            </div>
+            <ShinyContainer class="grow overflow-x-hidden rounded-md">
+                <div class="overflow-x-auto flex items-center gap-2 py-1 px-2 rounded-md bg-(--foreground)">
+                    <p>awd</p>
+                    <p>awd</p>
+                    <p>awd</p>
+                    <p>awd</p>
+                    <p>awd</p>
+                    <p>awd</p>
+                    <p>awd</p>
+                    <p>awd</p>
+                    <p>awd</p>
+                    <p>awd</p>
+                    <p>awd</p>
+                    <p>awd</p>
+                    <p>awd</p>
+                    <p>awd</p>
+                    <p>awd</p>
+                    <p>awd</p>
+                    <p>awd</p>
+                    <p>awd</p>
+                    <p>awd</p>
+                    <p>awd</p>
+                    <p>awd</p>
+                    <p>awd</p>
+                    <p>awd</p>
+                    <p>awd</p>
+                    <p>awd</p>
+                    <p>awd</p>
+                    <p>awd</p>
+                    <p>awd</p>
+                </div>
+            </ShinyContainer>
         </div>
     </footer>
 </template>
