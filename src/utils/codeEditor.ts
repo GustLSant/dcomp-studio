@@ -1,23 +1,21 @@
 import { EditorSelection } from '@codemirror/state';
-import type { CodeEditorButton } from '../enums/codeEditorButtons';
 import { createPopup } from './popup';
 
-export const FOOTER_BT_EVENT_SULFIX: string = '-fb-pressed';
 const indent = "  ";
 
-export const editorButtonsMappingToFunctions: Record<CodeEditorButton, (_view: any) => void> = {
-    'left':     moveCursorWordLeft,
-    'tab':      insertTabIndent,
-    'brackets': insertBrackets,
-    'braces':   insertBraces,
-    'right':    moveCursorWordRight,
-    'shift':    copy,
-    'home':     copy,
-    'end':      copy,
-    'copy':     copy,
-    'paste':    copy,
-    'undo':     undo,
-    'redo':     redo,
+
+export function insertChar(_view: any, _char: string) {
+    if (!_view) return;
+
+    const pos = _view.state.selection.main.head;
+
+    _view.dispatch({
+        changes: { from: pos, to: pos, insert: _char },
+        selection: EditorSelection.cursor(pos + _char.length),
+        scrollIntoView: true
+    });
+
+    _view.focus();
 }
 
 
@@ -80,6 +78,21 @@ export function insertTab(_view: any) {
             insert: indent
         },
         selection: EditorSelection.cursor(pos + indent.length),
+        scrollIntoView: true
+    });
+
+    _view.focus();
+}
+
+
+export function insertParens(_view: any) {
+    if (!_view) return;
+
+    const pos = _view.state.selection.main.head;
+
+    _view.dispatch({
+        changes: { from: pos, to: pos, insert: '()' },
+        selection: EditorSelection.cursor(pos + 1),
         scrollIntoView: true
     });
 

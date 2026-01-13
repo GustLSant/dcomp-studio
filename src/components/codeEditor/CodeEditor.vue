@@ -12,7 +12,7 @@
     import { pythonLinter } from '../../utils/code';
 
     const code = defineModel<string>();
-    const codeMirrorTextElement = ref<any>(null);
+    const editorView = defineModel<any>('editorView');
     const editorTheme = ref<EditorTheme>(getEditorTheme());
     const extensions = computed(() => [
         python(),
@@ -22,7 +22,7 @@
         ...codeThemesDict[editorTheme.value]
     ]);
 
-    function onCodeMirrorReady(payload: { view: any }) { codeMirrorTextElement.value = payload.view; }
+    function onCodeMirrorReady(payload: { view: any }) { editorView.value = payload.view; console.log(editorView.value); };
 
     onMounted(() => { eventBus.addEventListener(EVENT_EDITOR_THEME_CHANGED, handleEditorThemeChanged); });
 

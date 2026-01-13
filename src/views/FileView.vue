@@ -13,6 +13,7 @@
     import EditorFooter from '../components/file/EditorFooter.vue';
 
     const file = ref<FileType | undefined>(undefined);
+    const codeMirrorTextElement = ref<any>(null);
     const codeOutput = ref<CodeOutput>({ type: 'success', content: '' });
     const canShowCodeOutput = ref<boolean>(false);
     const loading = ref<boolean>(false);
@@ -85,9 +86,9 @@
     <router-view />
 
     <div v-if="file">
-        <CodeEditor v-model="file.content" />
+        <CodeEditor v-model="file.content" v-model:editor-view="codeMirrorTextElement" />
         <CodeOutputModal v-model="canShowCodeOutput" :file-name="file.name" :code-output="codeOutput" />
-        <EditorFooter />
+        <EditorFooter v-model:editor-view="codeMirrorTextElement" />
     </div>
 </template>
 
