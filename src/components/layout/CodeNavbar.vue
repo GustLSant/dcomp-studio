@@ -3,19 +3,15 @@
     import { useRouter } from 'vue-router';
     import PrimaryShinyContainer from '../common/shinyContainer/PrimaryShinyContainer.vue';
     import ShinyContainer from '../common/shinyContainer/ShinyContainer.vue';
+    import eventBus from '../../eventBus';
+    import { EVENT_SAVE_FILE } from '../../events/entities';
 
     const router = useRouter()
-    const emit = defineEmits(['runCode', 'saveFile']);
+    const emit = defineEmits(['runCode']);
 
-    function handleClickMenu() {
-        router.push({ name: 'FileMenu' });
-    }
-    function handleClickSave() {
-        emit('saveFile');
-    }
-    function handleClickRun() {
-        emit('runCode');
-    }    
+    function handleClickMenu() { router.push({ name: 'FileMenu' }); }
+    function handleClickSave() { eventBus.dispatchEvent(new Event(EVENT_SAVE_FILE)); };
+    function handleClickRun() { emit('runCode'); }    
 </script>
 
 

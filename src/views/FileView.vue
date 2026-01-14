@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { onMounted, ref } from 'vue';
+    import { onMounted, onUnmounted, ref } from 'vue';
     import CodeEditor from '../components/codeEditor/CodeEditor.vue';
     import { useRoute, useRouter } from 'vue-router';
     import { type FileType } from '../types/entities';
@@ -11,6 +11,8 @@
     import CodeNavbar from '../components/layout/CodeNavbar.vue';
     import { createPopup } from '../utils/popup';
     import EditorFooter from '../components/file/EditorFooter.vue';
+    import eventBus from '../eventBus';
+    import { EVENT_SAVE_FILE } from '../events/entities';
 
     const file = ref<FileType | undefined>(undefined);
     const codeMirrorTextElement = ref<any>(null);
@@ -20,7 +22,11 @@
     const route = useRoute();
     const router = useRouter();
 
+    
     onMounted(getFileFromDB);
+
+    onMounted(() => { eventBus.addEventListener(EVENT_SAVE_FILE, saveFile); });
+    onUnmounted(() => { eventBus.removeEventListener(EVENT_SAVE_FILE, saveFile); });
 
 
     async function getFileFromDB() {
@@ -80,7 +86,7 @@
 
 
 <template>
-    <CodeNavbar @run-code="runCode" @save-file="saveFile" />
+    <CodeNavbar @run-code="runCode" />
     
     <LoadingOverlay v-if="loading" />
     <router-view />

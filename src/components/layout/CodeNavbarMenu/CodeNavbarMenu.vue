@@ -14,7 +14,7 @@
     import Modal from '../../common/Modal.vue';
     import Button from '../../common/Button.vue';
     import { openDeleteEntityModal, openMoveEntityModal, openRenameEntityModal } from '../../../utils/actionModal';
-    import { EVENT_ENTITY_UPDATED } from '../../../events/entities';
+    import { EVENT_ENTITY_UPDATED, EVENT_SAVE_FILE } from '../../../events/entities';
     import EditorThemeAccordion from './EditorThemeAccordion.vue';
     import eventBus from '../../../eventBus';
 
@@ -63,6 +63,8 @@
     }
 
 
+    function handleClickSaveFile() { eventBus.dispatchEvent(new Event(EVENT_SAVE_FILE)); };
+
     function handleClickDeleteFile() {
         if (!file.value) return;
         openDeleteEntityModal(file.value);
@@ -108,7 +110,7 @@
                     <EditorThemeAccordion />
 
                     <section>
-                        <Button variant="primary-outlined" icon="mdi:content-save-outline">
+                        <Button variant="primary-outlined" @click="handleClickSaveFile" icon="mdi:content-save-outline">
                             Salvar
                         </Button>
                         
