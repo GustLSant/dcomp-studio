@@ -14,7 +14,7 @@
 
 <template>
     <section :class="(isOpen) ? 'max-h-[600px]' : 'max-h-10'" class="overflow-y-hidden border border-white/20 rounded-md p-2 gap-2!">
-        <div @click="() => { isOpen = !isOpen; }" class="flex items-center justify-between">
+        <div @click.stop="() => { isOpen = !isOpen; }" class="flex items-center justify-between">
             <p>Tema do Editor:</p>
             <Icon v-if="isOpen" icon="mdi:chevron-up" width="24" height="24" />
             <Icon v-else icon="mdi:chevron-down" width="24" height="24" />
