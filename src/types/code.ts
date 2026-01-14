@@ -3,7 +3,7 @@ export type CodeOutput = {
     content: string,
 }
 
-export type EditorFooterButtonLabel = '=' | '()' | ':' | ',' | '"' | '[]' | '{}' | '&' | '|' | '_' | '#' | '<' | '>' | '!' | 'tab';
+export type EditorFooterButtonLabel = '=' | '( )' | ':' | ',' | '"' | '[ ]' | '{ }' | '&' | '|' | '_' | '#' | '<' | '>' | '!' | 'tab';
 
 export type EditorFooterButton = {
     id: number,

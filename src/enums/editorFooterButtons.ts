@@ -3,12 +3,12 @@ import { insertBraces, insertBrackets, insertChar, insertParens, insertTabIndent
 
 export const EDITOR_FOOTER_BUTTONS: EditorFooterButton[] = [
     { id: 0,  label: '=',   function: (_view: any) => insertChar(_view, '=')  },
-    { id: 1,  label: '()',  function: insertParens                            },
+    { id: 1,  label: '( )', function: insertParens                            },
     { id: 2,  label: ':',   function: (_view: any) => insertChar(_view, ':')  },
     { id: 3,  label: ',',   function: (_view: any) => insertChar(_view, ',')  },
     { id: 4,  label: '"',   function: (_view: any) => insertChar(_view, '"')  },
-    { id: 5,  label: '[]',  function: insertBrackets                          },
-    { id: 6,  label: '{}',  function: insertBraces                            },
+    { id: 5,  label: '[ ]', function: insertBrackets                          },
+    { id: 6,  label: '{ }', function: insertBraces                            },
     { id: 7,  label: '&',   function: (_view: any) => insertChar(_view, '&')  },
     { id: 8,  label: '|',   function: (_view: any) => insertChar(_view, '|')  },
     { id: 9,  label: '_',   function: (_view: any) => insertChar(_view, '_')  },
