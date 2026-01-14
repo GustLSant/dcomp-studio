@@ -45,7 +45,7 @@
             
             <ShinyContainer class="grow overflow-x-hidden rounded-md">
                 <div class="overflow-x-auto flex items-center gap-2 py-1 px-2 rounded-md bg-(--foreground)">
-                    <p v-for="button in EDITOR_FOOTER_BUTTONS" :key="button.id" @pointerdown.stop @click="() => { button.function(editorView) }" class="bg-white/15 px-4 rounded-sm">
+                    <p v-for="button in EDITOR_FOOTER_BUTTONS" :key="button.id" @pointerdown.stop @click="() => { button.function(editorView) }" class="bg-white/15 px-4 rounded-sm whitespace-nowrap">
                         {{ button.label }}
                     </p>
                 </div>
