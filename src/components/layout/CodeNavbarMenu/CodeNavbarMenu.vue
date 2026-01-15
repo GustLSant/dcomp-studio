@@ -2,7 +2,6 @@
     import { useRoute, useRouter } from 'vue-router';
     import { Icon } from '@iconify/vue';
     import FileNameContainer from '../../common/FileNameContainer.vue';
-    import FolderPreview from '../../folders/FolderPreview.vue';
     import { type FolderType, type FileType } from '../../../types/entities';
     import { onBeforeUnmount, onMounted, onUnmounted, ref } from 'vue';
     import { getFileById } from '../../../services/files';
