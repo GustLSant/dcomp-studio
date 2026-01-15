@@ -34,7 +34,7 @@
 
 <template>
     <TransitionFadeHorizontal>
-        <div v-if="props.open" @click="handleClickOutsideModal" class="z-50 fixed top-0 bottom-0 left-0 right-0 bg-black/30 backdrop-blur-sm">
+        <div v-if="props.open" @click="handleClickOutsideModal" class="z-50 fixed top-0 bottom-0 left-0 right-0 bg-black/30 backdrop-blur-xs">
             <div class="w-full h-full flex items-center justify-center">
                 <div ref="modalContentRef" class="relative basis-(--max-modal-width) max-h-full p-2 overflow-y-auto">
                     <CloseButton @click="() => { emit('close'); }" />

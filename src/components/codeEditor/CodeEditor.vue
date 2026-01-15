@@ -1,15 +1,16 @@
 <script setup lang="ts">
-    import { computed, ref } from 'vue';
+    import { computed, onUnmounted, ref } from 'vue';
     import { Codemirror } from 'vue-codemirror';
     import { python } from "@codemirror/lang-python";
     import { codeThemesDict, getEditorTheme } from '../../utils/editorTheme';
     import { onMounted } from 'vue';
     import eventBus from '../../eventBus';
     import { history } from "@codemirror/commands";
-    import { EVENT_EDITOR_THEME_CHANGED } from '../../events/editor';
+    import { EVENT_EDITOR_FONT_SIZE_CHANGED, EVENT_EDITOR_THEME_CHANGED } from '../../events/editor';
     import type { EditorTheme } from '../../enums/editorThemes';
     import { lintGutter } from '@codemirror/lint';
     import { pythonLinter } from '../../utils/code';
+import { getFontSizeFromLocalStorage } from '../../utils/codeEditor';
 
     const code = defineModel<string>();
     const editorView = defineModel<any>('editorView');
@@ -21,14 +22,17 @@
         pythonLinter,
         ...codeThemesDict[editorTheme.value]
     ]);
+    const fontSize = ref<string>('12');
 
     function onCodeMirrorReady(payload: { view: any }) { editorView.value = payload.view; console.log(editorView.value); };
 
-    onMounted(() => { eventBus.addEventListener(EVENT_EDITOR_THEME_CHANGED, handleEditorThemeChanged); });
+    onMounted(() => { eventBus.addEventListener(EVENT_EDITOR_FONT_SIZE_CHANGED, getFontSize) });
+    onUnmounted(() => { eventBus.removeEventListener(EVENT_EDITOR_FONT_SIZE_CHANGED, getFontSize) });
+    function getFontSize() { fontSize.value = getFontSizeFromLocalStorage(); console.log(fontSize.value) }
 
-    function handleEditorThemeChanged() {
-        editorTheme.value = getEditorTheme();
-    }
+    onMounted(() => { eventBus.addEventListener(EVENT_EDITOR_THEME_CHANGED, handleEditorThemeChanged); });
+    onUnmounted(() => { eventBus.removeEventListener(EVENT_EDITOR_THEME_CHANGED, handleEditorThemeChanged) });
+    function handleEditorThemeChanged() { editorTheme.value = getEditorTheme(); }
 </script>
 
 
@@ -38,6 +42,7 @@
         v-model="code"
         @ready="onCodeMirrorReady"
         :extensions="extensions"
+        :style="{ fontSize: `${fontSize}px` }"
     />
 </template>
 

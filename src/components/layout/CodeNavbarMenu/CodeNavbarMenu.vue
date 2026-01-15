@@ -13,10 +13,12 @@
     import { createPopup } from '../../../utils/popup';
     import Modal from '../../common/Modal.vue';
     import Button from '../../common/Button.vue';
-    import { openDeleteEntityModal, openMoveEntityModal, openRenameEntityModal } from '../../../utils/actionModal';
+    import { openDeleteEntityModal, openRenameEntityModal } from '../../../utils/actionModal';
     import { EVENT_ENTITY_UPDATED, EVENT_SAVE_FILE } from '../../../events/entities';
     import EditorThemeAccordion from './EditorThemeAccordion.vue';
     import eventBus from '../../../eventBus';
+    import EditorFontSizeSelect from './EditorFontSizeSelect.vue';
+    import EditorOriginFolder from './EditorOriginFolder.vue';
 
     const file = ref<FileType | undefined>(undefined);
     const parentFolder = ref<FolderType | undefined>(undefined);
@@ -94,18 +96,14 @@
                         </div>
                     </section>
 
-                    <section>
-                        <p class="font-light opacity-60 text-sm">Data de criação:</p>
+                    <section class="flex-row! justify-between items-center">
+                        <p>Data de criação:</p>
                         <p class="font-mono">{{ formatDate(file.creationDate) }}</p>
                     </section>
 
-                    <section v-if="parentFolder">
-                        <p>Pasta de origem:</p>
-                        <div class="flex items-center justify-between gap-2">
-                            <FolderPreview :entity="parentFolder" :interactable="false" />
-                            <HoverableIcon icon="fa7-solid:exchange" :size="22" @click="() => { openMoveEntityModal(file!) }" />
-                        </div>
-                    </section>
+                    <EditorOriginFolder v-if="parentFolder" :file="file" :parent-folder="parentFolder" />
+
+                    <EditorFontSizeSelect />
 
                     <EditorThemeAccordion />
 

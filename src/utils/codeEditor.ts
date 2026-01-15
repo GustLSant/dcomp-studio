@@ -4,6 +4,9 @@ import { createPopup } from './popup';
 const indent = "  ";
 
 
+export function getFontSizeFromLocalStorage(): string { return localStorage.getItem('fontSize') ?? '12'; }
+
+
 export function insertChar(_view: any, _char: string) {
     if (!_view) return;
 
