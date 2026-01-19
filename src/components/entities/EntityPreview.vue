@@ -14,7 +14,8 @@
 
     function handleClick(_event: MouseEvent) {
         if (!props.interactable) return;
-        router.push({ name: 'Folder', params: { id: props.entity.id } });
+        const routeName: string = props.entity.kind === 'file' ? 'File' : 'Folder';
+        router.push({ name: routeName, params: { id: props.entity.id } });
     }
 </script>
 
