@@ -27,7 +27,7 @@
             <div class="shrink-0">
                 <Icon :icon="props.icon" width="22" height="22" />
             </div>
-            <p class="basis-1 grow overflow-auto">{{ props.entity.name }}</p>
+            <p class="basis-1 grow overflow-x-auto">{{ props.entity.name }}</p>
         </div>
 
         <Icon v-if="props.interactable" @click.stop="handleClickMenu" icon="mdi:dots-vertical" width="22" height="22" class="-mr-1" />

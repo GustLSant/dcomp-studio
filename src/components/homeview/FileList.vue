@@ -56,7 +56,7 @@
             </div>
 
             <div class="flex items-center justify-end hover:cursor-pointer">
-                <p @click="handleClickExploreFiles" class="text-sm primary-text-gradient underline">Explorar todos os arquivos</p>
+                <p @click="handleClickExploreFiles" class="text-sm text-(--primary) underline">Explorar todos os arquivos</p>
             </div>
         </section>
     </ShinyContainer>

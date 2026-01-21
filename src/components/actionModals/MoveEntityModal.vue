@@ -113,15 +113,15 @@
                 </div>
 
                 <div v-else class="text-center">
-                    <p>Não existe nenhuma outra pasta nos seus arquivos</p>
+                    <p class="text-sm opacity-60">Não existe nenhuma outra pasta nos seus arquivos</p>
                 </div>
 
                 <div class="flex flex-col gap-1">
                     <Button @click="handleClickNewFolder" variant="primary-outlined" icon="mdi:create-new-folder-outline">
                         Nova Pasta
                     </Button>
-                    <Button variant="primary-outlined" @click="handleCloseModal">
-                        Cancelar
+                    <Button variant="primary-outlined" @click="handleCloseModal" icon="mdi:arrow-back">
+                        Voltar
                     </Button>
                 </div>
             </div>
