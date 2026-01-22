@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import Logo from "../../assets/logo/new_white.png";
+  import Logo from "../../assets/logo/white.png";
   import { Icon } from "@iconify/vue";
 </script>
 
