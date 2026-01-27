@@ -10,7 +10,8 @@
     import type { EditorTheme } from '../../enums/editorThemes';
     import { lintGutter } from '@codemirror/lint';
     import { pythonLinter } from '../../utils/code';
-import { getFontSizeFromLocalStorage } from '../../utils/codeEditor';
+    import { getFontSizeFromLocalStorage } from '../../utils/codeEditor';
+    import { createPopup } from '../../utils/popup';
 
     const code = defineModel<string>();
     const editorView = defineModel<any>('editorView');
@@ -32,7 +33,7 @@ import { getFontSizeFromLocalStorage } from '../../utils/codeEditor';
 
     onMounted(() => { eventBus.addEventListener(EVENT_EDITOR_THEME_CHANGED, handleEditorThemeChanged); });
     onUnmounted(() => { eventBus.removeEventListener(EVENT_EDITOR_THEME_CHANGED, handleEditorThemeChanged) });
-    function handleEditorThemeChanged() { editorTheme.value = getEditorTheme(); }
+    function handleEditorThemeChanged() { editorTheme.value = getEditorTheme(); createPopup('success', 'Sucesso', 'Tema alterado com sucesso'); }
 </script>
 
 
