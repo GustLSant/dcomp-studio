@@ -12,9 +12,10 @@
     }
 </script>
 
+
 <template>
-    <div @click="handleClickFile" class="flex items-center gap-2 asd rounded-r-md font-mono">
-        <div class="neon-strike w-0.5 self-stretch primary-bg-gradient"></div>
+    <div @click="handleClickFile" class="flex items-center gap-2 file-card rounded-r-md font-mono">
+        <div class="neon-strike w-0.5 self-stretch bg-(--primary) brightness-75"></div>
 
         <div class="grow flex items-center gap-2 p-2 overflow-hidden">
             <CodePreview />
@@ -31,21 +32,13 @@
 
 
 <style scoped>
-    .asd {
-        background-color: rgba(255,255,255, 2.5%);
-        background-image: linear-gradient(to right, rgba(20, 140, 255, 5%), rgba(20, 140, 255, 10%), rgba(20, 140, 255, 5%));
-
-        .neon-strike{
-            filter: brightness(70%);
-        }
+    .file-card {
+        background-color: rgba(255,255,255, 5%);
+        background-image: linear-gradient(to right, rgba(20, 140, 255, 15%), transparent, transparent);
 
         &:hover {
             cursor: pointer;
-            background-image: linear-gradient(to right, rgba(20, 140, 255, 30%), rgba(20, 140, 255, 5%));
-
-            .neon-strike{
-                filter: brightness(100%);
-            }
+            background-color: rgba(255,255,255, 7.5%);
         }
     }
 </style>

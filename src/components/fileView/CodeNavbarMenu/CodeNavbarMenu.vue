@@ -7,7 +7,6 @@
     import { getFileById } from '../../../services/files';
     import { formatDate } from '../../../utils/date';
     import HoverableIcon from '../../common/HoverableIcon.vue';
-    import ShinyContainer from '../../common/shinyContainer/ShinyContainer.vue';
     import { getFolderById } from '../../../services/folders';
     import { createPopup } from '../../../utils/popup';
     import Modal from '../../common/Modal.vue';
@@ -34,7 +33,7 @@
     onUnmounted(() => { eventBus.removeEventListener(EVENT_ENTITY_UPDATED, getFileFromDB); });
 
 
-    function returnToHome() { router.push('/home'); }
+    function returnToHome() { router.push('/'); }
     function closeMenu() { router.back(); }
 
     
@@ -75,53 +74,51 @@
 
 <template>
     <Modal :open="true" @close="closeMenu">
-        <ShinyContainer class="rounded-md relative fade-in-bottom-short">
-            <div class="flex flex-col gap-4 p-2 py-4 rounded-md bg-(--foreground)">
+        <div class="flex flex-col gap-4 p-2 py-4 rounded-md bg-(--foreground)">
 
-                <div class="flex items-center gap-1">
-                    <Icon icon="mdi:file-outline" width="24" height="24" />
-                    <p>Menu do Arquivo</p>
-                </div>
-
-                <div v-if="file" class="flex flex-col gap-4">
-                    <section>
-                        <p class="font-light opacity-60 text-sm">Arquivo:</p>
-                        <div class="flex items-center gap-2">
-                            <FileNameContainer class="grow">
-                                {{ file.name }}
-                            </FileNameContainer>
-
-                            <HoverableIcon icon="mdi:rename-outline" :size="22" @click="() => { openRenameEntityModal(file!) }" />
-                        </div>
-                    </section>
-
-                    <section class="flex-row! justify-between items-center">
-                        <p>Data de criação:</p>
-                        <p class="font-mono">{{ formatDate(file.creationDate) }}</p>
-                    </section>
-
-                    <EditorOriginFolder v-if="parentFolder" :file="file" :parent-folder="parentFolder" />
-
-                    <EditorFontSizeSelect />
-
-                    <EditorThemeAccordion />
-
-                    <section>
-                        <Button variant="primary-outlined" @click="handleClickSaveFile" icon="mdi:content-save-outline">
-                            Salvar
-                        </Button>
-                        
-                        <Button variant="primary-outlined" @click="returnToHome" icon="mdi:home">
-                            Sair para Home
-                        </Button>
-
-                        <Button variant="danger-filled" @click="handleClickDeleteFile" icon="mdi:file-document-delete-outline">
-                            Excluir Arquivo
-                        </Button>
-                    </section>
-                </div>
+            <div class="flex items-center gap-1">
+                <Icon icon="mdi:file-outline" width="24" height="24" />
+                <p>Menu do Arquivo</p>
             </div>
-        </ShinyContainer>
+
+            <div v-if="file" class="flex flex-col gap-4">
+                <section>
+                    <p class="font-light opacity-60 text-sm">Arquivo:</p>
+                    <div class="flex items-center gap-2">
+                        <FileNameContainer class="grow">
+                            {{ file.name }}
+                        </FileNameContainer>
+
+                        <HoverableIcon icon="mdi:rename-outline" :size="22" @click="() => { openRenameEntityModal(file!) }" />
+                    </div>
+                </section>
+
+                <section class="flex-row! justify-between items-center">
+                    <p>Data de criação:</p>
+                    <p class="font-mono">{{ formatDate(file.creationDate) }}</p>
+                </section>
+
+                <EditorOriginFolder v-if="parentFolder" :file="file" :parent-folder="parentFolder" />
+
+                <EditorFontSizeSelect />
+
+                <EditorThemeAccordion />
+
+                <section>                    
+                    <Button variant="neutral" @click="handleClickSaveFile" icon="mdi:content-save-outline">
+                        Salvar
+                    </Button>
+                    
+                    <Button variant="neutral" @click="returnToHome" icon="mdi:home">
+                        Sair para Home
+                    </Button>
+
+                    <Button variant="danger-filled" @click="handleClickDeleteFile" icon="mdi:file-document-delete-outline">
+                        Excluir Arquivo
+                    </Button>
+                </section>
+            </div>
+        </div>
     </Modal>
 </template>
 

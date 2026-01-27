@@ -1,7 +1,7 @@
 <script setup lang="ts">
     import type { FileType, FolderType } from '../../../types/entities';
     import { openMoveEntityModal } from '../../../utils/actionModal';
-    import FolderPreview from '../../folders/FolderPreview.vue';
+    import FolderPreview from '../../entities/FolderPreview.vue';
 
     const props = defineProps<{ file:FileType, parentFolder: FolderType }>();
 </script>

@@ -1,16 +1,16 @@
 <script setup lang="ts">
     import { onMounted, onUnmounted, ref } from 'vue';
-    import CodeEditor from '../components/codeEditor/CodeEditor.vue';
+    import CodeEditor from '../components/fileView/CodeEditor.vue';
     import { useRoute, useRouter } from 'vue-router';
     import { type FileType } from '../types/entities';
     import { getFileById, updateFile } from '../services/files';
     import { runPythonCode } from '../utils/code';
-    import CodeOutputModal from '../components/file/CodeOutputModal.vue';
+    import CodeOutputModal from '../components/fileView/CodeOutputModal.vue';
     import LoadingOverlay from '../components/common/LoadingOverlay.vue';
     import type { CodeOutput } from '../types/code';
-    import CodeNavbar from '../components/layout/CodeNavbar.vue';
+    import CodeNavbar from '../components/fileView/CodeNavbar.vue';
     import { createPopup } from '../utils/popup';
-    import EditorFooter from '../components/file/EditorFooter.vue';
+    import EditorFooter from '../components/fileView/EditorFooter.vue';
     import eventBus from '../eventBus';
     import { EVENT_SAVE_FILE } from '../events/entities';
 

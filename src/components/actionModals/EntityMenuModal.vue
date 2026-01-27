@@ -1,6 +1,5 @@
 <script setup lang="ts">
     import { Icon } from '@iconify/vue';
-    import ShinyContainer from '../common/shinyContainer/ShinyContainer.vue';
     import { onMounted, onUnmounted, ref } from 'vue';
     import eventBus from '../../eventBus';
     import Button from '../common/Button.vue';
@@ -10,7 +9,7 @@
     import HoverableIcon from '../common/HoverableIcon.vue';
     import { openDeleteEntityModal, openMoveEntityModal, openRenameEntityModal } from '../../utils/actionModal';
     import { formatDate } from '../../utils/date';
-    import FolderPreview from '../folders/FolderPreview.vue';
+    import FolderPreview from '../entities/FolderPreview.vue';
     import { getFileById } from '../../services/files';
     import { getFolderById } from '../../services/folders';
     import { createPopup } from '../../utils/popup';
@@ -98,48 +97,46 @@
 
 <template>
     <ActionModalContainer ref="modalRef">
-        <ShinyContainer class="rounded-md relative fade-in-bottom-short">
-            <div class="flex flex-col gap-4 p-2 py-4 rounded-md bg-(--foreground)">
-                <div class="flex items-center gap-1">
-                    <Icon icon="mdi:file-outline" width="24" height="24" />
-                    <p>Menu {{ entity?.kind === 'file' ? 'do Arquivo' : 'da Pasta' }}</p>
-                </div>
-
-                <div v-if="entity" class="flex flex-col gap-4">
-                    <section>
-                        <p class="label">Nome:</p>
-                        <div class="flex items-center gap-2">
-                            <FileNameContainer class="grow" @click="() => { openRenameEntityModal(entity!) }">
-                                {{ entity.name }}
-                            </FileNameContainer>
-
-                            <HoverableIcon icon="mdi:rename-outline" :size="22" @click="() => { openRenameEntityModal(entity!) }" />
-                        </div>
-                    </section>
-
-                    <section v-if="entity.kind === 'file'">
-                        <p class="label">Data de criação:</p>
-                        <p class="font-mono">{{ formatDate(entity.creationDate) }}</p>
-                    </section>
-
-                    <section v-if="parentFolder">
-                        <p class="label">Pasta de origem:</p>
-                        <div class="flex items-center justify-between gap-2">
-                            <FolderPreview :entity="parentFolder" :interactable="false" @click="() => { openMoveEntityModal(entity!) }" />
-                            <HoverableIcon icon="fa7-solid:exchange" :size="22" @click="() => { openMoveEntityModal(entity!) }" />
-                        </div>
-                    </section>
-
-                    <!-- <EditorThemeAccordion /> -->
-
-                    <section class="mt-2">
-                        <Button variant="danger-filled" @click="handleClickDeleteEntity" icon="mdi:file-document-delete-outline">
-                            {{(entity.kind === 'file') ? 'Excluir Arquivo' : 'Excluir Pasta' }}
-                        </Button>
-                    </section>
-                </div>
+        <div class="flex flex-col gap-4 p-2 py-4 rounded-md bg-(--foreground)">
+            <div class="flex items-center gap-1">
+                <Icon icon="mdi:file-outline" width="24" height="24" />
+                <p>Menu {{ entity?.kind === 'file' ? 'do Arquivo' : 'da Pasta' }}</p>
             </div>
-        </ShinyContainer>
+
+            <div v-if="entity" class="flex flex-col gap-4">
+                <section>
+                    <p class="label">Nome:</p>
+                    <div class="flex items-center gap-2">
+                        <FileNameContainer class="grow" @click="() => { openRenameEntityModal(entity!) }">
+                            {{ entity.name }}
+                        </FileNameContainer>
+
+                        <HoverableIcon icon="mdi:rename-outline" :size="22" @click="() => { openRenameEntityModal(entity!) }" />
+                    </div>
+                </section>
+
+                <section v-if="entity.kind === 'file'">
+                    <p class="label">Data de criação:</p>
+                    <p class="font-mono">{{ formatDate(entity.creationDate) }}</p>
+                </section>
+
+                <section v-if="parentFolder">
+                    <p class="label">Pasta de origem:</p>
+                    <div class="flex items-center justify-between gap-2">
+                        <FolderPreview :entity="parentFolder" :interactable="false" @click="() => { openMoveEntityModal(entity!) }" />
+                        <HoverableIcon icon="fa7-solid:exchange" :size="22" @click="() => { openMoveEntityModal(entity!) }" />
+                    </div>
+                </section>
+
+                <!-- <EditorThemeAccordion /> -->
+
+                <section class="mt-2">
+                    <Button variant="danger-filled" @click="handleClickDeleteEntity" icon="mdi:file-document-delete-outline">
+                        {{(entity.kind === 'file') ? 'Excluir Arquivo' : 'Excluir Pasta' }}
+                    </Button>
+                </section>
+            </div>
+        </div>
     </ActionModalContainer>
 </template>
 

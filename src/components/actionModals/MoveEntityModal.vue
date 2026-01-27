@@ -1,6 +1,5 @@
 <script setup lang="ts">
     import { Icon } from '@iconify/vue';
-    import ShinyContainer from '../common/shinyContainer/ShinyContainer.vue';
     import Button from '../common/Button.vue';
     import { createPopup } from '../../utils/popup';
     import type { FileType, FolderType } from '../../types/entities';
@@ -9,7 +8,7 @@
     import { moveFile } from '../../services/files';
     import { EVENT_MOVE_ENTITY } from '../../events/actionModal';
     import { getAllFolders, getRootFolder, moveFolder } from '../../services/folders';
-    import FolderPreview from '../folders/FolderPreview.vue';
+    import FolderPreview from '../entities/FolderPreview.vue';
     import { EVENT_ENTITY_UPDATED } from '../../events/entities';
     import ActionModalContainer from './ActionModalContainer.vue';
     import { openCreateEntityModal } from '../../utils/actionModal';
@@ -93,39 +92,37 @@
 
 <template>
     <ActionModalContainer ref="modalRef">
-        <ShinyContainer class="rounded-md relative">
-            <div class="flex flex-col gap-6 p-2 py-4 rounded-md bg-(--foreground)" >
-                <div class="flex items-center gap-1">
-                    <Icon icon="fa7-solid:exchange" width="24" height="24" />
-                    <p class="text-xl">Mover Arquivo</p>
-                </div>
-
-                <p>Selecione para qual pasta deseja mover o arquivo:</p>
-
-                <div v-if="folders.length !== 0" class="flex flex-col gap-1 max-h-[50vh] overflow-y-auto">
-                    <FolderPreview
-                        v-for="folder in folders"
-                        :entity="folder"
-                        :interactable="false"
-                        @click="() => { handleClickFolder(folder.id) }"
-                        class="hover:brightness-130 hover:cursor-pointer"
-                    />
-                </div>
-
-                <div v-else class="text-center">
-                    <p class="text-sm opacity-60">Não existe nenhuma outra pasta nos seus arquivos</p>
-                </div>
-
-                <div class="flex flex-col gap-1">
-                    <Button @click="handleClickNewFolder" variant="primary-outlined" icon="mdi:create-new-folder-outline">
-                        Nova Pasta
-                    </Button>
-                    <Button variant="primary-outlined" @click="handleCloseModal" icon="mdi:arrow-back">
-                        Voltar
-                    </Button>
-                </div>
+        <div class="flex flex-col gap-6 p-2 py-4 rounded-md bg-(--foreground)" >
+            <div class="flex items-center gap-1">
+                <Icon icon="fa7-solid:exchange" width="24" height="24" />
+                <p class="text-xl">Mover Arquivo</p>
             </div>
-        </ShinyContainer>
+
+            <p>Selecione para qual pasta deseja mover o arquivo:</p>
+
+            <div v-if="folders.length !== 0" class="flex flex-col gap-1 max-h-[50vh] overflow-y-auto">
+                <FolderPreview
+                    v-for="folder in folders"
+                    :entity="folder"
+                    :interactable="false"
+                    @click="() => { handleClickFolder(folder.id) }"
+                    class="hover:brightness-130 hover:cursor-pointer"
+                />
+            </div>
+
+            <div v-else class="text-center">
+                <p class="text-sm opacity-60">Não existe nenhuma outra pasta nos seus arquivos</p>
+            </div>
+
+            <div class="flex flex-col gap-1">
+                <Button @click="handleClickNewFolder" variant="primary-outlined" icon="mdi:create-new-folder-outline">
+                    Nova Pasta
+                </Button>
+                <Button variant="primary-outlined" @click="handleCloseModal" icon="mdi:arrow-back">
+                    Voltar
+                </Button>
+            </div>
+        </div>
     </ActionModalContainer>
 </template>
 

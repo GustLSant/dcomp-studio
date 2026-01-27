@@ -21,7 +21,7 @@
 
 
 <template>
-    <div @click="handleClick" class="flex items-center gap-4 justify-between p-2 pr-3 rounded-sm">
+    <div @click="handleClick" class="flex items-center gap-4 justify-between p-2 pr-3 rounded-sm bg-(--bg-input) border border-(--border-01) hover:cursor-pointer hover:underline">
 
         <div class="flex items-center gap-2 leading-tight whitespace-nowrap basis-1 grow overflow-hidden">
             <div class="shrink-0">

@@ -42,9 +42,11 @@
         <FileList />
     </div>
 
-    <div v-if="!loading && fileCount !== undefined && fileCount === 0" class="flex flex-col items-center justify-center gap-2">
-        <p class="text-xl">Você ainda não possui nenhum arquivo</p>
-        <p class="opacity-60">Clique no botão abaixo para criar o primeiro:</p>
+    <div v-if="!loading && fileCount !== undefined && fileCount === 0" class="flex flex-col items-center justify-center gap-4">
+        <div class="flex flex-col items-center gap-1">
+            <p class="text-lg">Você ainda não possui nenhum arquivo</p>
+            <p class="text-sm opacity-60">Clique no botão abaixo para criar um arquivo</p>
+        </div>
         <Button @click="() => { openCreateEntityModal('file', getRootFolder()) }" variant="primary-filled" icon="mdi:file-plus-outline" >
             Criar Arquivo
         </Button>

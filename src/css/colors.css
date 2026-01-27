@@ -1,18 +1,18 @@
 :root {
+  --background: hsl(0, 0%, 96%);
+
+  --foreground: hsl(0, 0%, 100%);
+  --foreground-02: hsl(0, 0%, 100%);
+
+  --bg-input: rgba(0,0,0, 0.2);
+
   --primary: #148cff;
   --primary-gradient-left: #29a6ff;
   --primary-gradient-right: #0073ff;
+  --border-primary: rgba(20, 141, 255, 0.6);
 
-  --secondary: rgb(110, 20, 255);
-  --secondary-gradient-left: #8929ff;
-  --secondary-gradient-right: #5100ff;
-
-  --primary-darker: hsl(209, 100%, 35%);
-
-  --background: hsl(0, 0%, 96%);
-  --foreground: hsl(0, 0%, 100%);
-
-  --folder-bg-color: #282828;
+  --border-01: rgba(0,0,0, 0.3);
+  --border-02: rgba(0,0,0, 0.2);
 
   --success-color: rgb(170, 255, 40);
   --warning-color: rgb(255, 150, 0);
@@ -22,8 +22,15 @@
 }
 
 .dark {
-  --background: hsl(0, 0%, 8%);  
-  --foreground: hsl(240, 8%, 10%);
+  --background: hsl(0, 0%, 2%);
+
+  --foreground: hsl(0, 0%, 10%);
+  --foreground-02: hsl(0, 0%, 16%);
+
+  --bg-input: rgba(255,255,255, 0.05);
+
+  --border-01: rgba(255,255,255, 0.3);
+  --border-02: rgba(255,255,255, 0.2);
 
   color: white;
 }

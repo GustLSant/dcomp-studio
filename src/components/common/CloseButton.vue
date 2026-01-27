@@ -5,7 +5,7 @@
 
 
 <template>
-    <HoverableIcon icon="mdi:close" :size="(props.size) ? props.size : 22" class="absolute top-4 right-4 z-10" />
+    <HoverableIcon icon="mdi:close" :size="(props.size) ? props.size : 22" class="absolute top-2 right-2 z-10" />
 </template>
 
 

@@ -1,0 +1,35 @@
+.primary-bg-gradient {
+  background-image: linear-gradient(to right, var(--primary-gradient-left), var(--primary-gradient-right));
+}
+
+.primary-text-gradient {
+  background: linear-gradient(90deg, var(--primary-gradient-left), var(--primary-gradient-right));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  position: relative;
+
+  &.underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 1px;
+    width: 100%;
+    background: linear-gradient(90deg, var(--primary-gradient-left), var(--primary-gradient-right));
+  }
+}
+
+.shiny-border-01 {
+  border-left: 1px solid var(--border-01);
+  border-top: 1px solid var(--border-01);
+}
+
+.shiny-border-02 {
+  border-left: 1px solid var(--border-02);
+  border-top: 1px solid var(--border-02);
+}
+
+.shadow-inset {
+  box-shadow: 4px 4px 4px rgba(0,0,0, 0.15) inset;
+}

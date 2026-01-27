@@ -1,6 +1,5 @@
 <script setup lang="ts">
     import { Icon } from '@iconify/vue';
-    import ShinyContainer from '../common/shinyContainer/ShinyContainer.vue';
     import { onMounted, onUnmounted, ref } from 'vue';
     import eventBus from '../../eventBus';
     import Button from '../common/Button.vue';
@@ -71,29 +70,27 @@
 
 <template>
     <ActionModalContainer ref="modalRef">
-        <ShinyContainer class="rounded-md relative">
-            <div class="flex flex-col gap-6 p-2 py-4 rounded-md bg-(--foreground)">
-                <div class="flex items-center gap-1">
-                    <Icon icon="mdi:rename-outline" width="24" height="24" />
-                    <p class="text-xl">Renomear {{ (entity?.kind === 'file') ? 'Arquivo' : 'Pasta' }}</p>
-                </div>
-
-                <div class="flex flex-col">
-                    <p>Nome {{ (entity?.kind === 'file' ? 'do arquivo' : 'da pasta') }}:</p>
-                    <TextInput v-model="entityName" />
-                </div>
-
-                <div class="flex items-stretch justify-end flex-wrap gap-2">
-                    <Button @click="handleCloseModal" variant="primary-outlined">
-                        Cancelar
-                    </Button>
-
-                    <Button @click="handleClickRenameFile" variant="primary-filled" icon="mdi:rename-outline">
-                        Renomear arquivo
-                    </Button>
-                </div>
+        <div class="flex flex-col gap-6 p-2 py-4 rounded-md bg-(--foreground)">
+            <div class="flex items-center gap-1">
+                <Icon icon="mdi:rename-outline" width="24" height="24" />
+                <p class="text-xl">Renomear {{ (entity?.kind === 'file') ? 'Arquivo' : 'Pasta' }}</p>
             </div>
-        </ShinyContainer>
+
+            <div class="flex flex-col">
+                <p>Nome {{ (entity?.kind === 'file' ? 'do arquivo' : 'da pasta') }}:</p>
+                <TextInput v-model="entityName" />
+            </div>
+
+            <div class="flex items-stretch justify-end flex-wrap gap-2">
+                <Button @click="handleCloseModal" variant="primary-outlined">
+                    Cancelar
+                </Button>
+
+                <Button @click="handleClickRenameFile" variant="primary-filled" icon="mdi:rename-outline">
+                    Renomear arquivo
+                </Button>
+            </div>
+        </div>
     </ActionModalContainer>
 </template>
 

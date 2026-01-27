@@ -6,9 +6,8 @@
     import type { Entity, EntityKind, FileType, FolderType } from '../../types/entities';
     import { getDefaultFile, getDefaultFolder } from '../../utils/entities';
     import { createPopup } from '../../utils/popup';
-    import FolderPreview from '../folders/FolderPreview.vue';
+    import FolderPreview from '../entities/FolderPreview.vue';
     import Button from '../common/Button.vue';
-    import ShinyContainer from '../common/shinyContainer/ShinyContainer.vue';
     import TextInput from '../common/TextInput.vue';
     import eventBus from '../../eventBus';
     import { EVENT_CREATE_ENTITY } from '../../events/actionModal';
@@ -92,40 +91,36 @@
 
 <template>
     <ActionModalContainer ref="modalRef">
-        <ShinyContainer class="rounded-md max-w-[600px] m-auto">
-
-            <div class="relative flex flex-col gap-4 bg-(--foreground) p-2 rounded-md">
-                <div class="flex items-center gap-1 text-xl">
-                    <Icon icon="mdi:add" width="24" height="24" />
-                    <p>{{ (entityKind === 'file') ? 'Criar novo arquivo' : 'Criar nova pasta' }}</p>
-                </div>
-    
-                <div class="flex flex-col gap-4 my-4">
-                    <div class="flex items-center gap-2">
-                        <p>Nome:</p>
-                        <TextInput v-model="entityName" />
-                    </div>
-        
-                    <div class="flex items-center gap-2">
-                        <p>Pasta de origem:</p>
-                        <FolderPreview :entity="parentFolder!" :interactable="false" />
-                    </div>
-                </div>
-                
-
-                <div class="flex items-center justify-end gap-2">
-                    <Button variant="danger-outlined" icon="mdi:close" @click="handleCloseModal">
-                        Cancelar
-                    </Button>
-    
-                    <Button @click="handleAddEntity" variant="primary-filled" icon="mdi:add">
-                        Criar
-                        {{ (entityKind === 'file') ? 'Arquivo' : 'Pasta' }}
-                    </Button>
-                </div>
+        <div class="flex flex-col gap-4 bg-(--foreground) p-2 rounded-md">
+            <div class="flex items-center gap-1 text-xl">
+                <Icon icon="mdi:file-plus-outline" width="24" height="24" />
+                <p>{{ (entityKind === 'file') ? 'Criar novo arquivo' : 'Criar nova pasta' }}</p>
             </div>
 
-        </ShinyContainer>
+            <div class="flex flex-col gap-4 my-4">
+                <div class="flex flex-col gap-1">
+                    <p>Nome:</p>
+                    <TextInput v-model="entityName" icon="mdi:playlist-edit" />
+                </div>
+    
+                <div class="flex items-center gap-2 justify-between">
+                    <p>Pasta de origem:</p>
+                    <FolderPreview :entity="parentFolder!" :interactable="false" />
+                </div>
+            </div>
+            
+
+            <div class="flex items-center justify-end gap-2">
+                <Button variant="neutral" icon="mdi:close" @click="handleCloseModal">
+                    Cancelar
+                </Button>
+
+                <Button @click="handleAddEntity" variant="primary-filled" icon="mdi:file-plus-outline">
+                    Criar
+                    {{ (entityKind === 'file') ? 'Arquivo' : 'Pasta' }}
+                </Button>
+            </div>
+        </div>
     </ActionModalContainer>
 </template>
 

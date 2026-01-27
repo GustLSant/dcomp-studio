@@ -1,6 +1,5 @@
 <script setup lang="ts">
     import { Icon } from '@iconify/vue';
-    import ShinyContainer from '../common/shinyContainer/ShinyContainer.vue';
     import { onMounted, onUnmounted, ref } from 'vue';
     import eventBus from '../../eventBus';
     import Button from '../common/Button.vue';
@@ -69,29 +68,27 @@
 
 <template>
     <ActionModalContainer ref="modalRef">
-        <ShinyContainer class="rounded-md relative">
-            <div class="flex flex-col gap-6 p-2 py-4 rounded-md bg-(--foreground)">
-                <div class="flex items-center gap-1">
-                    <Icon icon="mdi:file-document-delete-outline" width="24" height="24" />
-                    <p class="text-xl">Excluir {{ (entity?.kind === 'file') ? 'Arquivo' : 'Pasta' }}</p>
-                </div>
-
-                <div class="flex flex-col">
-                    <p>Tem certeza que deseja excluir {{ (entity?.kind === 'file') ? 'o arquivo' : 'a pasta' }}?</p>
-                    <small class="opacity-60">*Esta ação é irreversível</small>
-                </div>
-
-                <div class="flex items-stretch justify-end flex-wrap gap-2">
-                    <Button variant="danger-filled" @click="handleClickDeleteFile">
-                        Excluir {{ (entity?.kind === 'file') ? 'Arquivo' : 'Pasta' }}
-                    </Button>
-
-                    <Button variant="primary-outlined" @click="handleCloseModal">
-                        Cancelar
-                    </Button>
-                </div>
+        <div class="flex flex-col gap-6 p-2 py-4 rounded-md bg-(--foreground)">
+            <div class="flex items-center gap-1">
+                <Icon icon="mdi:file-document-delete-outline" width="24" height="24" />
+                <p class="text-xl">Excluir {{ (entity?.kind === 'file') ? 'Arquivo' : 'Pasta' }}</p>
             </div>
-        </ShinyContainer>
+
+            <div class="flex flex-col">
+                <p>Tem certeza que deseja excluir {{ (entity?.kind === 'file') ? 'o arquivo' : 'a pasta' }}?</p>
+                <small class="opacity-60">*Esta ação é irreversível</small>
+            </div>
+
+            <div class="flex items-stretch justify-end flex-wrap gap-2">
+                <Button variant="danger-filled" @click="handleClickDeleteFile">
+                    Excluir {{ (entity?.kind === 'file') ? 'Arquivo' : 'Pasta' }}
+                </Button>
+
+                <Button variant="primary-outlined" @click="handleCloseModal">
+                    Cancelar
+                </Button>
+            </div>
+        </div>
     </ActionModalContainer>
 </template>
 

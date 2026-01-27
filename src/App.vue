@@ -16,7 +16,7 @@
   const paddingTop = computed(() => {
     switch (navbarVariation.value) {
       case 'none':    return '0px';
-      case 'full':    return '52px';
+      case 'full':    return '58px';
       default:        return '0px';
     };
   });
@@ -24,10 +24,10 @@
 
 
 <template>
-  <div class="app bg-(--background) max-w-(--max-app-width) min-h-screen m-auto flex flex-col overflow-x-hidden dark" :style="{ paddingTop: paddingTop }">
+  <div class="app bg-(--background) max-w-(--max-app-width) min-h-screen h-full flex flex-col m-auto overflow-hidden dark" :style="{ paddingTop: paddingTop }">
     <Navbar v-if="navbarVariation === 'full'" />
     
-    <main class="grow flex flex-col">
+    <main class="flex flex-col basis-1 grow overflow-y-auto" :class="(navbarVariation === 'full') ? 'p-2' : ''">
       <router-view />
     </main>
     
@@ -43,12 +43,14 @@
 
 <style>
   .app {
-    background-image: radial-gradient(circle at 10% 10%, rgba(255,255,255, 0.05), transparent, transparent);
+    background-image: radial-gradient(circle at 10% 10%, rgba(255,255,255, 0.06), transparent);
   }
 
   main {
-    & > div {
-      flex-grow: 1;
+    .page-container {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
   }
 </style>

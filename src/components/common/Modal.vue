@@ -3,6 +3,7 @@
     import CloseButton from './CloseButton.vue';
     import TransitionFadeHorizontal from '../transitions/TransitionFadeHorizontal.vue';
     import { useRoute } from 'vue-router';
+    import Card from './Card.vue';
 
     const props = withDefaults(defineProps<{ open?: boolean, persistent?: boolean }>(), {
         open: true,
@@ -35,11 +36,15 @@
 <template>
     <TransitionFadeHorizontal>
         <div v-if="props.open" @click="handleClickOutsideModal" class="z-50 fixed top-0 bottom-0 left-0 right-0 bg-black/30 backdrop-blur-xs">
-            <div class="w-full h-full flex items-center justify-center">
-                <div ref="modalContentRef" class="relative basis-(--max-modal-width) max-h-full p-2 overflow-y-auto">
-                    <CloseButton @click="() => { emit('close'); }" />
-                    <slot />
-                </div>
+            <div class="w-full h-full flex items-center justify-center p-4">
+                
+                <Card class="relative basis-(--max-modal-width) max-h-full p-2! overflow-y-auto">
+                    <div ref="modalContentRef">
+                        <CloseButton @click="() => { emit('close'); }" />
+                        <slot />
+                    </div>
+                </Card>
+                
             </div>
         </div>
     </TransitionFadeHorizontal>

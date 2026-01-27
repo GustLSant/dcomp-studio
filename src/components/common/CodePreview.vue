@@ -4,7 +4,7 @@
 
 
 <template>
-    <div class="code-preview p-2 border border-(--primary-darker) rounded-sm">
+    <div class="code-preview p-2 border border-(--border-01) rounded-sm">
         <Icon icon="mdi:file-code-outline" width="36" height="36" />
     </div>
 </template>

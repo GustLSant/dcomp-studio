@@ -3,7 +3,8 @@ import HomeView from "./views/HomeView.vue";
 import FolderView from "./views/FolderView.vue";
 import FileView from "./views/FileView.vue";
 import type { RouteMeta } from "./types/route";
-import CodeNavbarMenu from "./components/layout/CodeNavbarMenu/CodeNavbarMenu.vue";
+import CodeNavbarMenu from "./components/fileView/CodeNavbarMenu/CodeNavbarMenu.vue";
+import ClassicAlgorithmsView from "./views/ClassicAlgorithmsView.vue";
 
 
 const routes: Array<RouteRecordRaw & { meta: RouteMeta }> = [
@@ -31,6 +32,12 @@ const routes: Array<RouteRecordRaw & { meta: RouteMeta }> = [
         component: CodeNavbarMenu
       }
     ]
+  },
+  {
+    path: "/algorithms",
+    name: "Algorithms",
+    component: ClassicAlgorithmsView,
+    meta: { navbarVariation: 'full' },
   },
 ];
 
