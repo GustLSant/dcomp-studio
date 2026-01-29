@@ -23,6 +23,7 @@
             <div class="flex items-start flex-col justify-center grow basis-1 overflow-auto">
                 <p>{{ props.name }}</p>
                 <p class="text-sm opacity-50">{{ formatDate(props.date) }}</p>
+                <p class="text-sm opacity-50 leading-tight">{{ formatDate(props.date) }}</p>
             </div>
 
             <HoverableIcon icon="mdi:login" :size="24" />
