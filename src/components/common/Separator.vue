@@ -2,7 +2,7 @@
     import { computed } from 'vue';
 
     const props = withDefaults(
-        defineProps<{ direction: 'horizontal' | 'vertical' }>(),
+        defineProps<{ direction?: 'horizontal' | 'vertical' }>(),
         {
             direction: 'horizontal'
         }
@@ -21,7 +21,7 @@
 
 <template>
     <div
-        class="bg-white/50 self-stretch"
+        class="bg-white/20 self-stretch fade-in-short"
         :style="computedStyle"
     ></div>
 </template>
