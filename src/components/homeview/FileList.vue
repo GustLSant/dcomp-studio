@@ -45,12 +45,12 @@
                 <p class="text-lg">Arquivos Recentes</p>
             </div>
 
-            <div @click="handleClickAddFile" class="py-1 px-2 border bg-(--primary) border-(--primary) rounded-sm hover:cursor-pointer">
+            <div @click="handleClickAddFile" class="p-2 primary-bg-gradient rounded-sm hover:cursor-pointer">
                 <Icon icon="mdi:file-plus-outline" width="24" height="24" class="shrink-0" />
             </div>
         </div>
 
-        <div class="flex flex-col gap-2 max-h-[312px] overflow-y-auto">
+        <div class="flex flex-col gap-2 max-h-[312px] overflow-y-auto p-px">
             <CodeFileCard v-for="(file, idx) in fileList" :key="idx" :id="file.id!" :name="file.name" :date="file.editDate"  />
         </div>
 
