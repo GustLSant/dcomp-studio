@@ -1,5 +1,6 @@
 .primary-bg-gradient {
   background-image: linear-gradient(to right, var(--primary-gradient-left), var(--primary-gradient-right));
+  color: white;
 }
 
 .primary-text-gradient {
