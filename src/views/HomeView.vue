@@ -8,6 +8,7 @@
     import Button from '../components/common/Button.vue';
     import { openCreateEntityModal } from '../utils/actionModal';
     import { getRootFolder } from '../services/folders';
+    import PageContainer from '../components/common/PageContainer.vue';
 
     const fileCount = ref<number | undefined>(undefined);
     const loading = ref<boolean>(false);
@@ -37,10 +38,10 @@
         <LoadingComponent />
     </div>
 
-    <div v-if="!loading && fileCount !== undefined && fileCount > 0" class="flex flex-col gap-4 p-4 fade-in-left-normal">
+    <PageContainer v-if="!loading && fileCount !== undefined && fileCount > 0">
         <RecentFileViewer />
         <FileList />
-    </div>
+    </PageContainer>
 
     <div v-if="!loading && fileCount !== undefined && fileCount === 0" class="flex flex-col items-center justify-center gap-4">
         <div class="flex flex-col items-center gap-1">

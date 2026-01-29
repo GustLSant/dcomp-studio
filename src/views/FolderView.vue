@@ -12,6 +12,7 @@
     import eventBus from '../eventBus';
     import { EVENT_ENTITY_TREE_UPDATED } from '../events/entitiesTree';
     import PageHeader from '../components/common/PageHeader.vue';
+    import PageContainer from '../components/common/PageContainer.vue';
 
     const folder = ref<FolderType | undefined>(undefined);
     const content = ref<(FolderType | FileType)[]>([]);
@@ -68,9 +69,8 @@
 
 
 <template>
-    <div class="flex flex-col px-2 py-4 gap-4">
-
-        <PageHeader icon="mdi:folder" title="Explorador de arquivos" />
+    <PageContainer>
+        <PageHeader icon="mdi:folder-outline" title="Explorador de arquivos" />
         
         <div v-if="loading" class="flex items-center justify-center py-4">
             <LoadingComponent />
@@ -122,7 +122,7 @@
             <p class="text-lg">Ops, algo deu errado</p>
             <p class="text-sm opacity-60 font-light">Por favor, recarregue a página para tentar novamente</p>
         </div>
-    </div>
+    </PageContainer>
 </template>
 
 

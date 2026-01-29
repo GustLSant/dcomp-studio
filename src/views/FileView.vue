@@ -87,7 +87,6 @@
 
 <template>
     <CodeNavbar @run-code="runCode" />
-    
     <LoadingOverlay v-if="loading" />
     <router-view />
 
