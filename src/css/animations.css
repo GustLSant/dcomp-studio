@@ -4,12 +4,14 @@
 }
 
 .fade-in-normal{
+    opacity: 0%;
     animation-name: FadeIn;
     animation-duration: var(--anim-duration-normal);
     animation-fill-mode: forwards;
 }
 
 .fade-in-short{
+    opacity: 0%;
     animation-name: FadeIn;
     animation-duration: var(--anim-duration-short);
     animation-fill-mode: forwards;
@@ -28,30 +30,35 @@
 }
 
 .fade-in-top-normal{
+    opacity: 0%;
     animation-name: FadeInTop;
     animation-duration: var(--anim-duration-normal);
     animation-fill-mode: forwards;
 }
 
 .fade-in-top-short{
+    opacity: 0%;
     animation-name: FadeInTop;
     animation-duration: var(--anim-duration-short);
     animation-fill-mode: forwards;
 }
 
 .fade-in-bottom-short{
+    opacity: 0%;
     animation-name: FadeInBottom;
     animation-duration: var(--anim-duration-short);
     animation-fill-mode: forwards;
 }
 
 .fade-in-left-normal{
+    opacity: 0%;
     animation-name: FadeInLeft;
     animation-duration: var(--anim-duration-normal);
     animation-fill-mode: forwards;
 }
 
 .fade-in-right-normal{
+    opacity: 0%;
     animation-name: FadeInRight;
     animation-duration: var(--anim-duration-normal);
     animation-fill-mode: forwards;
@@ -59,6 +66,7 @@
 
 
 .fade-in-left-short{
+    opacity: 0%;
     animation-name: FadeInLeft;
     animation-duration: var(--anim-duration-short);
     animation-fill-mode: forwards;
