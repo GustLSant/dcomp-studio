@@ -1,10 +1,10 @@
 :root {
-  --background: hsl(0, 0%, 96%);
+  --background: hsl(0, 0%, 95%);
 
   --foreground: hsl(0, 0%, 100%);
-  --foreground-02: hsl(0, 0%, 100%);
+  --foreground-02: hsl(0, 0%, 95%);
 
-  --bg-input: rgba(0,0,0, 0.2);
+  --bg-input: transparent;
 
   --primary: #148cff;
   --primary-gradient-left: #29a6ff;
@@ -19,6 +19,14 @@
   --error-color: rgb(255, 0, 60);
 
   color: black;
+
+  .interactive-themed-text {
+    color: var(--primary);
+  }
+
+  .themed-image {
+    filter: invert();
+  }
 }
 
 .dark {
@@ -33,4 +41,12 @@
   --border-02: rgba(255,255,255, 0.2);
 
   color: white;
+
+  .interactive-themed-text {
+    color: white;
+  }
+
+  .themed-image {
+    filter: none;
+  }
 }

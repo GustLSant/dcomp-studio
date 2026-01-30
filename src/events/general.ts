@@ -1,0 +1,1 @@
+export const EVENT_APP_THEME_CHANGED: string = 'app-theme-changed';
