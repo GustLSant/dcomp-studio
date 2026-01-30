@@ -84,12 +84,12 @@
             <div v-if="file" class="flex flex-col gap-4">
                 <section>
                     <p class="font-light opacity-60 text-sm">Arquivo:</p>
-                    <div class="flex items-center gap-2">
+                    <div class="flex items-center gap-2" @click="() => { openRenameEntityModal(file!) }">
                         <FileNameContainer class="grow">
                             {{ file.name }}
                         </FileNameContainer>
 
-                        <HoverableIcon icon="mdi:rename-outline" :size="22" @click="() => { openRenameEntityModal(file!) }" />
+                        <HoverableIcon icon="mdi:rename-outline" :size="22" />
                     </div>
                 </section>
 
