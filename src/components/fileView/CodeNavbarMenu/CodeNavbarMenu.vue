@@ -127,6 +127,6 @@
     section {
         display: flex;
         flex-direction: column;
-        gap: 4px;
+        gap: 8px;
     }
 </style>
