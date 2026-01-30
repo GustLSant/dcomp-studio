@@ -1,20 +1,14 @@
 <script setup lang="ts">
-    import { useRouter } from 'vue-router';
     import { formatDate } from '../../utils/date';
     import CodePreview from '../common/CodePreview.vue';
     import HoverableIcon from '../common/HoverableIcon.vue';
 
-    const router = useRouter();
     const props = defineProps<{ id: number, name: string, date: Date }>();
-
-    function handleClickFile() {
-        router.push({ path: '/file/' + props.id });
-    }
 </script>
 
 
 <template>
-    <div @click="handleClickFile" class="file-card-light dark:file-card-dark flex items-center gap-2 rounded-r-md font-mono">
+    <RouterLink :to="{ path: '/file/' + props.id }" class="file-card-light dark:file-card-dark flex items-center gap-2 rounded-r-md font-mono">
         <div class="w-0.5 self-stretch bg-(--primary) brightness-150 dark:brightness-75"></div>
 
         <div class="grow flex items-center gap-2 p-2 overflow-hidden">
@@ -27,7 +21,7 @@
 
             <HoverableIcon icon="mdi:login" :size="24" icon-class="interactive-themed-text" />
         </div>
-    </div>
+    </RouterLink>
 </template>
 
 
