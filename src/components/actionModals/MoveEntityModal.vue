@@ -114,12 +114,12 @@
                 <p class="text-sm opacity-60">Não existe nenhuma outra pasta nos seus arquivos</p>
             </div>
 
-            <div class="flex flex-col gap-1">
-                <Button @click="handleClickNewFolder" variant="primary-outlined" icon="mdi:create-new-folder-outline">
+            <div class="flex flex-col gap-2">
+                <Button @click="handleClickNewFolder" variant="neutral" icon="mdi:create-new-folder-outline">
                     Nova Pasta
                 </Button>
-                <Button variant="primary-outlined" @click="handleCloseModal" icon="mdi:arrow-back">
-                    Voltar
+                <Button variant="neutral" @click="handleCloseModal" icon="mdi:cancel">
+                    Cancelar
                 </Button>
             </div>
         </div>

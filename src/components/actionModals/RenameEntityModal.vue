@@ -82,7 +82,7 @@
             </div>
 
             <div class="flex items-stretch justify-end flex-wrap gap-2">
-                <Button @click="handleCloseModal" variant="primary-outlined">
+                <Button @click="handleCloseModal" variant="neutral" icon="mdi:cancel">
                     Cancelar
                 </Button>
 

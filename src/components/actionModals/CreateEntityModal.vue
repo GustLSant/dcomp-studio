@@ -111,7 +111,7 @@
             
 
             <div class="flex items-center justify-end gap-2">
-                <Button variant="neutral" icon="mdi:close" @click="handleCloseModal">
+                <Button variant="neutral" icon="mdi:cancel" @click="handleCloseModal">
                     Cancelar
                 </Button>
 

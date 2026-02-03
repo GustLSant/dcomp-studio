@@ -80,11 +80,11 @@
             </div>
 
             <div class="flex items-stretch justify-end flex-wrap gap-2">
-                <Button variant="danger-filled" @click="handleClickDeleteFile">
+                <Button variant="danger-filled" @click="handleClickDeleteFile" icon="mdi:file-document-delete-outline">
                     Excluir {{ (entity?.kind === 'file') ? 'Arquivo' : 'Pasta' }}
                 </Button>
 
-                <Button variant="primary-outlined" @click="handleCloseModal">
+                <Button variant="neutral" @click="handleCloseModal" icon="mdi:cancel">
                     Cancelar
                 </Button>
             </div>
