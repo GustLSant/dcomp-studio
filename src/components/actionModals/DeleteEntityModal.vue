@@ -70,7 +70,7 @@
     <ActionModalContainer ref="modalRef">
         <div class="flex flex-col gap-6 p-2 py-4 rounded-md bg-(--foreground)">
             <div class="flex items-center gap-1">
-                <Icon icon="mdi:file-document-delete-outline" width="24" height="24" />
+                <Icon icon="mdi:delete-outline" width="24" height="24" />
                 <p class="text-xl">Excluir {{ (entity?.kind === 'file') ? 'Arquivo' : 'Pasta' }}</p>
             </div>
 
@@ -80,7 +80,7 @@
             </div>
 
             <div class="flex items-stretch justify-end flex-wrap gap-2">
-                <Button variant="danger-filled" @click="handleClickDeleteFile" icon="mdi:file-document-delete-outline">
+                <Button variant="danger-filled" @click="handleClickDeleteFile" icon="mdi:delete-outline">
                     Excluir {{ (entity?.kind === 'file') ? 'Arquivo' : 'Pasta' }}
                 </Button>
 

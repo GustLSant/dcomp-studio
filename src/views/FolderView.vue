@@ -95,19 +95,17 @@
 
             <div class="self-stretch bg-white/20 h-px"></div>
 
-            <div v-if="content.length > 0" class="flex gap-1 items-start flex-wrap">
+            <div v-if="content.length > 0" class="grid grid-cols-1 sm:grid-cols-2 gap-1">
                 <template v-for="entity in content">
                     <FolderPreview
                         v-if="entity.kind === 'folder'"
                         :entity="entity"
                         :interactable="true"
-                        class="basis-1 grow max-w-[50%]"
                     />
                     <FilePreview
                         v-else
                         :entity="entity"
                         :interactable="true"
-                        class="basis-1 grow max-w-[50%]"
                     />
                 </template>
             </div>

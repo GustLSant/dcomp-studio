@@ -34,16 +34,16 @@
 
 
 <template>
-    <div v-if="loading" class="flex flex-col justify-center items-center">
+    <PageContainer v-if="loading" class="flex flex-col justify-center items-center">
         <LoadingComponent />
-    </div>
+    </PageContainer>
 
     <PageContainer v-if="!loading && fileCount !== undefined && fileCount > 0">
         <RecentFileViewer />
         <FileList />
     </PageContainer>
 
-    <div v-if="!loading && fileCount !== undefined && fileCount === 0" class="flex flex-col items-center justify-center gap-4">
+    <PageContainer v-if="!loading && fileCount !== undefined && fileCount === 0" class="items-center justify-center">
         <div class="flex flex-col items-center gap-1">
             <p class="text-lg">Você ainda não possui nenhum arquivo</p>
             <p class="text-sm opacity-60">Clique no botão abaixo para criar um arquivo</p>
@@ -51,7 +51,7 @@
         <Button @click="() => { openCreateEntityModal('file', getRootFolder()) }" variant="primary-filled" icon="mdi:file-plus-outline" >
             Criar Arquivo
         </Button>
-    </div>
+    </PageContainer>
 </template>
 
 

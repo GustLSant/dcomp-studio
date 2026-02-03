@@ -99,8 +99,8 @@
     <ActionModalContainer ref="modalRef">
         <div class="flex flex-col gap-4 p-2 py-4 rounded-md bg-(--foreground)">
             <div class="flex items-center gap-1">
-                <Icon icon="mdi:file-outline" width="24" height="24" />
-                <p>Menu {{ entity?.kind === 'file' ? 'do Arquivo' : 'da Pasta' }}</p>
+                <Icon :icon="(entity?.kind === 'file') ? 'mdi:file-outline' : 'mdi:folder-outline'" width="24" height="24" />
+                <p class="text-xl">Menu {{ entity?.kind === 'file' ? 'do Arquivo' : 'da Pasta' }}</p>
             </div>
 
             <div v-if="entity" class="flex flex-col gap-4">
@@ -131,7 +131,7 @@
                 <!-- <EditorThemeAccordion /> -->
 
                 <section class="mt-2">
-                    <Button variant="danger-filled" @click="handleClickDeleteEntity" icon="mdi:file-document-delete-outline">
+                    <Button variant="danger-filled" @click="handleClickDeleteEntity" icon="mdi:delete-outline">
                         {{(entity.kind === 'file') ? 'Excluir Arquivo' : 'Excluir Pasta' }}
                     </Button>
                 </section>
