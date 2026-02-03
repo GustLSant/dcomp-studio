@@ -1,12 +1,26 @@
 import { loadPyodide, type PyodideInterface } from "pyodide";
 import { type Diagnostic, linter } from "@codemirror/lint";
 
-let pyodide: PyodideInterface | null = await loadPyodide({ indexURL: "/pyodide/" });
+let pyodide: PyodideInterface | null = null;
+let pyodidePromise: Promise<PyodideInterface> | null = null;
+
+
+export async function initializePyodide(): Promise<void> {
+    if (pyodide) return;
+
+    if (!pyodidePromise) {
+        pyodidePromise = loadPyodide({ indexURL: "/pyodide/" });
+    }
+
+    pyodide = await pyodidePromise;
+}
+
 
 export async function runPythonCode(_code: string): Promise<string> {
+    await initializePyodide();
+
     if (!pyodide) {
-        console.error('Error on runCode: pyodide not loaded');
-        return 'Error';
+        throw new Error("O interpretador Python não foi inicializado. Por favor, reinicie a aplicação");
     }
 
     try {
