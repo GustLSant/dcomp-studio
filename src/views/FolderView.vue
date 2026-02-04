@@ -95,7 +95,7 @@
 
             <div class="self-stretch bg-white/20 h-px"></div>
 
-            <div v-if="content.length > 0" class="grid grid-cols-1 sm:grid-cols-2 gap-1">
+            <div v-if="content.length > 0" class="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
                 <template v-for="entity in content">
                     <FolderPreview
                         v-if="entity.kind === 'folder'"
