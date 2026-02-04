@@ -1,11 +1,11 @@
 export const editorThemeItems = [
     'default',
-    'dracula',
-    'githubLight',
+    'dr4cul4',
+    'g1thubL1ght',
     'hacker90s',
-    'lightPlus',
-    'solarizedLight',
-    'solarizedDark',
+    'l1ghtPlus',
+    's0l4r1zedL1ght',
+    's0l4r1z3dD4rk',
     'synthwave',
 ] as const;
 

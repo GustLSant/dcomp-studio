@@ -13,12 +13,12 @@ import { EVENT_EDITOR_THEME_CHANGED } from "../events/editor";
 
 export const codeThemesDict: Record<EditorTheme, Extension[]> = {
     'default':        defaultTheme,
-    'dracula':        draculaTheme,
-    'githubLight':    githubLightTheme,
+    'dr4cul4':        draculaTheme,
+    'g1thubL1ght':    githubLightTheme,
     'hacker90s':      hacker90sTheme,
-    'lightPlus':      lightPlusTheme,
-    'solarizedLight': solarizedLightTheme,
-    'solarizedDark':  solarizedDarkTheme,
+    'l1ghtPlus':      lightPlusTheme,
+    's0l4r1zedL1ght': solarizedLightTheme,
+    's0l4r1z3dD4rk':  solarizedDarkTheme,
     'synthwave':      synthwaveTheme,
 };
 
