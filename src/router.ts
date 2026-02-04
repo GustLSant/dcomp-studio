@@ -6,6 +6,7 @@ import type { RouteMeta } from "./types/route";
 import CodeNavbarMenu from "./components/fileView/CodeNavbarMenu/CodeNavbarMenu.vue";
 import ClassicAlgorithmsView from "./views/ClassicAlgorithmsView.vue";
 import MenuView from "./views/MenuView.vue";
+import ExercisesView from "./views/ExercisesView.vue";
 
 
 const routes: Array<RouteRecordRaw & { meta: RouteMeta }> = [
@@ -49,7 +50,7 @@ const routes: Array<RouteRecordRaw & { meta: RouteMeta }> = [
   {
     path: "/exercises",
     name: "Exercises",
-    component: ClassicAlgorithmsView,
+    component: ExercisesView,
     meta: { navbarVariation: 'full' },
   },
 ];

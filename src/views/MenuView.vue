@@ -17,9 +17,9 @@
             </div>
 
             <div class="flex flex-col gap-2">
-                <MenuCard label="Exercícios" icon="mdi:book-edit-outline" link="/algorithms"            style="animation-delay: 0.04s;"/>
-                <MenuCard label="Meus Arquivos" icon="mdi:folder-outline" link="/folder/0"              style="animation-delay: 0.08s;" />
-                <MenuCard label="Algoritmos Clássicos" icon="mdi:book-open-variant" link="/algorithms"  style="animation-delay: 0.12s;"/>
+                <MenuCard label="Exercícios" icon="mdi:book-edit-outline" link="/exercises"            style="animation-delay: 0.04s;"/>
+                <MenuCard label="Meus Arquivos" icon="mdi:folder-outline" link="/folder/0"             style="animation-delay: 0.08s;" />
+                <MenuCard label="Algoritmos Clássicos" icon="mdi:book-open-variant" link="/algorithms" style="animation-delay: 0.12s;"/>
             </div>
         </section>
 
