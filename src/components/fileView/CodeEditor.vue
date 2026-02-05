@@ -25,7 +25,7 @@
     ]);
     const fontSize = ref<string>('12');
 
-    function onCodeMirrorReady(payload: { view: any }) { editorView.value = payload.view; console.log(editorView.value); };
+    function onCodeMirrorReady(payload: { view: any }) { editorView.value = payload.view; };
 
     onMounted(() => { eventBus.addEventListener(EVENT_EDITOR_FONT_SIZE_CHANGED, getFontSize) });
     onUnmounted(() => { eventBus.removeEventListener(EVENT_EDITOR_FONT_SIZE_CHANGED, getFontSize) });

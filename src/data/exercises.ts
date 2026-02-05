@@ -27,14 +27,14 @@ export const EXERCISES: ExerciseData[] = [
         startCode: [
             '# Crie uma variável do tipo lista com os valores: 1, 2, 3',
             '# Imprima a lista criada',
-            '# Output esperado: "[1,2,3]"',
+            '# Output esperado: "[1, 2, 3]"',
         ],
         completed: false,
         codeAnswer: [
-            'x = 10',
-            'print(x)'
+            'lista = [1,2,3]',
+            'print(lista)'
         ],
-        expectedCodeOutput: '10',
+        expectedCodeOutput: '[1, 2, 3]',
         studyMaterialName: 'docs.python',
         studyMaterialLink: 'https://docs.python.org/3/tutorial/introduction.html#using-python-as-a-calculator'
     }

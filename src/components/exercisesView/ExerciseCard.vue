@@ -3,12 +3,12 @@
     import type { ExerciseData } from '../../types/exercises';
     import { useRouter } from 'vue-router';
     import type { FileType } from '../../types/entities';
-    import { getRootFolder } from '../../services/folders';
     import { addFile } from '../../services/files';
     import Card from '../common/Card.vue';
     import { Icon } from '@iconify/vue';
     import HoverableIcon from '../common/HoverableIcon.vue';
     import Button from '../common/Button.vue';
+    import { getDefaultFile } from '../../utils/entities';
 
     const props = defineProps<{ data: ExerciseData }>();
     const isOpen = ref<boolean>(false);
@@ -17,14 +17,11 @@
     function toggleOpen() { isOpen.value = !isOpen.value; }
 
     async function openAlgorithm() {
-        const newFile: FileType = {
-            kind: 'file',
-            name: props.data.name,
-            content: props.data.startCode.join('\n'),
-            parentFolderId: getRootFolder().id!,
-            creationDate: new Date(),
-            editDate: new Date(),
-        }
+        const newFile: FileType = getDefaultFile()
+        newFile.name = props.data.name
+        newFile.content = props.data.startCode.join('\n'),
+        newFile.exerciseId = props.data.id
+
         const newFileId: number = await addFile(newFile);
 
         router.push({

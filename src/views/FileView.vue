@@ -5,7 +5,7 @@
     import { type FileType } from '../types/entities';
     import { getFileById, updateFile } from '../services/files';
     import { runPythonCode } from '../utils/code';
-    import CodeOutputModal from '../components/fileView/CodeOutputModal.vue';
+    import CodeOutputModal from '../components/fileView/codeOutputModal/CodeOutputModal.vue';
     import LoadingOverlay from '../components/common/LoadingOverlay.vue';
     import type { CodeOutput } from '../types/code';
     import CodeNavbar from '../components/fileView/CodeNavbar.vue';
@@ -92,7 +92,7 @@
 
     <div v-if="file">
         <CodeEditor v-model="file.content" v-model:editor-view="codeMirrorTextElement" />
-        <CodeOutputModal v-model="canShowCodeOutput" :file-name="file.name" :code-output="codeOutput" />
+        <CodeOutputModal v-model="canShowCodeOutput" :file="file" :code-output="codeOutput" />
         <EditorFooter v-model:editor-view="codeMirrorTextElement" />
     </div>
 </template>
