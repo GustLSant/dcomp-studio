@@ -20,11 +20,12 @@ export class IndexedDB {
         return new Promise((resolve, reject) => {
             const request = indexedDB.open(DB_NAME, DB_VERSION);
 
-            request.onerror = () => { reject(request.error); }
+            request.onerror = () => { reject(request.error); };
+
             request.onsuccess = () => {
                 this.db = request.result;
                 resolve();
-            }
+            };
 
             request.onupgradeneeded = () => {
                 const db = request.result;
@@ -125,6 +126,7 @@ export class IndexedDB {
 
         return new Promise((resolve, reject) => {
             if(!this.db) { return reject('DB not initialized'); }
+            if (!this.db) return reject('DB not initialized');
 
             const tx: IDBTransaction               = this.db.transaction(this.storeName, 'readwrite');
             const store: IDBObjectStore            = tx.objectStore(this.storeName);
@@ -132,7 +134,8 @@ export class IndexedDB {
 
             request.onsuccess = () => resolve();
             request.onerror   = () => reject(request.error);
-        })
+            request.onerror = () => reject(request.error);
+        });
     }
 
 
@@ -141,13 +144,15 @@ export class IndexedDB {
 
         return new Promise((resolve, reject) => {
             if (!this.db) { return reject('DB not initialized'); }
+            if (!this.db) return reject('DB not initialized');
 
             const tx: IDBTransaction             = this.db.transaction(this.storeName, 'readwrite');
             const store: IDBObjectStore          = tx.objectStore(this.storeName);
             const request: IDBRequest<undefined> = store.delete(id);
 
             request.onsuccess = () => { resolve(); }
-            request.onerror   = () => { reject(request.error); }
-        })
+            request.onsuccess = () => resolve();
+            request.onerror = () => reject(request.error);
+        });
     }
 }
