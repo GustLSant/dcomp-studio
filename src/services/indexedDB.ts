@@ -12,8 +12,8 @@ export class IndexedDB {
     private storeName: string;
 
     constructor(_storeName: StoreType) {
-        this.initRequest = this.open();
         this.storeName = _storeName;
+        this.initRequest = this.open();
     }
 
     private open(): Promise<void> {
@@ -42,9 +42,9 @@ export class IndexedDB {
                     if (!objectStore.indexNames.contains('by_parentFolderId')) {
                         objectStore.createIndex("by_parentFolderId", "parentFolderId", { unique: false });
                     }
-                })
-            }
-        })
+                });
+            };
+        });
     }
 
     
@@ -58,9 +58,9 @@ export class IndexedDB {
             const store: IDBObjectStore            = tx.objectStore(this.storeName);
             const request: IDBRequest<IDBValidKey> = store.add(data);
 
-            request.onsuccess = () => { resolve(request.result as number); }
-            request.onerror   = () => { reject(request.error); }
-        })
+            request.onsuccess = () => resolve(request.result as number);
+            request.onerror = () => reject(request.error);
+        });
     }
 
 
@@ -74,9 +74,9 @@ export class IndexedDB {
             const store: IDBObjectStore      = tx.objectStore(this.storeName);
             const request: IDBRequest<any[]> = store.getAll();
 
-            request.onsuccess = () => { resolve(request.result as T[]); }
-            request.onerror   = () => { reject(request.error); }
-        })
+            request.onsuccess = () => resolve(request.result as T[]);
+            request.onerror = () => reject(request.error);
+        });
     }
 
 
@@ -106,18 +106,19 @@ export class IndexedDB {
         await this.initRequest;
 
         return new Promise((resolve, reject) => {
-            if (!this.db) { return reject('DB not initialized'); }
+            if (!this.db) return reject('DB not initialized');
 
             const tx: IDBTransaction       = this.db.transaction(this.storeName, 'readonly');
             const store: IDBObjectStore    = tx.objectStore(this.storeName);
             const request: IDBRequest<any> = store.get(_id);
 
             request.onsuccess = () => {
-                if (request.result) { resolve(request.result as T); }
-                else { reject('Not found'); }
-            }
-            request.onerror = () => { reject(request.error); }
-        })
+                if (request.result) resolve(request.result as T);
+                else reject('Not found');
+            };
+
+            request.onerror = () => reject(request.error);
+        });
     }
 
 
@@ -150,7 +151,6 @@ export class IndexedDB {
             const store: IDBObjectStore          = tx.objectStore(this.storeName);
             const request: IDBRequest<undefined> = store.delete(id);
 
-            request.onsuccess = () => { resolve(); }
             request.onsuccess = () => resolve();
             request.onerror = () => reject(request.error);
         });
