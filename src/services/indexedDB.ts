@@ -68,7 +68,7 @@ export class IndexedDB {
         await this.initRequest;
 
         return new Promise((resolve, reject) => {
-            if (!this.db) { return reject('DB not initialized'); }
+            if (!this.db) return reject('DB not initialized');
 
             const tx: IDBTransaction         = this.db.transaction(this.storeName, 'readonly');
             const store: IDBObjectStore      = tx.objectStore(this.storeName);
