@@ -1,17 +1,23 @@
 const DB_VERSION = 5;
 const DB_NAME = 'DcompStudioDB' as const;
-const STORES = ['folders', 'files'] as const;
 
-export type StoreType = typeof STORES[number];
+const STORES = ['folders', 'files', 'exercises'] as const;
+
+const STORES_WITH_PARENT_INDEX = new Set([
+    'folders',
+    'files'
+]);
+
+export type StoreName = typeof STORES[number];
 export type StoreIndex = 'by_parentFolderId';
 
 
 export class IndexedDB {
     private db: IDBDatabase | null = null;
     private initRequest: Promise<void>;
-    private storeName: string;
+    private storeName: StoreName;
 
-    constructor(_storeName: StoreType) {
+    constructor(_storeName: StoreName) {
         this.storeName = _storeName;
         this.initRequest = this.open();
     }
@@ -31,7 +37,7 @@ export class IndexedDB {
                 const db = request.result;
                 let objectStore: IDBObjectStore;
                 
-                STORES.forEach((_store: StoreType) => {
+                STORES.forEach((_store: StoreName) => {
                     if (!db.objectStoreNames.contains(_store)) {
                         objectStore = db.createObjectStore(_store, { keyPath: 'id', autoIncrement: true });
                     }
@@ -39,8 +45,15 @@ export class IndexedDB {
                         objectStore = request.transaction!.objectStore(_store);
                     }
 
-                    if (!objectStore.indexNames.contains('by_parentFolderId')) {
-                        objectStore.createIndex("by_parentFolderId", "parentFolderId", { unique: false });
+                    if (
+                        STORES_WITH_PARENT_INDEX.has(_store) &&
+                        !objectStore.indexNames.contains('by_parentFolderId')
+                    ) {
+                        objectStore.createIndex(
+                            'by_parentFolderId',
+                            'parentFolderId',
+                            { unique: false }
+                        );
                     }
                 });
             };
