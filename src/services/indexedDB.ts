@@ -126,7 +126,6 @@ export class IndexedDB {
         await this.initRequest;
 
         return new Promise((resolve, reject) => {
-            if(!this.db) { return reject('DB not initialized'); }
             if (!this.db) return reject('DB not initialized');
 
             const tx: IDBTransaction               = this.db.transaction(this.storeName, 'readwrite');
@@ -134,7 +133,6 @@ export class IndexedDB {
             const request: IDBRequest<IDBValidKey> = store.put(_value);
 
             request.onsuccess = () => resolve();
-            request.onerror   = () => reject(request.error);
             request.onerror = () => reject(request.error);
         });
     }
@@ -144,7 +142,6 @@ export class IndexedDB {
         await this.initRequest;
 
         return new Promise((resolve, reject) => {
-            if (!this.db) { return reject('DB not initialized'); }
             if (!this.db) return reject('DB not initialized');
 
             const tx: IDBTransaction             = this.db.transaction(this.storeName, 'readwrite');
