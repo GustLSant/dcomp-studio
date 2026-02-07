@@ -29,7 +29,10 @@ export async function getAllFilesFromFolder(_folderId: number): Promise<FileType
 
 export async function getFileById(_id: number): Promise<FileType> {
     try {
-        return await dbInstance.getById<FileType>(_id);
+        const foundFile: FileType | undefined = await dbInstance.getById(_id);
+
+        if (!foundFile) throw new Error('File not Found');
+        else return foundFile;
     }
     catch(_error: unknown) {
         const message = _error instanceof Error ? _error.message : String(_error);

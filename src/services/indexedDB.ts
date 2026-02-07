@@ -127,7 +127,7 @@ export class IndexedDB {
 
             request.onsuccess = () => {
                 if (request.result) resolve(request.result as T);
-                else reject('Not found');
+                else resolve(undefined as T);
             };
 
             request.onerror = () => reject(request.error);

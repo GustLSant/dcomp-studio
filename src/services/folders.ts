@@ -56,7 +56,10 @@ export async function getFolderById(_id: number): Promise<FolderType> {
     }
 
     try {
-        return await dbInstance.getById<FolderType>(_id);
+        const foundFolder: FolderType | undefined = await dbInstance.getById(_id);
+
+        if (!foundFolder) throw new Error('Folder not Found');
+        else return foundFolder; 
     }
     catch(_error: unknown) {
         const message = _error instanceof Error ? _error.message : String(_error);
