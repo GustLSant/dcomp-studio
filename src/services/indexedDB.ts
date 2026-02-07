@@ -1,7 +1,7 @@
 const DB_VERSION = 5;
 const DB_NAME = 'DcompStudioDB' as const;
 
-const STORES = ['folders', 'files', 'exercises'] as const;
+const STORES = ['folders', 'files', 'exercise_records'] as const;
 
 const STORES_WITH_PARENT_INDEX = new Set([
     'folders',
