@@ -1,32 +1,30 @@
 <script setup lang="ts">
-    import { ref, watch } from 'vue';
+    import { onMounted, ref } from 'vue';
     import type { CodeOutput } from '../../../types/code';
     import type { FileType } from '../../../types/entities';
     import { createPopup } from '../../../utils/popup';
     import { truncate } from '../../../utils/text';
     import HoverableIcon from '../../common/HoverableIcon.vue';
     import Modal from '../../common/Modal.vue';
-    import { getExerciseDataById } from '../../../services/exercises';
-    import type { ExerciseData } from '../../../types/exercises';
-    import { normalizeCodeOutput } from '../../../utils/exercises';
     import ExerciseAccordion from './ExerciseAccordion.vue';
+    import type { ExerciseRecord } from '../../../types/exercises';
+    import { getExerciseRecordById } from '../../../services/exercises';
 
     const open = defineModel<boolean>();
     const props = defineProps<{ file: FileType, codeOutput: CodeOutput }>();
-
-    const exerciseData = ref<ExerciseData | null>(getExerciseDataById(props.file.exerciseId));
-
-    watch(open, checkExerciseIsCompleted)
-
-    function checkExerciseIsCompleted() {
-        if (!exerciseData.value || open.value === false || props.codeOutput.type === 'error') return;
-
-        if (normalizeCodeOutput(exerciseData.value.expectedCodeOutput) === normalizeCodeOutput(props.codeOutput.content)) {
-            exerciseData.value.completed = true;
-            createPopup('success', 'Parabéns!', 'Exercício concluído com sucesso');
+    const exerciseRecord = ref<ExerciseRecord | undefined>(undefined);
+    
+    onMounted(async () => {
+        if (!props.file.exerciseRecordId) return;
+        
+        try {
+            exerciseRecord.value = await getExerciseRecordById(props.file.exerciseRecordId!);
         }
-        else { exerciseData.value.completed = false; }
-    }
+        catch (_error) {
+            createPopup('error', 'Erro ao obter as informações do exercício', 'Por favor, tente novamente');
+            console.error(_error);
+        }
+    })
     
     function close() {
         open.value = false;
@@ -60,7 +58,7 @@
                 <textarea readonly :rows="(props.codeOutput.type === 'success' ? 5 : 20)" class="bg-neutral-950 p-2 rounded-sm shadow-inner font-mono text-green-500">{{ props.codeOutput.content }}</textarea>
             </div>
 
-            <ExerciseAccordion v-if="exerciseData" :exercise-data="exerciseData" />
+            <ExerciseAccordion v-if="exerciseRecord" :exercise-record="exerciseRecord" :code-output="props.codeOutput" />
         </div>
     </Modal>
 </template>
