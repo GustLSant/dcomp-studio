@@ -50,7 +50,7 @@
             </div>
         </div>
 
-        <div class="flex flex-col gap-2 max-h-[312px] overflow-y-auto p-px">
+        <div class="flex flex-col gap-2 max-h-[200px] overflow-y-auto p-px">
             <CodeFileCard v-for="(file, idx) in fileList" :key="idx" :id="file.id!" :name="file.name" :date="file.editDate"  />
         </div>
 
