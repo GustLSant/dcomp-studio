@@ -7,8 +7,9 @@
     const router = useRouter();
 
     function handleClickButton() {
-        if (route.path !== '/menu') { router.push('/menu'); }
-        else { router.back(); }
+        if (route.path === '/menu') { router.push('/'); }
+        else if (route.path === '/') { router.push('/menu'); }
+        else { router.back() }
     }
 </script>
 
@@ -26,8 +27,20 @@
             </RouterLink>
     
             <div @click="handleClickButton" class="flex items-center bg-(--foreground) py-2 px-4 gap-1.5 rounded-full border border-(--border-02)">
-                <Icon :icon="(route.path !== '/menu') ? 'mdi:menu' : 'mdi:arrow-left'" width="24" height="24" />
-                <p class="mr-1">{{ (route.path !== '/menu') ? 'Menu' : 'Voltar' }}</p>
+                <template v-if="route.path === '/menu'">
+                    <Icon icon="mdi:home-variant-outline" width="24" height="24" />
+                    <p>Home</p>
+                </template>
+
+                <template v-else-if="route.path == '/'">
+                    <Icon icon="mdi:menu" width="24" height="24" />
+                    <p class="mr-1">Menu</p>
+                </template>
+
+                <template v-else>
+                    <Icon icon="mdi:arrow-left" width="24" height="24" />
+                    <p class="mr-1">Voltar</p>
+                </template>
             </div>
         </div>
 
