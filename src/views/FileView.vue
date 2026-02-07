@@ -13,6 +13,7 @@
     import EditorFooter from '../components/fileView/EditorFooter.vue';
     import eventBus from '../eventBus';
     import { EVENT_SAVE_FILE } from '../events/entities';
+    import { updateRecordCompletion } from '../services/exercises';
 
     const file = ref<FileType | undefined>(undefined);
     const codeMirrorTextElement = ref<any>(null);
@@ -70,6 +71,13 @@
                 type: 'success',
                 content: _response,
             };
+
+            if (file.value!.exerciseRecordId !== undefined) {
+                updateRecordCompletion(file.value!.exerciseRecordId, codeOutput.value.content)
+                .then((_response) => {
+                    if (_response === true) createPopup('success', 'Parabéns', 'Exercício concluído com sucesso!');
+                })
+            }
         })
         .catch((_error) => {
             codeOutput.value = {

@@ -9,6 +9,7 @@
     import { openCreateEntityModal } from '../utils/actionModal';
     import { getRootFolder } from '../services/folders';
     import PageContainer from '../components/common/PageContainer.vue';
+    import ExerciseRecordsList from '../components/homeview/ExerciseRecordsList.vue';
 
     const fileCount = ref<number | undefined>(undefined);
     const loading = ref<boolean>(false);
@@ -41,6 +42,7 @@
     <PageContainer v-if="!loading && fileCount !== undefined && fileCount > 0">
         <RecentFileViewer />
         <FileList />
+        <ExerciseRecordsList />
     </PageContainer>
 
     <PageContainer v-if="!loading && fileCount !== undefined && fileCount === 0" class="items-center justify-center">
