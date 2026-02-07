@@ -1,6 +1,6 @@
 <script setup lang="ts">
     import PageHeader from '../components/common/PageHeader.vue';
-    import type { AlgorithmCollection, AlgorithmData } from '../types/classicAlgorithms';
+    import type { AlgorithmCollection } from '../types/classicAlgorithms';
     import { CLASSIC_ALGORITHMS } from '../data/classicAlgorithms';
     import { ref } from 'vue';
     import PageContainer from '../components/common/PageContainer.vue';

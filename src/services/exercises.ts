@@ -1,5 +1,5 @@
 import { IndexedDB } from "./indexedDB";
-import type { ExerciseData, ExerciseRecord } from "../types/exercises";
+import type { ExerciseRecord } from "../types/exercises";
 import { compareCodeOutputs, createNewExerciseRecordObj, getExerciseDataById } from "../utils/exercises";
 
 
