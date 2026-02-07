@@ -39,7 +39,7 @@
 
 <template>
     <Card
-        :class="(isOpen) ? 'max-h-[700px]' : 'max-h-[calc(34px+16px)]'"
+        :class="(isOpen) ? 'max-h-[700px] overflow-y-auto' : 'max-h-[calc(34px+16px)]'"
         class="card overflow-hidden py-2 gap-6"
     >
         <div
