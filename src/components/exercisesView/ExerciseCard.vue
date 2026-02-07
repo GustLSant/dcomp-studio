@@ -9,6 +9,7 @@
     import HoverableIcon from '../common/HoverableIcon.vue';
     import Button from '../common/Button.vue';
     import { getDefaultFile } from '../../utils/entities';
+    import { addFileToExerciseRecord, addNewExerciseRecord } from '../../services/exercises';
 
     const props = defineProps<{ data: ExerciseData }>();
     const isOpen = ref<boolean>(false);
@@ -17,10 +18,34 @@
     function toggleOpen() { isOpen.value = !isOpen.value; }
 
     async function openAlgorithm() {
+        try {
+            const newRecordId = await addNewExerciseRecord(props.data.id);
+
+            const newFile: FileType = getDefaultFile()
+            newFile.name = props.data.name
+            newFile.content = props.data.startCode.join('\n'),
+            newFile.exerciseRecordId = newRecordId
+
+            const newFileId: number = await addFile(newFile);
+            addFileToExerciseRecord(newRecordId, newFileId);
+
+            router.push({
+                name: 'File',
+                params: {
+                    id: newFileId
+                }
+            });
+        }
+        catch (_error) {
+            const message = _error instanceof Error ? _error.message : String(_error);
+            throw new Error(message);
+        }
+    }
+
+    async function openAlgorithmSolution() {
         const newFile: FileType = getDefaultFile()
-        newFile.name = props.data.name
-        newFile.content = props.data.startCode.join('\n'),
-        newFile.exerciseId = props.data.id
+        newFile.name = 'Solução - ' + props.data.name
+        newFile.content = props.data.startCode.join('\n') + "\n \n" + props.data.codeAnswer.join('\n');
 
         const newFileId: number = await addFile(newFile);
 
@@ -37,13 +62,13 @@
 <template>
     <Card
         :class="(isOpen) ? 'max-h-[700px]' : 'max-h-[calc(34px+16px)]'"
-        class="card overflow-hidden py-2 gap-6"
+        class="card overflow-hidden py-2 gap-4"
     >
         <div
             @click="toggleOpen"
             class="flex items-center justify-between gap-2 hover:cursor-pointer hover:underline"
         >
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-1">
                 <Icon icon="mdi:book-outline" width="24" height="24" />
                 <p>{{ props.data.name }}</p>
             </div>
@@ -60,11 +85,6 @@
             </div>
         </div>
 
-        <!-- <div class="flex flex-col gap-2">
-            <h3>Resumo:</h3>            
-            <p>{{ props.data.abstract }}</p>
-        </div> -->
-
         <div v-if="props.data.studyMaterialName" class="flex items-center justify-between gap-2 pb-2 flex-wrap">
             <h3 class="shrink-0">Material de apoio:</h3>
             <a
@@ -78,9 +98,12 @@
             </a>
         </div>
 
-        <div class="flex justify-end pb-2">
+        <div class="flex flex-col items-end gap-2 pb-2">
             <Button @click="() => { openAlgorithm() }" variant="primary-filled" icon="mdi:file-move-outline">
                 Realizar exercício
+            </Button>
+            <Button @click="() => { openAlgorithmSolution() }" variant="neutral" icon="mdi:file-lock-outline">
+                Abrir gabarito de código
             </Button>
         </div>
     </Card>
