@@ -1,8 +1,13 @@
+export type AlgorithmCollection = {
+    complexity: string,
+    resume: string,
+    algorithms: AlgorithmData[],
+}
+
 export type AlgorithmData = {
     name: string,
-    complexity: string,
-    source: string,
-    sourceLink: string,
+    source: string | undefined,
+    sourceLink: string | undefined,
     code: string[],
     abstract: string,
 }
