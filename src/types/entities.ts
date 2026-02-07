@@ -16,7 +16,7 @@ export type FileType = Entity & {
     kind: 'file',
     creationDate: Date,
     editDate: Date,
-    exerciseId?: number,
+    exerciseRecordId?: number,
 }
 
 export type EntityPreviewPropType = {
