@@ -6,11 +6,18 @@
     import { Icon } from '@iconify/vue';
     import ExerciseRecordCard from './ExerciseRecordCard.vue';
     import { useRouter } from 'vue-router';
+    import { createPopup } from '../../utils/popup';
 
     const exerciseRecords = ref<ExerciseRecord[]>([]);
     const router = useRouter();
 
-    onMounted(async () => { exerciseRecords.value = await getAllExerciseRecords(); })
+    onMounted(getRecordsData);
+
+    function getRecordsData() {
+        getAllExerciseRecords()
+        .then((_response) => { exerciseRecords.value = _response; })
+        .catch((_error) => { createPopup('error', 'Erro ao obter o registro de exercícios', 'Por favor, tente novamente'); })
+    }
 
     function handleClickExploreExercises() {
         router.push({ name: 'Exercises' });
