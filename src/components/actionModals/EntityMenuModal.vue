@@ -128,8 +128,6 @@
                     </div>
                 </section>
 
-                <!-- <EditorThemeAccordion /> -->
-
                 <section class="mt-2">
                     <Button variant="danger-filled" @click="handleClickDeleteEntity" icon="mdi:delete-outline">
                         {{(entity.kind === 'file') ? 'Excluir Arquivo' : 'Excluir Pasta' }}
