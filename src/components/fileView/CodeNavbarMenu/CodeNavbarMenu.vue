@@ -14,9 +14,9 @@
     import { openDeleteEntityModal, openRenameEntityModal } from '../../../utils/actionModal';
     import { EVENT_ENTITY_UPDATED, EVENT_SAVE_FILE } from '../../../events/entities';
     import EditorThemeAccordion from './EditorThemeAccordion.vue';
-    import eventBus from '../../../eventBus';
     import EditorFontSizeSelect from './EditorFontSizeSelect.vue';
     import EditorOriginFolder from './EditorOriginFolder.vue';
+    import eventBus from '../../../eventBus';
 
     const file = ref<FileType | undefined>(undefined);
     const parentFolder = ref<FolderType | undefined>(undefined);

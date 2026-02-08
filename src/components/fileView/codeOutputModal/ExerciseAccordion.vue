@@ -23,7 +23,7 @@
             <p>Exercício:</p>
             <div class="flex items-center gap-1">
                 <p>{{ exerciseData.name }}</p>
-                <Icon v-if="successOnThisTrial" class="text-(--success-color)" icon="mdi:check-circle-outline" width="18" height="18" />
+                <Icon v-if="successOnThisTrial" class="text-(--completed-color)" icon="mdi:check-circle-outline" width="18" height="18" />
                 <Icon :icon="(open) ? 'mdi:chevron-up' : 'mdi:chevron-down'" width="24" height="24" />
             </div>
         </div>

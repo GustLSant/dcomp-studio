@@ -39,7 +39,7 @@
 
         <template v-else>
             <div class="flex flex-col items-center">
-                <p>Você não tentou nenhum exercício ainda</p>
+                <p>Você não realizou nenhum exercício ainda</p>
                 <RouterLink to="Exercises" class="text-sm opacity-60 underline hover:cursor-pointer">Clique aqui para realizar o primeiro</RouterLink>
             </div>
         </template>

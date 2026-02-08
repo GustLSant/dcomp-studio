@@ -73,7 +73,7 @@
         </template>
 
         <template v-if="isCompleted" #header-sulfix>
-            <Icon class="text-(--success-color)" icon="mdi:check-circle-outline" width="18" height="18" />
+            <Icon class="text-(--completed-color)" icon="mdi:check-circle-outline" width="18" height="18" />
         </template>
 
         <template #body>

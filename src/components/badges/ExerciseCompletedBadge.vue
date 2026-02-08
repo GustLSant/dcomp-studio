@@ -4,7 +4,7 @@
 
 
 <template>
-    <div class="flex items-center gap-1 text-(--success-color)">
+    <div class="flex items-center gap-1 text-(--completed-color)">
         <Icon icon="mdi:medal-outline" width="18" height="18" /> 
         <p>Completo</p>
     </div>
