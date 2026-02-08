@@ -75,37 +75,29 @@ export const BINARY_SEARCH_ALGORITHM: AlgorithmData = {
         dos elementos é descartada, resultando em complexidade O(log n).
     `
 }
-export const HEAP_INSERT_ALGORITHM: AlgorithmData = {
-    name: 'Heap Insert (Heapify Up)',
-    source: 'geeksforgeeks.org',
-    sourceLink: 'https://www.geeksforgeeks.org/insertion-in-a-binary-heap/',
+export const FAST_EXPONENTIATION_ALGORITHM: AlgorithmData = {
+    name: 'Exponenciação Rápida',
+    source: 'GeeksforGeeks',
+    sourceLink: 'https://www.geeksforgeeks.org/python/fast-exponentiation-in-python/',
     code: [
-        "heap = []",
+        "def fast_pow(_base, _expoente):",
+        "  resultado = 1",
         "",
-        "def heap_insert(_heap, valor):",
-        "  _heap.append(valor)",
-        "  i = len(_heap) - 1",
+        "  while _expoente > 0:",
+        "    if _expoente % 2 == 1:",
+        "      resultado *= _base",
+        "    _base *= _base",
+        "    _expoente //= 2",
         "",
-        "  while i > 0:",
-        "    pai = (i - 1) // 2",
-        "    if _heap[pai] <= _heap[i]:",
-        "      break",
+        "  return resultado",
         "",
-        "    _heap[pai], _heap[i] = _heap[i], _heap[pai]",
-        "    i = pai",
-        "",
-        "heap_insert(heap, 10)",
-        "heap_insert(heap, 5)",
-        "heap_insert(heap, 20)",
-        "heap_insert(heap, 3)",
-        "",
-        "print(heap)",
+        "print('Resultado de 2 elevado a 10:', fast_pow(2, 10))",
     ],
     abstract: `
-        A inserção em um heap binário mantém a propriedade do heap
-        ajustando o elemento inserido em direção à raiz. Esse processo
-        percorre no máximo a altura da árvore, que é logarítmica em
-        relação ao número de elementos, resultando em complexidade O(log n).
+        A exponenciação rápida calcula potências reduzindo o expoente
+        pela metade a cada iteração. Isso evita multiplicações repetidas
+        e garante que o número de operações cresça de forma logarítmica,
+        resultando em complexidade O(log n).
     `
 }
 
@@ -312,7 +304,7 @@ export const CLASSIC_ALGORITHMS: AlgorithmCollection[] = [
     {
         complexity: 'O(log n)',
         resume: 'Algoritmos O(log n) reduzem o tamanho do problema a cada passo, normalmente pela metade. Esse comportamento é comum em estruturas hierárquicas e estratégias de divisão.',
-        algorithms: [ BINARY_SEARCH_ALGORITHM, HEAP_INSERT_ALGORITHM ]
+        algorithms: [ BINARY_SEARCH_ALGORITHM, FAST_EXPONENTIATION_ALGORITHM ]
     },
 
     {
