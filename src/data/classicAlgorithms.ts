@@ -123,7 +123,7 @@ export const LINEAR_SEARCH_ALGORITHM: AlgorithmData = {
         "      return i",
         "  return -1",
         "",
-        "print(linear_search(lista, 7))",
+        "print('O elemento 7 está no index: ', linear_search(lista, 7))",
     ],
     abstract: `
         A busca linear percorre todos os elementos da lista até encontrar
