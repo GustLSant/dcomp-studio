@@ -13,13 +13,12 @@ const ui = EditorView.theme({
   "&.cm-focused .cm-cursor": {
     borderLeftColor: "#1f2328"
   },
-  "&.cm-selectionBackground, ::selection": {
-    backgroundColor: "#bcdfff"
+
+  "&.cm-editor.cm-focused .cm-selectionBackground": {
+    backgroundColor: "rgba(58, 193, 255, 0.45) !important"
   },
-  ".cm-gutters": {
-    backgroundColor: "#ffffff",
-    color: "#8c959f",
-    border: "none"
+  ".cm-activeLine": {
+    backgroundColor: "rgba(58, 166, 255, 0.14) !important"
   }
 }, { dark: false });
 

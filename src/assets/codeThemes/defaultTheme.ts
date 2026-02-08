@@ -4,7 +4,7 @@ import { tags as t } from "@lezer/highlight"
 
 const ui = EditorView.theme({
   "&": {
-    backgroundColor: "#0d0d0d",
+    backgroundColor: "#161618",
     color: "#f8f8f2"
   },
   ".cm-content": {
@@ -13,8 +13,12 @@ const ui = EditorView.theme({
   "&.cm-focused .cm-cursor": {
     borderLeftColor: "#f8f8f2"
   },
-  "&.cm-focused .cm-selectionBackground, ::selection": {
-    background: "#44475a"
+
+  "&.cm-editor.cm-focused .cm-selectionBackground": {
+    backgroundColor: "rgba(69, 150, 255, 0.45) !important"
+  },
+  ".cm-activeLine": {
+    backgroundColor: "rgba(248, 248, 242, 0.07) !important"
   }
 }, { dark: true })
 

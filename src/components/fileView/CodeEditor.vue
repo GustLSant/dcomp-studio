@@ -48,12 +48,12 @@
 </template>
 
 
-<style scoped>
-    :deep(.cm-editor) {
+<style>
+    .cm-editor {
         min-height: 100vh;
     }
 
-    :deep(.cm-tooltip, .cm-tooltip-lint) {
+    .cm-tooltip, .cm-tooltip-lint {
         padding: 6px 8px;
         border-radius: 4px;
         background: #292929;
@@ -65,7 +65,7 @@
         pointer-events: none !important;
     }
 
-    :deep(.cm-diagnostic-error)   { color: #fca5a5; border-left: 2px solid red; border-radius: 2px solid transparent; }
-    :deep(.cm-diagnostic-warning) { color: #fde68a; }
-    :deep(.cm-diagnostic-info)    { color: #93c5fd; }
+    .cm-diagnostic-error   { color: #fca5a5; border-left: 2px solid red; border-radius: 2px solid transparent; }
+    .cm-diagnostic-warning { color: #fde68a; }
+    .cm-diagnostic-info    { color: #93c5fd; }
 </style>

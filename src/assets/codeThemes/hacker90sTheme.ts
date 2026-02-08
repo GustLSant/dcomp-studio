@@ -14,24 +14,22 @@ const ui = EditorView.theme({
     borderLeftColor: "#3aff3a"
   },
 
-  "&.cm-selectionBackground, ::selection": {
-    backgroundColor: "#0f3010"
+  "&.cm-editor.cm-focused .cm-selectionBackground": {
+    backgroundColor: "rgba(58, 255, 58, 0.45) !important"
   },
-  ".cm-gutters": {
-    backgroundColor: "#050805",
-    color: "#1f4f1f",
-    border: "none"
+  ".cm-activeLine": {
+    backgroundColor: "rgba(58, 255, 58, 0.14) !important"
   }
 }, { dark: true })
 
 const highlight = syntaxHighlighting(
   HighlightStyle.define([
-    { tag: t.keyword, color: "#6aff6a" },
-    { tag: t.string, color: "#9aff9a" },
-    { tag: t.number, color: "#b0ffb0" },
+    { tag: t.keyword, color: "#88ff6a" },
+    { tag: t.string, color: "#e6ff78" },
+    { tag: t.number, color: "#a3b9ff" },
     { tag: t.comment, color: "#2d6b2d" },
     { tag: t.variableName, color: "#3aff3a" },
-    { tag: t.function(t.variableName), color: "#7affc2" },
+    { tag: t.function(t.variableName), color: "#7afff4" },
     { tag: t.typeName, color: "#5aff5a" },
     { tag: t.className, color: "#5aff5a" },
     { tag: t.operator, color: "#6aff6a" },
