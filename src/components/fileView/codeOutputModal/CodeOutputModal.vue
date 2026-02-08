@@ -3,7 +3,6 @@
     import type { CodeOutput } from '../../../types/code';
     import type { FileType } from '../../../types/entities';
     import { createPopup } from '../../../utils/popup';
-    import { truncate } from '../../../utils/text';
     import HoverableIcon from '../../common/HoverableIcon.vue';
     import Modal from '../../common/Modal.vue';
     import ExerciseAccordion from './ExerciseAccordion.vue';
@@ -47,7 +46,7 @@
         <div class="flex flex-col gap-4 p-2 bg-(--foreground) rounded-md">
             <div class="flex items-center gap-2 pr-6">
                 <p>Arquivo:</p>
-                <p class="px-2 py-1 bg-black/15 shadow-inset rounded-sm font-mono">{{ truncate(props.file.name, 25) }}</p>
+                <p class="px-2 py-1 bg-black/15 shadow-inset rounded-sm font-mono">{{ props.file.name }}</p>
             </div>
 
             <div class="flex flex-col gap-1">

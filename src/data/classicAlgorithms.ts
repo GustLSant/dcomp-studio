@@ -67,7 +67,7 @@ export const BINARY_SEARCH_ALGORITHM: AlgorithmData = {
         "",
         "  return -1",
         "",
-        "print(binary_search(lista, 7))",
+        "print('O elemento 7 está no index: ', binary_search(lista, 7))",
     ],
     abstract: `
         A busca binária localiza um elemento em uma lista ordenada dividindo
@@ -144,7 +144,7 @@ export const ARRAY_SUM_ALGORITHM: AlgorithmData = {
         "    total += valor",
         "  return total",
         "",
-        "print(somar_elementos(lista))",
+        "print('soam dos elementos: ', somar_elementos(lista))",
     ],
     abstract: `
         Para calcular a soma de todos os elementos de um array,
@@ -318,7 +318,7 @@ export const CLASSIC_ALGORITHMS: AlgorithmCollection[] = [
     {
         complexity: 'O(n)',
         resume: 'Algoritmos O(n) percorrem todos os elementos da entrada uma única vez. O tempo de execução cresce de forma proporcional ao tamanho dos dados.',
-        algorithms: [ ARRAY_SUM_ALGORITHM, ARRAY_SUM_ALGORITHM ]
+        algorithms: [ LINEAR_SEARCH_ALGORITHM, ARRAY_SUM_ALGORITHM ]
     },
     
     {
