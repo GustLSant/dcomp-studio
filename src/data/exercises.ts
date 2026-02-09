@@ -10,6 +10,9 @@ const EXERCISE_VARIAVEIS_1: ExerciseData = {
         '# Imprima o valor de x',
         '# Para printar o valor, utilize print(x)',
         '# Output esperado: "10"',
+        '',
+        '',
+        '',
     ],
     codeAnswer: [
         'x = 10',
@@ -28,6 +31,9 @@ const EXERCISE_VARIAVEIS_2: ExerciseData = {
         '# Crie uma variável do tipo lista com os valores: 1, 2, 3',
         '# Imprima a lista criada',
         '# Output esperado: "[1, 2, 3]"',
+        '',
+        '',
+        '',
     ],
     codeAnswer: [
         'lista = [1,2,3]',
@@ -46,6 +52,9 @@ const EXERCISE_VARIAVEIS_3: ExerciseData = {
         '# Crie três variáveis do tipo string com os valores "estudo", "de" e "programação"',
         '# Imprima uma frase com essas três strings ao mesmo tempo',
         '# Output esperado: "estudo de programação"',
+        '',
+        '',
+        '',
     ],
     codeAnswer: [
         'a = "estudo"',
@@ -70,6 +79,9 @@ const EXERCISE_ARRAYS_1: ExerciseData = {
         '# Output esperado: "15"',
         '',
         'array = [1,2,3,4,5]',
+        '',
+        '',
+        '',
     ],
     codeAnswer: [
         'total = 0',
