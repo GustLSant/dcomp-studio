@@ -23,7 +23,19 @@ const PWA_OBJECT: Partial<VitePWAOptions> = {
   },
   workbox: {
     navigateFallback: '/index.html',
+    globIgnores: ['**/pyodide/**'],
     runtimeCaching: [
+      {
+        urlPattern: /pyodide\/.*$/,
+        handler: 'CacheFirst',
+        options: {
+          cacheName: 'pyodide-cache',
+          expiration: {
+            maxEntries: 20,
+            maxAgeSeconds: 60 * 60 * 24 * 30
+          }
+        }
+      },
       {
         urlPattern: ({ request }) => request.destination === 'document',
         handler: 'NetworkFirst',
@@ -33,17 +45,6 @@ const PWA_OBJECT: Partial<VitePWAOptions> = {
           ['script', 'style', 'image', 'font'].includes(request.destination),
         handler: 'CacheFirst',
       },
-      {
-        urlPattern: /\.wasm$/,
-        handler: 'CacheFirst',
-        options: {
-          cacheName: 'wasm-cache',
-          expiration: {
-            maxEntries: 10,
-            maxAgeSeconds: 60 * 60 * 24 * 30
-          }
-        }
-      }
     ]
   }
 }
