@@ -3,8 +3,11 @@
     import { changeEditorTheme } from '../../../utils/editorTheme';
     import Accordion from '../../common/Accordion.vue';
 
+    const emit = defineEmits(['theme-changed']);
+
     function handleClickChangeEditorTheme(_theme: EditorTheme) {
         changeEditorTheme(_theme);
+        emit('theme-changed');
     }
 </script>
 

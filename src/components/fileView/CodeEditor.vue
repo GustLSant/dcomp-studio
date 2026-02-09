@@ -38,7 +38,7 @@
 
     onMounted(() => { eventBus.addEventListener(EVENT_EDITOR_THEME_CHANGED, handleEditorThemeChanged); });
     onUnmounted(() => { eventBus.removeEventListener(EVENT_EDITOR_THEME_CHANGED, handleEditorThemeChanged) });
-    function handleEditorThemeChanged() { editorTheme.value = getEditorTheme(); createPopup('success', 'Sucesso', 'Tema alterado com sucesso'); }
+    function handleEditorThemeChanged() { editorTheme.value = getEditorTheme(); }
 </script>
 
 

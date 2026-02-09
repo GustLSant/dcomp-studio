@@ -104,7 +104,7 @@
 
                 <EditorFontSizeSelect />
 
-                <EditorThemeAccordion />
+                <EditorThemeAccordion @theme-changed="closeMenu" />
 
                 <section>                    
                     <Button variant="neutral" @click="handleClickSaveFile" icon="mdi:content-save-outline">
