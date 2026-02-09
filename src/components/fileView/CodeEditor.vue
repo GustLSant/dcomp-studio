@@ -29,7 +29,7 @@
 
     onMounted(() => { eventBus.addEventListener(EVENT_EDITOR_FONT_SIZE_CHANGED, getFontSize) });
     onUnmounted(() => { eventBus.removeEventListener(EVENT_EDITOR_FONT_SIZE_CHANGED, getFontSize) });
-    function getFontSize() { fontSize.value = getFontSizeFromLocalStorage(); console.log(fontSize.value) }
+    function getFontSize() { fontSize.value = getFontSizeFromLocalStorage(); }
 
     onMounted(() => { eventBus.addEventListener(EVENT_EDITOR_THEME_CHANGED, handleEditorThemeChanged); });
     onUnmounted(() => { eventBus.removeEventListener(EVENT_EDITOR_THEME_CHANGED, handleEditorThemeChanged) });
