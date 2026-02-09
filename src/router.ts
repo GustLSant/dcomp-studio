@@ -3,7 +3,7 @@ import HomeView from "./views/HomeView.vue";
 import FolderView from "./views/FolderView.vue";
 import FileView from "./views/FileView.vue";
 import type { RouteMeta } from "./types/route";
-import CodeNavbarMenu from "./components/fileView/CodeNavbarMenu/CodeNavbarMenu.vue";
+import CodeNavbarMenu from "./components/fileView/codeNavbarMenu_/CodeNavbarMenu.vue";
 import ClassicAlgorithmsView from "./views/ClassicAlgorithmsView.vue";
 import MenuView from "./views/MenuView.vue";
 import ExercisesView from "./views/ExercisesView.vue";
