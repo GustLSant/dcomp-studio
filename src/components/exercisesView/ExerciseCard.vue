@@ -52,7 +52,7 @@
     async function openAlgorithmSolution() {
         const newFile: FileType = getDefaultFile()
         newFile.name = 'Solução - ' + props.data.name
-        newFile.content = props.data.startCode.join('\n') + "\n \n" + props.data.codeAnswer.join('\n');
+        newFile.content = props.data.startCode.join('\n') + props.data.codeAnswer.join('\n');
 
         const newFileId: number = await addFile(newFile);
 

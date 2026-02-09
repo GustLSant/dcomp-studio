@@ -12,7 +12,6 @@ const EXERCISE_VARIAVEIS_1: ExerciseData = {
         '# Output esperado: "10"',
         '',
         '',
-        '',
     ],
     codeAnswer: [
         'x = 10',
@@ -33,7 +32,6 @@ const EXERCISE_VARIAVEIS_2: ExerciseData = {
         '# Output esperado: "[1, 2, 3]"',
         '',
         '',
-        '',
     ],
     codeAnswer: [
         'lista = [1,2,3]',
@@ -52,7 +50,6 @@ const EXERCISE_VARIAVEIS_3: ExerciseData = {
         '# Crie três variáveis do tipo string com os valores "estudo", "de" e "programação"',
         '# Imprima uma frase com essas três strings ao mesmo tempo',
         '# Output esperado: "estudo de programação"',
-        '',
         '',
         '',
     ],
@@ -81,12 +78,11 @@ const EXERCISE_ARRAYS_1: ExerciseData = {
         'array = [1,2,3,4,5]',
         '',
         '',
-        '',
     ],
     codeAnswer: [
         'total = 0',
         'for value in array:',
-        '    total += value',
+        '  total += value',
         'print(total)'
     ],
     expectedCodeOutput: '15',
@@ -107,13 +103,12 @@ const EXERCISE_ARRAYS_2: ExerciseData = {
         'array = [10, 5, 22, 37, 18, 40, 29, 12]',
         '',
         '',
-        '',
     ],
     codeAnswer: [
         'maior = array[0]',
         'for value in array:',
-        '    if value > maior:',
-        '        maior = value',
+        '  if value > maior:',
+        '    maior = value',
         'print(maior)'
     ],
     expectedCodeOutput: '40',
@@ -135,19 +130,104 @@ const EXERCISE_ARRAYS_3: ExerciseData = {
         'array = [3, 5, 3, 2, 5, 1]',
         '',
         '',
-        '',
     ],
     codeAnswer: [
         'unicos = []',
         'for value in array:',
-        '    if value not in unicos:',
-        '        unicos.append(value)',
+        '  if value not in unicos:',
+        '    unicos.append(value)',
         'print(unicos)'
     ],
     expectedCodeOutput: '[3, 5, 2, 1]',
     studyMaterialName: 'docs.python',
     studyMaterialLink: 'https://docs.python.org/3/tutorial/datastructures.html#more-on-lists'
 }
+
+
+const EXERCISE_GENERAL_1: ExerciseData = {
+    id: 6,
+    name: 'Geral 1',
+    difficulty: 'Easy',
+    question: 'Crie um programa que verifique se um número N é par ou ímpar e imprima o resultado.',
+    startCode: [
+        '# Verifique se o número é par ou ímpar',
+        '# Se for par, imprima "par"',
+        '# Se for ímpar, imprima "ímpar"',
+        '# Output esperado para n = 4: "par"',
+        '',
+        'n = 4',
+        '',
+        '',
+    ],
+    codeAnswer: [
+        'if n % 2 == 0:',
+        '  print("par")',
+        'else:',
+        '  print("ímpar")'
+    ],
+    expectedCodeOutput: 'par',
+    studyMaterialName: 'w3schools',
+    studyMaterialLink: 'https://www.w3schools.com/python/python_operators_arithmetic.asp'
+}
+
+const EXERCISE_GENERAL_2: ExerciseData = {
+    id: 7,
+    name: 'Geral 2',
+    difficulty: 'Medium',
+    question: 'Crie uma função recursiva que calcule o fatorial de um número inteiro positivo N.',
+    startCode: [
+        '# Crie uma função recursiva para calcular o fatorial',
+        '# Imprima o resultado',
+        '# Output esperado para n = 5: "120"',
+        '',
+        'n = 5',
+        '',
+        '',
+    ],
+    codeAnswer: [
+        'def fatorial(n):',
+        '  if n == 0 or n == 1:',
+        '    return 1',
+        '  return n * fatorial(n - 1)',
+        '',
+        'print(fatorial(n))'
+    ],
+    expectedCodeOutput: '120',
+    studyMaterialName: 'datacamp',
+    studyMaterialLink: 'https://www.datacamp.com/pt/tutorial/recursion-in-python'
+}
+
+const EXERCISE_GENERAL_3: ExerciseData = {
+    id: 8,
+    name: 'Geral 3',
+    difficulty: 'Hard',
+    question: 'Dado um número inteiro positivo n, determine se ele é um número primo. Imprima "primo" ou "não primo".',
+    startCode: [
+        '# Verifique se o número é primo',
+        '# Imprima "primo" ou "não primo"',
+        '# Output esperado para n = 7: "primo"',
+        '',
+        'n = 7',
+        '',
+        '',
+    ],
+    codeAnswer: [
+        'if n <= 1:',
+        '  print("não primo")',
+        'else:',
+        '  primo = True',
+        '  for i in range(2, int(n ** 0.5) + 1):',
+        '    if n % i == 0:',
+        '      primo = False',
+        '      break',
+        '  print("primo" if primo else "não primo")'
+    ],
+    expectedCodeOutput: 'primo',
+    studyMaterialName: 'docs.python',
+    studyMaterialLink: 'https://docs.python.org/3/library/math.html'
+}
+
+
 
 
 export const EXERCISE_GROUPS: ExerciseGroup[] = [
@@ -160,5 +240,10 @@ export const EXERCISE_GROUPS: ExerciseGroup[] = [
         id: 1,
         name: 'Arrays',
         exercises: [ EXERCISE_ARRAYS_1, EXERCISE_ARRAYS_2, EXERCISE_ARRAYS_3 ]
+    },
+    {
+        id: 2,
+        name: 'Geral',
+        exercises: [ EXERCISE_GENERAL_1, EXERCISE_GENERAL_2, EXERCISE_GENERAL_3 ]
     }
 ]
