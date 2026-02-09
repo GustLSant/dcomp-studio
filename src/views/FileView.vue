@@ -23,6 +23,8 @@
     const route = useRoute();
     const router = useRouter();
 
+    const firstRun = ref<boolean>(true);
+
     
     onMounted(getFileFromDB);
 
@@ -78,6 +80,8 @@
                     if (_response === true) createPopup('success', 'Parabéns', 'Exercício concluído com sucesso!');
                 })
             }
+
+            firstRun.value = false;
         })
         .catch((_error) => {
             codeOutput.value = {
@@ -95,7 +99,7 @@
 
 <template>
     <CodeNavbar @run-code="runCode" />
-    <LoadingOverlay v-if="loading" />
+    <LoadingOverlay v-if="loading" :message="(firstRun) ? 'A primeira execução pode levar alguns segundos...' : ''" />
     <router-view />
 
     <div v-if="file">
