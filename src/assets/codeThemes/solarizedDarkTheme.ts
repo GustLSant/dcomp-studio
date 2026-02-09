@@ -4,7 +4,7 @@ import { tags as t } from "@lezer/highlight";
 
 const ui = EditorView.theme({
   "&": {
-    backgroundColor: "#002b36",
+    backgroundColor: "#021a20",
     color: "#93a1a1"
   },
   ".cm-content": {
