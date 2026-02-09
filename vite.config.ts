@@ -32,6 +32,17 @@ const PWA_OBJECT: Partial<VitePWAOptions> = {
         urlPattern: ({ request }) =>
           ['script', 'style', 'image', 'font'].includes(request.destination),
         handler: 'CacheFirst',
+      },
+      {
+        urlPattern: /\.wasm$/,
+        handler: 'CacheFirst',
+        options: {
+          cacheName: 'wasm-cache',
+          expiration: {
+            maxEntries: 10,
+            maxAgeSeconds: 60 * 60 * 24 * 30
+          }
+        }
       }
     ]
   }
