@@ -14,6 +14,7 @@
     import eventBus from '../eventBus';
     import { EVENT_SAVE_FILE } from '../events/entities';
     import { updateRecordCompletion } from '../services/exercises';
+    import { nextTick } from 'vue';
 
     const file = ref<FileType | undefined>(undefined);
     const codeMirrorTextElement = ref<any>(null);
@@ -24,6 +25,7 @@
     const router = useRouter();
 
     const firstRun = ref<boolean>(true);
+    const isEditorReady = ref<boolean>(false);
 
     
     onMounted(getFileFromDB);
@@ -35,17 +37,20 @@
     async function getFileFromDB() {
         loading.value = true;
 
-        getFileById(Number(route.params.id))
-        .then((_response: FileType) => {
-            file.value = _response
-        })
-        .catch((_error) => {
-            createPopup('error', 'Erro ao obter o arquivo', _error);
+        try {
+            const _response = await getFileById(Number(route.params.id));
+            file.value = {
+                ..._response,
+            };
+
+            await nextTick();
+            isEditorReady.value = true;
+        }
+        catch (_error) {
+            createPopup('error', 'Erro ao obter o arquivo', _error as string);
             router.push({ name: 'Home' });
-        })
-        .finally(() => {
-            loading.value = false;
-        })
+        }
+        finally { loading.value = false; }
     }
 
 
@@ -102,7 +107,7 @@
     <LoadingOverlay v-if="loading" :message="(firstRun) ? 'A primeira execução pode levar alguns segundos...' : ''" />
     <router-view />
 
-    <div v-if="file">
+    <div v-if="file && isEditorReady">
         <CodeEditor v-model="file.content" v-model:editor-view="codeMirrorTextElement" />
         <CodeOutputModal v-model="canShowCodeOutput" :file="file" :code-output="codeOutput" />
         <EditorFooter v-model:editor-view="codeMirrorTextElement" />

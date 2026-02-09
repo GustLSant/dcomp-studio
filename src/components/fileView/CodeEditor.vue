@@ -25,7 +25,12 @@
     ]);
     const fontSize = ref<string>('12');
 
-    function onCodeMirrorReady(payload: { view: any }) { editorView.value = payload.view; };
+    function onCodeMirrorReady(payload: { view: any }) {
+        editorView.value = payload.view;
+        requestAnimationFrame(() => {
+            editorView.value.requestMeasure(); // re-renderizacao para evitar bug de editor todo preto na primeira renderização
+        });
+    };
 
     onMounted(() => { eventBus.addEventListener(EVENT_EDITOR_FONT_SIZE_CHANGED, getFontSize) });
     onUnmounted(() => { eventBus.removeEventListener(EVENT_EDITOR_FONT_SIZE_CHANGED, getFontSize) });
