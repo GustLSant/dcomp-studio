@@ -25,6 +25,8 @@
             const allFiles: FileType[] = await getAllFiles();
             attemptFiles.value = allFiles.filter((_file) => _file.exerciseRecordId === props.data.id!);
 
+            if (attemptFiles.value.length === 0) return;
+
             lastAttemptDate.value = attemptFiles.value
                 .map((_file) => _file.editDate)
                 .reduce((latest, current) =>
