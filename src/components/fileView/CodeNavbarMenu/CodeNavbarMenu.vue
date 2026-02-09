@@ -69,6 +69,8 @@
         if (!file.value) return;
         openDeleteEntityModal(file.value);
     }
+
+    function goToExercises() { router.push({ name: 'Exercises' }); }
 </script>
 
 
@@ -84,7 +86,7 @@
             <div v-if="file" class="flex flex-col gap-4">
                 <section>
                     <p class="font-light opacity-60 text-sm">Arquivo:</p>
-                    <div class="flex items-center gap-2" @click="() => { openRenameEntityModal(file!) }">
+                    <div class="flex items-center gap-2 hover:cursor-pointer" @click="() => { openRenameEntityModal(file!) }">
                         <FileNameContainer class="grow">
                             {{ file.name }}
                         </FileNameContainer>
@@ -109,8 +111,12 @@
                         Salvar
                     </Button>
                     
-                    <Button variant="neutral" @click="returnToHome" icon="mdi:home">
-                        Sair para Home
+                    <Button variant="neutral" @click="goToExercises" icon="mdi:book-edit-outline">
+                        Exercícios
+                    </Button>
+
+                    <Button variant="neutral" @click="returnToHome" icon="mdi:home-variant-outline">
+                        Home
                     </Button>
 
                     <Button variant="danger-filled" @click="handleClickDeleteFile" icon="mdi:file-document-delete-outline">
