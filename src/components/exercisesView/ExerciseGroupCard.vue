@@ -21,7 +21,7 @@
 
 
 <template>
-    <Accordion :title="props.data.name" max-height="1000px" icon="mdi:script-text-outline" :header-class-override="(progressPercent === 100) ? '' : ''" >
+    <Accordion :title="props.data.name" max-height="1000px" icon="mdi:script-text-outline">
         <template #header-sulfix>
             <ExerciseGroupProgressBadge :progress="progressPercent" />
         </template>

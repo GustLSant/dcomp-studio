@@ -10,7 +10,7 @@
 
 
 <template>
-    <Accordion title="Tema do Editor:" max-height="460px" min-height="44px" class="py-1!">
+    <Accordion title="Tema do Editor:" max-height="460px">
         <template #body>
             <div class="flex flex-col gap-2 pb-1.5">
                 <div v-for="theme in editorThemeItems" @click.stop="() => { handleClickChangeEditorTheme(theme) }" class="border border-(--border-02) bg-white/10 p-2 rounded-sm">{{ theme }}</div>
