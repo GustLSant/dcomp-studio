@@ -6,7 +6,7 @@ import type { EntityKind, FileType, FolderType } from "../types/entities";
 export function getDefaultFile(): FileType {
     return {
         name: 'new_file.py',
-        content: 'print("Hello World")',
+        content: 'print("Hello World")\n',
         parentFolderId: 0,
         kind: 'file',
         creationDate: new Date(),
