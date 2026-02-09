@@ -103,3 +103,19 @@ export async function markExerciseRecordAsCompleted(_record: ExerciseRecord): Pr
         throw new Error(message);
     }
 }
+
+
+export async function removeFileFromRecord(_recordId: number, _fileId: number): Promise<void> {
+    try {
+        const record: ExerciseRecord = await dbInstance.getById(_recordId);
+
+        if (!record.fileIds.includes(_fileId)) return;
+
+        record.fileIds = record.fileIds.filter(_id => _id !== _fileId);
+        await dbInstance.update(record);
+    }
+    catch (_error) {
+        const message = _error instanceof Error ? _error.message : String(_error);
+        throw new Error(message);
+    }
+}

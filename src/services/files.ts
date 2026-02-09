@@ -1,4 +1,5 @@
 import type { FileType } from "../types/entities";
+import { removeFileFromRecord } from "./exercises";
 import { IndexedDB } from "./indexedDB";
 
 
@@ -140,6 +141,8 @@ export async function getLastEditedFile(): Promise<FileType | undefined> {
 export async function deleteFile(_file: FileType): Promise<void> {
     try {
         if (!_file.id) throw new Error('Erro ao excluir o arquivo: arquivo não possui um ID');
+        if (_file.exerciseRecordId) { removeFileFromRecord(_file.exerciseRecordId, _file.id); }
+        
         dbInstance.delete(_file.id);
     }
     catch(_error) {
