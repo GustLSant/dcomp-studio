@@ -11,12 +11,12 @@
     import { createPopup } from '../../utils/popup';
     import { formatDate } from '../../utils/date';
     import FilePreview from '../entities/FilePreview.vue';
+    import Accordion from '../common/Accordion.vue';
 
     const props = defineProps<{ data: ExerciseRecord }>();
     const exercise = ref<ExerciseData>(getExerciseDataById(props.data.exerciseId!));
     const attemptFiles = ref<FileType[]>([]);
     const lastAttemptDate = ref<Date | undefined>(undefined);
-    const openFilesAccordion = ref<boolean>(false);
 
     onMounted(getFilesData);
 
@@ -40,7 +40,7 @@
 
 
 <template>
-    <Card class="bg-white/5 gap-4!">
+    <Card class="bg-white/5 gap-4! p-2!">
         <div class="flex items-center justify-between gap-2">
             <div class="flex items-center gap-1">
                 <Icon icon="mdi:book-outline" width="24" height="24" />
@@ -56,19 +56,11 @@
             <p class="text-right">{{ formatDate(lastAttemptDate) }}</p>
         </div>
 
-        <div
-            :class="(openFilesAccordion) ? 'max-h-40 overflow-y-auto' : 'max-h-10 overflow-hidden'"
-            class="accordion flex flex-col gap-4 p-2 rounded-md border border-(--border-02)"
-        >
-            <div @click="() => { openFilesAccordion = !openFilesAccordion }" class="flex items-center justify-between gap-2">
-                <p>Arquivos de tentativas:</p>
-                <Icon :icon="(openFilesAccordion) ? 'mdi:chevron-up' : 'mdi:chevron-down'" width="24" height="24" />
-            </div>
-
-            <div class="flex flex-col gap-2">
+        <Accordion v-if="attemptFiles.length > 0" title="Arquivos de tentativas" max-height="160px">
+            <template #body>
                 <FilePreview v-for="file in attemptFiles" :entity="file" :interactable="true" />
-            </div>
-        </div>
+            </template>
+        </Accordion>
     </Card>
 </template>
 
