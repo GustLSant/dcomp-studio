@@ -1,18 +1,23 @@
 <script setup lang="ts">
   import Logo from "../../assets/logo/white.png";
   import { Icon } from "@iconify/vue";
+  const props = defineProps<{ message?: string }>();
 </script>
 
 
 <template>
   <div class="loading-overlay fade-in-short fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm select-none">
+    
     <div class="flex flex-col justify-center items-center gap-2 animate-pulse">
       <img alt="Logo Dcomp Studio" :src="Logo" class="w-24" />
       <div class="flex items-center gap-2 font-mono text-white text-xl text-shadow-md ">
         <Icon icon="mdi:loading" class="max-w-[42px] max-h-[42px] spin"/>
         <p>Carregando...</p>
       </div>
+
+      <p v-if="props.message" class="mt-10 text-sm opacity-60">{{ props.message }}</p>
     </div>
+
   </div>
 </template>
 
