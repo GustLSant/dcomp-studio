@@ -11,8 +11,7 @@
     import { lintGutter } from '@codemirror/lint';
     import { pythonLinter } from '../../utils/code';
     import { getFontSizeFromLocalStorage } from '../../utils/codeEditor';
-    import { createPopup } from '../../utils/popup';
-
+    
     const code = defineModel<string>();
     const editorView = defineModel<any>('editorView');
     const editorTheme = ref<EditorTheme>(getEditorTheme());
