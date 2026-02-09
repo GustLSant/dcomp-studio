@@ -45,7 +45,7 @@ export async function getFullExercisesProgress(): Promise<number> {
 
         const completed = (await getAllExerciseRecords()).filter(r => r.completed).length;
 
-        return Math.min((completed / totalExercises) * 100, 100);
+        return Math.min(Math.floor((completed / totalExercises) * 100), 100);
     }
     catch (_error) {
         const message = _error instanceof Error ? _error.message : String(_error);

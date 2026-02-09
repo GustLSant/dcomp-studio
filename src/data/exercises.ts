@@ -94,6 +94,61 @@ const EXERCISE_ARRAYS_1: ExerciseData = {
     studyMaterialLink: 'https://docs.python.org/3/tutorial/controlflow.html#for-statements'
 }
 
+const EXERCISE_ARRAYS_2: ExerciseData = {
+    id: 4,
+    name: 'Arrays 2',
+    difficulty: 'Medium',
+    question: 'Dado um array [10, 5, 22, 37, 18, 40, 29, 12], imprima apenas o maior valor do array (não use a função max).',
+    startCode: [
+        '# Encontre o maior valor do array',
+        '# Imprima o maior valor',
+        '# Output esperado: "40"',
+        '',
+        'array = [10, 5, 22, 37, 18, 40, 29, 12]',
+        '',
+        '',
+        '',
+    ],
+    codeAnswer: [
+        'maior = array[0]',
+        'for value in array:',
+        '    if value > maior:',
+        '        maior = value',
+        'print(maior)'
+    ],
+    expectedCodeOutput: '40',
+    studyMaterialName: 'docs.python',
+    studyMaterialLink: 'https://docs.python.org/3/tutorial/controlflow.html#for-statements'
+}
+
+const EXERCISE_ARRAYS_3: ExerciseData = {
+    id: 5,
+    name: 'Arrays 4',
+    difficulty: 'Hard',
+    question: 'Dado um array [3, 5, 3, 2, 5, 1], crie um novo array contendo apenas os valores únicos, mantendo a ordem original, e imprima o resultado (não use set).',
+    startCode: [
+        '# Crie um novo array apenas com valores únicos',
+        '# Mantenha a ordem original',
+        '# Não use set',
+        '# Output esperado: "[3, 5, 2, 1]"',
+        '',
+        'array = [3, 5, 3, 2, 5, 1]',
+        '',
+        '',
+        '',
+    ],
+    codeAnswer: [
+        'unicos = []',
+        'for value in array:',
+        '    if value not in unicos:',
+        '        unicos.append(value)',
+        'print(unicos)'
+    ],
+    expectedCodeOutput: '[3, 5, 2, 1]',
+    studyMaterialName: 'docs.python',
+    studyMaterialLink: 'https://docs.python.org/3/tutorial/datastructures.html#more-on-lists'
+}
+
 
 export const EXERCISE_GROUPS: ExerciseGroup[] = [
     {
@@ -104,6 +159,6 @@ export const EXERCISE_GROUPS: ExerciseGroup[] = [
     {
         id: 1,
         name: 'Arrays',
-        exercises: [ EXERCISE_ARRAYS_1 ]
+        exercises: [ EXERCISE_ARRAYS_1, EXERCISE_ARRAYS_2, EXERCISE_ARRAYS_3 ]
     }
 ]
