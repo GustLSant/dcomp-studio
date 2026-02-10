@@ -1,15 +1,11 @@
 <script setup lang="ts">
     import { Icon } from '@iconify/vue';
-    import { useRouter } from 'vue-router';
-    import eventBus from '../../eventBus';
-    import { EVENT_SAVE_FILE } from '../../events/entities';
 
-    const router = useRouter()
-    const emit = defineEmits(['runCode']);
-
-    function handleClickMenu() { router.push({ name: 'FileMenu' }); }
-    function handleClickSave() { eventBus.dispatchEvent(new Event(EVENT_SAVE_FILE)); };
-    function handleClickRun() { emit('runCode'); }    
+    const emit = defineEmits(['openMenu', 'saveFile', 'runCode']);
+    
+    function handleClickMenu() { emit('openMenu'); }
+    function handleClickSave() { emit('saveFile'); }
+    function handleClickRun()  { emit('runCode'); }    
 </script>
 
 

@@ -1,69 +1,32 @@
 <script setup lang="ts">
-    import { useRoute, useRouter } from 'vue-router';
+    import { useRouter } from 'vue-router';
     import { Icon } from '@iconify/vue';
     import FileNameContainer from '../../common/FileNameContainer.vue';
     import { type FolderType, type FileType } from '../../../types/entities';
-    import { onBeforeUnmount, onMounted, onUnmounted, ref } from 'vue';
-    import { getFileById } from '../../../services/files';
+    import { onBeforeUnmount, onMounted, ref } from 'vue';
     import { formatDate } from '../../../utils/date';
     import HoverableIcon from '../../common/HoverableIcon.vue';
-    import { getFolderById } from '../../../services/folders';
     import { createPopup } from '../../../utils/popup';
     import Modal from '../../common/Modal.vue';
     import Button from '../../common/Button.vue';
     import { openDeleteEntityModal, openRenameEntityModal } from '../../../utils/actionModal';
-    import { EVENT_ENTITY_UPDATED, EVENT_SAVE_FILE } from '../../../events/entities';
     import EditorThemeAccordion from './EditorThemeAccordion.vue';
     import EditorFontSizeSelect from './EditorFontSizeSelect.vue';
     import EditorOriginFolder from './EditorOriginFolder.vue';
-    import eventBus from '../../../eventBus';
+    import { exportFile, importFile } from '../../../utils/entities';
 
-    const file = ref<FileType | undefined>(undefined);
+    const open = defineModel<boolean>('open');
+    const file = defineModel<FileType>('file');
     const parentFolder = ref<FolderType | undefined>(undefined);
-    const loading = ref<boolean>(false);
-    const route = useRoute();
     const router = useRouter();
 
-    onMounted(getFileFromDB);
 
     onMounted(() => { document.body.style.overflow = "hidden"; });
     onBeforeUnmount(() => { document.body.style.overflow = ""; });
-    
-    onMounted(() => { eventBus.addEventListener(EVENT_ENTITY_UPDATED, getFileFromDB); });
-    onUnmounted(() => { eventBus.removeEventListener(EVENT_ENTITY_UPDATED, getFileFromDB); });
-
 
     function returnToHome() { router.push('/'); }
-    function closeMenu() { router.back(); }
-
+    function closeMenu() { open.value = false; }
     
-    function getFileFromDB() {
-        loading.value = true;
-
-        getFileById(Number(route.params.id))
-        .then((_response: FileType) => {
-            file.value = _response;
-            getParentFolder();
-        })
-        .catch((_error) => {
-            console.error(_error);
-            createPopup('error', 'Erro ao obter o arquivo', 'Por favor, tente novamente');
-            closeMenu();
-        })
-        .finally(() => {
-            loading.value = false;
-        })
-    }
-
-
-    function getParentFolder() {
-        getFolderById(file.value!.parentFolderId)
-        .then((_response: FolderType) => { parentFolder.value = _response; })
-        .catch((_error) => { createPopup('error', 'Erro ao obter a pasta de origem', 'Por favor, recarregue a página'); })
-    }
-
-
-    function handleClickSaveFile() { eventBus.dispatchEvent(new Event(EVENT_SAVE_FILE)); };
 
     function handleClickDeleteFile() {
         if (!file.value) return;
@@ -71,11 +34,32 @@
     }
 
     function goToExercises() { router.push({ name: 'Exercises' }); }
+
+    function handleClickExportFile() {
+        if (!file.value) {
+            createPopup('error', 'Erro ao exportar arquivo', 'Por favor, recarregue a página');
+            return;
+        }
+
+        exportFile(file.value);
+    }
+
+    function handleClickImportFile() {
+        importFile()
+        .then((_response) => { 
+            file.value = {
+                ..._response,
+                id: file.value?.id
+            };
+            createPopup('success', 'Sucesso', 'Arquivo Importado com sucesso');
+            closeMenu();
+        })
+    }
 </script>
 
 
 <template>
-    <Modal :open="true" @close="closeMenu">
+    <Modal :open="open" @close="closeMenu">
         <div class="flex flex-col gap-4 p-2 py-4 rounded-md bg-(--foreground)">
 
             <div class="flex items-center gap-1">
@@ -106,11 +90,7 @@
 
                 <EditorThemeAccordion @theme-changed="closeMenu" />
 
-                <section>                    
-                    <Button variant="neutral" @click="handleClickSaveFile" icon="mdi:content-save-outline">
-                        Salvar
-                    </Button>
-                    
+                <section>                                        
                     <Button variant="neutral" @click="goToExercises" icon="mdi:book-edit-outline">
                         Exercícios
                     </Button>
@@ -118,6 +98,17 @@
                     <Button variant="neutral" @click="returnToHome" icon="mdi:home-variant-outline">
                         Home
                     </Button>
+
+                    <div class="flex items-center gap-2">
+                        <Button @click="handleClickImportFile" class="basis-1 grow" variant="neutral" icon="mdi:download-circle-outline"> 
+                            Importar
+                        </Button>
+
+                        <Button @click="handleClickExportFile" class="basis-1 grow" variant="neutral" icon="mdi:upload-circle-outline"> 
+                            Exportar
+                        </Button>
+                    </div>
+
 
                     <Button variant="danger-filled" @click="handleClickDeleteFile" icon="mdi:file-document-delete-outline">
                         Excluir Arquivo

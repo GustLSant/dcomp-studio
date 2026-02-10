@@ -3,7 +3,6 @@ import HomeView from "./views/HomeView.vue";
 import FolderView from "./views/FolderView.vue";
 import FileView from "./views/FileView.vue";
 import type { RouteMeta } from "./types/route";
-import CodeNavbarMenu from "./components/fileView/codeNavbarMenu_/CodeNavbarMenu.vue";
 import ClassicAlgorithmsView from "./views/ClassicAlgorithmsView.vue";
 import MenuView from "./views/MenuView.vue";
 import ExercisesView from "./views/ExercisesView.vue";
@@ -27,13 +26,6 @@ const routes: Array<RouteRecordRaw & { meta: RouteMeta }> = [
     name: "File",
     component: FileView,
     meta: { navbarVariation: 'none' },
-    children: [
-      {
-        path: 'menu',
-        name: 'FileMenu',
-        component: CodeNavbarMenu
-      }
-    ]
   },
   {
     path: "/menu",

@@ -15,6 +15,7 @@
     import { EVENT_SAVE_FILE } from '../events/entities';
     import { updateRecordCompletion } from '../services/exercises';
     import { nextTick } from 'vue';
+    import CodeNavbarMenu from '../components/fileView/codeNavbarMenu_/CodeNavbarMenu.vue';
 
     const file = ref<FileType | undefined>(undefined);
     const codeMirrorTextElement = ref<any>(null);
@@ -23,6 +24,8 @@
     const loading = ref<boolean>(false);
     const route = useRoute();
     const router = useRouter();
+
+    const menuOpen = ref<boolean>(false);
 
     const firstRun = ref<boolean>(true);
     const isEditorReady = ref<boolean>(false);
@@ -55,7 +58,7 @@
 
 
     function saveFile() {
-        if (!file.value) { return; } 
+        if (!file.value) { return; }
 
         updateFile(file.value)
         .then((_response) => {
@@ -103,9 +106,9 @@
 
 
 <template>
-    <CodeNavbar @run-code="runCode" />
+    <CodeNavbar @open-menu="() => { menuOpen = true }" @save-file="saveFile"  @run-code="runCode" />
     <LoadingOverlay v-if="loading" :message="(firstRun) ? 'A primeira execução pode levar alguns segundos...' : ''" />
-    <router-view />
+    <CodeNavbarMenu v-model:open="menuOpen" v-model:file="file" />
 
     <div v-if="file && isEditorReady">
         <CodeEditor v-model="file.content" v-model:editor-view="codeMirrorTextElement" />
