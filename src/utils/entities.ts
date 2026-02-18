@@ -33,9 +33,13 @@ export function openEntityMenu(_id: number, _kind: EntityKind): void {
 export function exportFile(_file: FileType): void {
     const json = JSON.stringify(
         {
-            ..._file,
-            exerciseId: undefined,
-        },
+            name: _file.name,
+            content: _file.content,
+            kind: "file",
+            parentFolderId: 0,
+            creationDate: _file.creationDate,
+            editDate: _file.editDate,
+        } satisfies FileType,
         null,
         2
     );
@@ -75,7 +79,6 @@ export function importFile(): Promise<FileType> {
                         ...parsed,
                         creationDate: new Date(parsed.creationDate),
                         editDate: new Date(parsed.editDate),
-                        kind: 'file',
                     };
 
                     resolve(imported);

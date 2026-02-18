@@ -15,6 +15,7 @@
     import { createPopup } from '../../utils/popup';
     import { EVENT_OPEN_FILE_MENU } from '../../events/entities';
     import { EVENT_ENTITY_TREE_UPDATED } from '../../events/entitiesTree';
+    import { exportFile } from '../../utils/entities';
 
     const modalRef = ref<InstanceType<typeof ActionModalContainer> | null>(null);
     const entity = ref<FileType | FolderType | undefined>(undefined);
@@ -92,6 +93,11 @@
         catch { return false; }
         finally { modalRef.value?.setLoading(false); }
     }
+
+    function handleClickExportFile() {
+        if (entity.value?.kind !== 'file') return;
+        exportFile(entity.value);
+    }
 </script>
 
 
@@ -129,6 +135,9 @@
                 </section>
 
                 <section class="mt-2">
+                    <Button v-if="entity.kind === 'file'" variant="neutral" @click="handleClickExportFile" icon="mdi:upload-circle-outline">
+                        Exportar Arquivo
+                    </Button>
                     <Button variant="danger-filled" @click="handleClickDeleteEntity" icon="mdi:delete-outline">
                         {{(entity.kind === 'file') ? 'Excluir Arquivo' : 'Excluir Pasta' }}
                     </Button>

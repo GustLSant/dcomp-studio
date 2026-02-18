@@ -13,7 +13,7 @@
     import { EVENT_ENTITY_TREE_UPDATED } from '../events/entitiesTree';
     import PageHeader from '../components/common/PageHeader.vue';
     import PageContainer from '../components/common/PageContainer.vue';
-    import { getDefaultFile, importFile } from '../utils/entities';
+    import { importFile } from '../utils/entities';
     import { addFile } from '../services/files';
 
     const folder = ref<FolderType | undefined>(undefined);
@@ -58,24 +58,16 @@
     }
 
 
-    function handleClickImportFile(): void {
-        importFile()
-        .then((_response) => {
-            const newFile: FileType = getDefaultFile();
-            newFile.name = _response.name;
-            newFile.content = _response.content;
-            
-            addFile(newFile)
-            .then((_response) => {
-                createPopup('success', 'Sucesso', 'Arquivo importado com sucesso');
-                getFolderData();
-            })
-            .catch((_error) => { createPopup('error' ,'Erro ao importar o arquivo', _error); })
-        })
-        .catch((_error) => {
-            createPopup('error', 'Erro ao importar o arquivo', 'Por favor, tente novamente');
-            console.error(_error);
-        })
+    async function handleClickImportFile() {
+        try {
+            const newFile: FileType = await importFile();
+            await addFile(newFile);
+            createPopup('success', 'Sucesso', 'Arquivo importado com sucesso');
+            getFolderData();
+        }
+        catch (_error) {
+            createPopup('error' ,'Erro ao importar o arquivo', 'Por favor, tente novamente');
+        }
     }
 
     function handleClickAddFolder(): void {
