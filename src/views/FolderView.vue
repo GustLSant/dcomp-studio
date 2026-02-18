@@ -13,6 +13,8 @@
     import { EVENT_ENTITY_TREE_UPDATED } from '../events/entitiesTree';
     import PageHeader from '../components/common/PageHeader.vue';
     import PageContainer from '../components/common/PageContainer.vue';
+    import { getDefaultFile, importFile } from '../utils/entities';
+    import { addFile } from '../services/files';
 
     const folder = ref<FolderType | undefined>(undefined);
     const content = ref<(FolderType | FileType)[]>([]);
@@ -56,12 +58,32 @@
     }
 
 
-    function handleClickAddFolder() {
+    function handleClickImportFile(): void {
+        importFile()
+        .then((_response) => {
+            const newFile: FileType = getDefaultFile();
+            newFile.name = _response.name;
+            newFile.content = _response.content;
+            
+            addFile(newFile)
+            .then((_response) => {
+                createPopup('success', 'Sucesso', 'Arquivo importado com sucesso');
+                getFolderData();
+            })
+            .catch((_error) => { createPopup('error' ,'Erro ao importar o arquivo', _error); })
+        })
+        .catch((_error) => {
+            createPopup('error', 'Erro ao importar o arquivo', 'Por favor, tente novamente');
+            console.error(_error);
+        })
+    }
+
+    function handleClickAddFolder(): void {
         if (!folder.value) { return; }
         openCreateEntityModal('folder', folder.value);
     }
 
-    function handleClickAddFile() {
+    function handleClickAddFile(): void {
         if (!folder.value) { return; }
         openCreateEntityModal('file', folder.value);
     }
@@ -79,15 +101,21 @@
         <div v-if="!loading && folder && content" class="flex flex-col gap-4 p-2 bg-(--foreground) rounded-md border border-(--border-02)">
             <div class="flex items-center justify-between gap-2">
                 <div class="flex items-center gap-2">
-                    <Icon icon="mdi:folder-outline" width="28" height="28" />
-                    <p class="text-lg">/ {{ folder.name }}</p>
+                    <div>
+                        <Icon icon="mdi:folder-outline" width="28" height="28" />
+                    </div>
+                    <p class="-mr-0.5">/</p>
+                    <p class="text-lg">{{ folder.name }}</p>
                 </div>
 
                 <div class="flex items-center gap-2">
-                    <div class="p-2 rounded-sm border border-(--border-01) bg-(--bg-input) hover:cursor-pointer" @click="handleClickAddFolder" icon="mdi:create-new-folder-outline">
+                    <div class="p-2 rounded-sm border border-(--border-01) bg-(--bg-input) hover:cursor-pointer" @click="handleClickImportFile">
+                        <Icon icon="mdi:download-circle-outline" width="24" height="24" />
+                    </div>
+                    <div class="p-2 rounded-sm border border-(--border-01) bg-(--bg-input) hover:cursor-pointer" @click="handleClickAddFolder">
                         <Icon icon="mdi:create-new-folder-outline" width="24" height="24" />
                     </div>
-                    <div class="p-2 rounded-sm primary-bg-gradient hover:cursor-pointer" @click="handleClickAddFile" icon="mdi:file-plus-outline">
+                    <div class="p-2 rounded-sm primary-bg-gradient hover:cursor-pointer" @click="handleClickAddFile">
                         <Icon icon="mdi:file-plus-outline" width="24" height="24" />
                     </div>
                 </div>
