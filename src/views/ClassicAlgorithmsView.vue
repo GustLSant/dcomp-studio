@@ -19,15 +19,15 @@
         <Accordion title="Fundamentação Teórica" icon="mdi:script-text-outline" max-height="600px">
             <template #body>
                 <p>
-                    A análise da complexidade de algoritmos é uma forma de medir o custo de execução de um algoritmo, normalmente em termos de tempo ou uso de memória,
-                    conforme o tamanho da entrada cresce. Em vez de medir o tempo real em segundos, a análise de complexidade observa quantas operações o algoritmo
-                    executa à medida que a quantidade de dados aumenta, permitindo comparar algoritmos de forma mais abstrata e independente de hardware ou linguagem.
+                    A análise da complexidade de algoritmos é uma forma de medir o custo de execução de um algoritmo, normalmente em termos de complexidade temporal (tempo de execução) 
+                    ou complexidade espacial, conforme o tamanho da entrada cresce. Em vez de medir o tempo real em segundos, a análise de complexidade observa quantas 
+                    operações o algoritmo executa à medida que a quantidade de dados aumenta, permitindo comparar algoritmos de forma mais abstrata e independente de hardware ou linguagem.
                 </p>
                 <p>
-                    A notação Big O (O-grande) é usada para representar essa taxa de crescimento no pior caso. Ela descreve como o desempenho de um algoritmo escala, ignorando
-                    constantes e detalhes de implementação, e focando apenas no comportamento dominante. Por exemplo, um algoritmo O(1) executa em tempo constante, O(n) cresce
-                    linearmente com a entrada, O(n²) cresce quadraticamente e O(n log n) é comum em algoritmos de ordenação eficientes. Entender Big O é essencial para escolher
-                    algoritmos mais eficientes e evitar soluções que não escalam bem.
+                    A notação Big O representa um limite superior assintótico do crescimento da função de custo, sendo comumente usada para analisar o pior caso. Ela descreve 
+                    como o desempenho de um algoritmo escala, ignorando constantes e detalhes de implementação, e focando apenas no comportamento dominante. Por exemplo, um 
+                    algoritmo O(1) executa em tempo constante, O(n) cresce linearmente com a entrada, O(n²) cresce quadraticamente e O(n log n) é comum em algoritmos de 
+                    ordenação eficientes. Entender Big O é essencial para escolher algoritmos mais eficientes e evitar soluções que não escalam bem.
                 </p>
             </template>
         </Accordion>
