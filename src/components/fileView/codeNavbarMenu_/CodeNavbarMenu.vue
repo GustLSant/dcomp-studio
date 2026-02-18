@@ -54,6 +54,7 @@
             createPopup('success', 'Sucesso', 'Arquivo Importado com sucesso');
             closeMenu();
         })
+        .catch((_error) => { createPopup('error', 'Erro ao importar o arquivo', 'Verifique se o arquivo é válido'); })
     }
 </script>
 
