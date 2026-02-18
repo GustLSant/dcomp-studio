@@ -90,3 +90,18 @@ export function importFile(): Promise<FileType> {
         input.click();
     });
 }
+
+
+export function checkIsFileValid(_file: any): boolean {
+    if (typeof _file !== 'object' || _file === null) return false;
+
+    if (_file.kind !== 'file') return false;
+
+    if (typeof _file.name !== 'string' || !_file.name.trim()) return false;
+
+    if (typeof _file.parentFolderId !== 'number') return false;
+
+    if (typeof _file.content !== 'string') return false;
+
+    return true;
+}

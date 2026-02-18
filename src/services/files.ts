@@ -1,4 +1,5 @@
 import type { FileType } from "../types/entities";
+import { checkIsFileValid } from "../utils/entities";
 import { removeFileFromRecord } from "./exercises";
 import { IndexedDB } from "./indexedDB";
 
@@ -44,6 +45,7 @@ export async function getFileById(_id: number): Promise<FileType> {
 
 export async function addFile(_file: FileType): Promise<number> {
     try {
+        if (!checkIsFileValid(_file)) { throw new Error('A estrutura do arquivo é inválida'); }        
         return await dbInstance.add(_file);
     }
     catch(_error) {
